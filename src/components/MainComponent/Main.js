@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Fragment} from "react";
 import {MainStyles} from "components/MainComponent/Main.styles";
 import withStyles from "@material-ui/core/styles/withStyles";
 import {withRouter} from "react-router-dom";
@@ -6,14 +6,16 @@ import Paper from "@material-ui/core/Paper/Paper";
 import Grid from "@material-ui/core/Grid/Grid";
 import Typography from "@material-ui/core/Typography/Typography";
 import Button from "@material-ui/core/Button/Button";
+import {TopbarComponent} from "components/TopbarComponent/Topbar";
 
 
 export class _MainComponent extends React.Component {
-
   render() {
     const { classes } = this.props;
 
     return (
+      <Fragment>
+        <TopbarComponent />
       <div className={classes.root}>
         <Grid container justify="center">
           <Grid spacing={4} alignItems="center" justify="center" container className={classes.grid}>
@@ -94,7 +96,8 @@ export class _MainComponent extends React.Component {
             </Grid>
           </Grid>
         </Grid>
-      </div>);
+      </div>
+      </Fragment>);
   }
 }
 
