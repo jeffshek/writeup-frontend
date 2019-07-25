@@ -7,8 +7,37 @@ import Grid from "@material-ui/core/Grid/Grid";
 import Typography from "@material-ui/core/Typography/Typography";
 import Button from "@material-ui/core/Button/Button";
 import { TopbarComponent } from "components/TopbarComponent/Topbar";
+import { Editor } from "slate-react";
+import { Value } from "slate";
+import { lorem_one_paragraph, lorem_two_paragraphs } from "utilities/lorem";
+
+const initialValue = Value.fromJSON({
+  document: {
+    nodes: [
+      {
+        object: "block",
+        type: "paragraph",
+        nodes: [
+          {
+            object: "text",
+            text: lorem_two_paragraphs
+          }
+        ]
+      }
+    ]
+  }
+});
 
 export class _MainComponent extends React.Component {
+  state = {
+    value: initialValue
+  };
+
+  // On change, update the app's React state with the new editor value.
+  onTextChange = ({ value }) => {
+    this.setState({ value });
+  };
+
   render() {
     const { classes } = this.props;
 
@@ -36,53 +65,25 @@ export class _MainComponent extends React.Component {
                         >
                           Writing Prompt ...
                         </Typography>
+                        <Editor
+                          value={this.state.value}
+                          onChange={this.onTextChange}
+                        />
+                        <br />
                         <Typography
-                          variant="subtitle1"
+                          color="secondary"
                           gutterBottom
-                          color={"textPrimary"}
+                          variant={"h6"}
                         >
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit. Integer eu sem vel nisi scelerisque finibus
-                          vitae a nibh. Maecenas sed sem felis. Fusce feugiat,
-                          mauris nec tempus varius, nisl diam porttitor turpis,
-                          non pretium ipsum leo id urna. Pellentesque mattis
-                          lectus ornare justo hendrerit, sit amet blandit odio
-                          semper. Suspendisse ut dapibus sapien. Phasellus
-                          mollis at metus eget imperdiet. Proin lobortis, neque
-                          ac mattis hendrerit, dolor justo elementum lectus, eu
-                          molestie risus lorem vel felis. Proin a lacinia quam.
-                          Praesent laoreet tristique turpis, vel lobortis lectus
-                          tempus quis. Etiam efficitur, velit ac bibendum
-                          rutrum, lacus odio mollis erat, in sollicitudin massa
-                          lorem sed lorem. In bibendum diam nec ligula
-                          consectetur iaculis. Nunc posuere mollis risus, id
-                          efficitur neque feugiat in. Proin eu augue in turpis
-                          convallis cursus.
+                          Style To Mimic (Hardcoded) ...
                         </Typography>
                         <Typography
                           variant="subtitle1"
                           gutterBottom
                           color={"textPrimary"}
                         >
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit. Integer eu sem vel nisi scelerisque finibus
-                          vitae a nibh. Maecenas sed sem felis. Fusce feugiat,
-                          mauris nec tempus varius, nisl diam porttitor turpis,
-                          non pretium ipsum leo id urna. Pellentesque mattis
-                          lectus ornare justo hendrerit, sit amet blandit odio
-                          semper. Suspendisse ut dapibus sapien. Phasellus
-                          mollis at metus eget imperdiet. Proin lobortis, neque
-                          ac mattis hendrerit, dolor justo elementum lectus, eu
-                          molestie risus lorem vel felis. Proin a lacinia quam.
-                          Praesent laoreet tristique turpis, vel lobortis lectus
-                          tempus quis. Etiam efficitur, velit ac bibendum
-                          rutrum, lacus odio mollis erat, in sollicitudin massa
-                          lorem sed lorem. In bibendum diam nec ligula
-                          consectetur iaculis. Nunc posuere mollis risus, id
-                          efficitur neque feugiat in. Proin eu augue in turpis
-                          convallis cursus.
+                          {lorem_two_paragraphs}
                         </Typography>
-                        Text Write Now
                       </div>
                       <div className={classes.alignRight}>
                         <Button
