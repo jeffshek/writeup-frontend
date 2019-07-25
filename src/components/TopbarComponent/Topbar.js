@@ -19,6 +19,27 @@ import ListItemText from '@material-ui/core/ListItemText';
 import logo from "images/logo.svg"
 import {Menu} from "components/Menu"
 
+const InlineTagline = ({classes}) => {
+  return (<div className={classes.inline}>
+    <Typography variant="h6" color="inherit" noWrap>
+      <Link to='/' className={classes.link}>
+        <img width={20} src={logo} alt="" />
+        <span className={classes.tagline}>writeup.ai</span>
+      </Link>
+    </Typography>
+  </div>)
+}
+
+const TextTagline = ({classes}) => {
+  return (
+    <div className={classes.productLogo}>
+      <Typography>
+        write, right. fast.
+      </Typography>
+    </div>
+  )
+}
+
 
 class _TopbarComponent extends Component {
   state = {
@@ -61,6 +82,48 @@ class _TopbarComponent extends Component {
 
   }
 
+  renderMobileIconContainer = () => {
+    const { classes } = this.props;
+
+    return (
+      <div className={classes.iconContainer}>
+        <IconButton onClick={this.mobileMenuOpen} className={classes.iconButton} color="inherit" aria-label="Menu">
+          <MenuIcon />
+        </IconButton>
+      </div>
+    )
+  }
+
+  renderTabContainer = () => {
+    const { classes } = this.props;
+
+    return (
+      <div className={classes.tabContainer}>
+        <SwipeableDrawer anchor="right" open={this.state.menuDrawer} onClose={this.mobileMenuClose} onOpen={this.mobileMenuOpen}>
+          <AppBar title="Menu" />
+          <List>
+            {Menu.map((item, index) => (
+              <ListItem component={item.external ? MaterialLink : Link} href={item.external ? item.pathname : null} to={item.external ? null : {pathname: item.pathname, search: this.props.location.search}} button key={item.label}>
+                <ListItemText primary={item.label} />
+              </ListItem>
+            ))}
+          </List>
+        </SwipeableDrawer>
+
+        <Tabs
+          value={this.current() || this.state.value}
+          indicatorColor="primary"
+          textColor="primary"
+          onChange={this.handleChange}
+        >
+          {Menu.map((item, index) => (
+            <Tab key={index} component={item.external ? MaterialLink : Link} href={item.external ? item.pathname : null} to={item.external ? null : {pathname: item.pathname, search: this.props.location.search}} classes={{root: classes.tabItem}} label={item.label} />
+          ))}
+        </Tabs>
+      </div>
+    )
+  }
+
   render() {
 
     const { classes } = this.props;
@@ -70,49 +133,12 @@ class _TopbarComponent extends Component {
         <Toolbar>
           <Grid container spacing={24} alignItems="baseline">
             <Grid item xs={12} className={classes.flex}>
-              <div className={classes.inline}>
-                <Typography variant="h6" color="inherit" noWrap>
-                  <Link to='/' className={classes.link}>
-                    <img width={20} src={logo} alt="" />
-                    <span className={classes.tagline}>writeup.ai</span>
-                  </Link>
-                </Typography>
-              </div>
+              <InlineTagline classes={classes}/>
               { !this.props.noTabs && (
                 <React.Fragment>
-                  <div className={classes.productLogo}>
-                    <Typography>
-                      {/*write now, right now.*/}
-                      write right now.
-                    </Typography>
-                  </div>
-                  <div className={classes.iconContainer}>
-                    <IconButton onClick={this.mobileMenuOpen} className={classes.iconButton} color="inherit" aria-label="Menu">
-                      <MenuIcon />
-                    </IconButton>
-                  </div>
-                  <div className={classes.tabContainer}>
-                    <SwipeableDrawer anchor="right" open={this.state.menuDrawer} onClose={this.mobileMenuClose} onOpen={this.mobileMenuOpen}>
-                      <AppBar title="Menu" />
-                      <List>
-                        {Menu.map((item, index) => (
-                          <ListItem component={item.external ? MaterialLink : Link} href={item.external ? item.pathname : null} to={item.external ? null : {pathname: item.pathname, search: this.props.location.search}} button key={item.label}>
-                            <ListItemText primary={item.label} />
-                          </ListItem>
-                        ))}
-                      </List>
-                    </SwipeableDrawer>
-                    <Tabs
-                      value={this.current() || this.state.value}
-                      indicatorColor="primary"
-                      textColor="primary"
-                      onChange={this.handleChange}
-                    >
-                      {Menu.map((item, index) => (
-                        <Tab key={index} component={item.external ? MaterialLink : Link} href={item.external ? item.pathname : null} to={item.external ? null : {pathname: item.pathname, search: this.props.location.search}} classes={{root: classes.tabItem}} label={item.label} />
-                      ))}
-                    </Tabs>
-                  </div>
+                  <TextTagline classes={classes}/>
+                  {this.renderMobileIconContainer()}
+                  {this.renderTabContainer()}
                 </React.Fragment>
               )}
             </Grid>
