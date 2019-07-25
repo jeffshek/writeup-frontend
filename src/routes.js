@@ -1,6 +1,6 @@
 import React from 'react'
 import {HashRouter, Route} from 'react-router-dom'
-import {MainComponent} from "components/Main";
+import {MainComponent} from "components/MainComponent/Main";
 
 
 export default props => (
