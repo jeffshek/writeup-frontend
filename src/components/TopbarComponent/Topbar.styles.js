@@ -53,9 +53,21 @@ export const TopbarStyles = theme => ({
       display: 'none'
     }
   },
+  tabContainerRight: {
+    marginLeft: 32,
+    [theme.breakpoints.down('sm')]: {
+                  display: 'none'
+                },
+    [theme.breakpoints.up('md')]: {
+      paddingTop: '0.8em'
+    }
+  },
   tabItem: {
     paddingTop: 20,
     paddingBottom: 20,
     minWidth: 'auto'
+  },
+  settingsContainer: {
+    paddingBottom: "0.5rem"
   }
 })

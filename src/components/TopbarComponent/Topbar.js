@@ -18,12 +18,15 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import logo from "images/logo.svg"
 import {Menu} from "components/Menu"
+import {TopbarMenu} from "components/TopbarMenu";
+
 
 const InlineTagline = ({classes}) => {
-  return (<div className={classes.inline}>
+  return (
+    <div className={classes.inline}>
     <Typography variant="h6" color="inherit" noWrap>
       <Link to='/' className={classes.link}>
-        <img width={20} src={logo} alt="" />
+        <img width={20} src={logo} alt="writeup.ai logo"/>
         <span className={classes.tagline}>writeup.ai</span>
       </Link>
     </Typography>
@@ -43,20 +46,20 @@ const TextTagline = ({classes}) => {
 
 class _TopbarComponent extends Component {
   state = {
-    value: 0,
+    value:      0,
     menuDrawer: false
   };
 
   handleChange = (event, value) => {
-    this.setState({ value });
+    this.setState({value});
   };
 
   mobileMenuOpen = (event) => {
-    this.setState({ menuDrawer: true });
+    this.setState({menuDrawer: true});
   }
 
   mobileMenuClose = (event) => {
-    this.setState({ menuDrawer: false });
+    this.setState({menuDrawer: false});
   }
 
   componentDidMount() {
@@ -64,47 +67,50 @@ class _TopbarComponent extends Component {
   }
 
   current = () => {
-    if(this.props.currentPath === '/home') {
+    if (this.props.currentPath === '/home') {
       return 0
     }
-    if(this.props.currentPath === '/dashboard') {
+    if (this.props.currentPath === '/dashboard') {
       return 1
     }
-    if(this.props.currentPath === '/signup') {
+    if (this.props.currentPath === '/signup') {
       return 2
     }
-    if(this.props.currentPath === '/wizard') {
+    if (this.props.currentPath === '/wizard') {
       return 3
     }
-    if(this.props.currentPath === '/cards') {
+    if (this.props.currentPath === '/cards') {
       return 4
     }
 
   }
 
   renderMobileIconContainer = () => {
-    const { classes } = this.props;
+    const {classes} = this.props;
 
     return (
       <div className={classes.iconContainer}>
         <IconButton onClick={this.mobileMenuOpen} className={classes.iconButton} color="inherit" aria-label="Menu">
-          <MenuIcon />
+          <MenuIcon/>
         </IconButton>
       </div>
     )
   }
 
   renderTabContainer = () => {
-    const { classes } = this.props;
+    const {classes} = this.props;
 
     return (
       <div className={classes.tabContainer}>
-        <SwipeableDrawer anchor="right" open={this.state.menuDrawer} onClose={this.mobileMenuClose} onOpen={this.mobileMenuOpen}>
-          <AppBar title="Menu" />
+        <SwipeableDrawer anchor="right" open={this.state.menuDrawer} onClose={this.mobileMenuClose}
+                         onOpen={this.mobileMenuOpen}>
+          <AppBar title="Menu"/>
           <List>
             {Menu.map((item, index) => (
-              <ListItem component={item.external ? MaterialLink : Link} href={item.external ? item.pathname : null} to={item.external ? null : {pathname: item.pathname, search: this.props.location.search}} button key={item.label}>
-                <ListItemText primary={item.label} />
+              <ListItem component={item.external ? MaterialLink : Link} href={item.external ? item.pathname : null}
+                        to={item.external ? null : {pathname: item.pathname, search: this.props.location.search}} button
+                        key={item.label}>
+                <ListItemText primary={item.label}/>
               </ListItem>
             ))}
           </List>
@@ -117,7 +123,9 @@ class _TopbarComponent extends Component {
           onChange={this.handleChange}
         >
           {Menu.map((item, index) => (
-            <Tab key={index} component={item.external ? MaterialLink : Link} href={item.external ? item.pathname : null} to={item.external ? null : {pathname: item.pathname, search: this.props.location.search}} classes={{root: classes.tabItem}} label={item.label} />
+            <Tab key={index} component={item.external ? MaterialLink : Link} href={item.external ? item.pathname : null}
+                 to={item.external ? null : {pathname: item.pathname, search: this.props.location.search}}
+                 classes={{root: classes.tabItem}} label={item.label}/>
           ))}
         </Tabs>
       </div>
@@ -126,22 +134,42 @@ class _TopbarComponent extends Component {
 
   render() {
 
-    const { classes } = this.props;
+    const {classes} = this.props;
 
     return (
       <AppBar position="absolute" color="default" className={classes.appBar}>
         <Toolbar>
-          <Grid container spacing={24} alignItems="baseline">
-            <Grid item xs={12} className={classes.flex}>
+          <Grid container spacing={2} alignItems="baseline">
+
+            <Grid item xs={10} className={classes.flex}>
               <InlineTagline classes={classes}/>
-              { !this.props.noTabs && (
+              {!this.props.noTabs && (
                 <React.Fragment>
-                  <TextTagline classes={classes}/>
-                  {this.renderMobileIconContainer()}
+                  {/*<TextTagline classes={classes}/>*/}
+                  {/*{this.renderMobileIconContainer()}*/}
                   {this.renderTabContainer()}
                 </React.Fragment>
               )}
             </Grid>
+
+            <Grid item xs={2} className={classes.flex}>
+              <div className={classes.tabContainerRight}>
+                <Tabs
+                  value={this.current() || this.state.value}
+                  indicatorColor="primary"
+                  textColor="primary"
+                  onChange={this.handleChange}
+                >
+                  {TopbarMenu.map((item, index) => (
+                    <Tab key={index} component={item.external ? MaterialLink : Link}
+                         href={item.external ? item.pathname : null}
+                         to={item.external ? null : {pathname: item.pathname, search: this.props.location.search}}
+                         classes={{root: classes.tabItem}} label={item.label}/>
+                  ))}
+                </Tabs>
+              </div>
+            </Grid>
+
           </Grid>
         </Toolbar>
       </AppBar>
