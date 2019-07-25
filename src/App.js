@@ -1,5 +1,4 @@
 import React from 'react';
-import 'App.css'
 import {ThemeProvider} from '@material-ui/styles';
 import {createMuiTheme} from '@material-ui/core/styles'
 import {blue, indigo} from '@material-ui/core/colors'
