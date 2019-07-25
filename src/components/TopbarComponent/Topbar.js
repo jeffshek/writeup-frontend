@@ -101,7 +101,7 @@ class _TopbarComponent extends Component {
     );
   };
 
-  renderTabContainer = () => {
+  renderLeftTabContainer = () => {
     const { classes } = this.props;
 
     return (
@@ -163,6 +163,39 @@ class _TopbarComponent extends Component {
     );
   };
 
+  renderRightContainer = () => {
+    const { classes } = this.props;
+
+    return (
+      <div className={classes.tabContainerRight}>
+        <Tabs
+          value={this.current() || this.state.value}
+          indicatorColor="primary"
+          textColor="primary"
+          onChange={this.handleChange}
+        >
+          {TopbarMenu.map((item, index) => (
+            <Tab
+              key={index}
+              component={item.external ? MaterialLink : Link}
+              href={item.external ? item.pathname : null}
+              to={
+                item.external
+                  ? null
+                  : {
+                      pathname: item.pathname,
+                      search: this.props.location.search
+                    }
+              }
+              classes={{ root: classes.tabItem }}
+              label={item.label}
+            />
+          ))}
+        </Tabs>
+      </div>
+    );
+  };
+
   render() {
     const { classes } = this.props;
 
@@ -176,37 +209,12 @@ class _TopbarComponent extends Component {
                 <React.Fragment>
                   <TextTagline classes={classes} />
                   {this.renderMobileIconContainer()}
-                  {this.renderTabContainer()}
+                  {this.renderLeftTabContainer()}
                 </React.Fragment>
               )}
             </Grid>
             <Grid item xs={2} className={classes.flex}>
-              <div className={classes.tabContainerRight}>
-                <Tabs
-                  value={this.current() || this.state.value}
-                  indicatorColor="primary"
-                  textColor="primary"
-                  onChange={this.handleChange}
-                >
-                  {TopbarMenu.map((item, index) => (
-                    <Tab
-                      key={index}
-                      component={item.external ? MaterialLink : Link}
-                      href={item.external ? item.pathname : null}
-                      to={
-                        item.external
-                          ? null
-                          : {
-                              pathname: item.pathname,
-                              search: this.props.location.search
-                            }
-                      }
-                      classes={{ root: classes.tabItem }}
-                      label={item.label}
-                    />
-                  ))}
-                </Tabs>
-              </div>
+              {this.renderRightContainer()}
             </Grid>
           </Grid>
         </Toolbar>
