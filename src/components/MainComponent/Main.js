@@ -82,6 +82,7 @@ export class _MainComponent extends React.Component {
                           efficitur neque feugiat in. Proin eu augue in turpis
                           convallis cursus.
                         </Typography>
+                        Text Write Now
                       </div>
                       <div className={classes.alignRight}>
                         <Button
