@@ -51,7 +51,8 @@ export const MainStyles = theme => ({
   },
   box: {
     marginBottom: 60,
-    height: 200
+    //height: 200
+    minHeight: 200
   },
   inlining: {
     display: "inline-block",

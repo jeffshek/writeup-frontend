@@ -29,10 +29,18 @@ export class _MainComponent extends React.Component {
                   <Paper className={classes.paper}>
                     <div>
                       <div className={classes.box}>
-                        <Typography color="secondary" gutterBottom>
+                        <Typography
+                          color="secondary"
+                          gutterBottom
+                          variant={"h6"}
+                        >
                           Writing Prompt ...
                         </Typography>
-                        <Typography variant="body1" gutterBottom>
+                        <Typography
+                          variant="subtitle1"
+                          gutterBottom
+                          color={"textPrimary"}
+                        >
                           Lorem ipsum dolor sit amet, consectetur adipiscing
                           elit. Integer eu sem vel nisi scelerisque finibus
                           vitae a nibh. Maecenas sed sem felis. Fusce feugiat,
@@ -51,7 +59,11 @@ export class _MainComponent extends React.Component {
                           efficitur neque feugiat in. Proin eu augue in turpis
                           convallis cursus.
                         </Typography>
-                        <Typography variant="body1" gutterBottom>
+                        <Typography
+                          variant="subtitle1"
+                          gutterBottom
+                          color={"textPrimary"}
+                        >
                           Lorem ipsum dolor sit amet, consectetur adipiscing
                           elit. Integer eu sem vel nisi scelerisque finibus
                           vitae a nibh. Maecenas sed sem felis. Fusce feugiat,
