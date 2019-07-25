@@ -50,9 +50,9 @@ export const MainStyles = theme => ({
     padding: theme.spacing(2)
   },
   box: {
-    marginBottom: 60,
+    marginBottom: 40,
     //height: 200
-    minHeight: 200
+    minHeight: 150
   },
   inlining: {
     display: "inline-block",

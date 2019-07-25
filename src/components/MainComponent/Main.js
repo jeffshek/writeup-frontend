@@ -9,7 +9,7 @@ import Button from "@material-ui/core/Button/Button";
 import { TopbarComponent } from "components/TopbarComponent/Topbar";
 import { Editor } from "slate-react";
 import { Value } from "slate";
-import { lorem_one_paragraph, lorem_two_paragraphs } from "utilities/lorem";
+import { lorem_two_paragraphs } from "utilities/lorem";
 
 const initialValue = Value.fromJSON({
   document: {
@@ -28,12 +28,31 @@ const initialValue = Value.fromJSON({
   }
 });
 
+const WritingHeader = (
+  <Typography color="secondary" gutterBottom variant={"h6"}>
+    Writing Prompt |
+  </Typography>
+);
+
+const LearnMoreButton = ({ classes }) => {
+  return (
+    <div className={classes.alignRight}>
+      <Button
+        color="primary"
+        variant="contained"
+        className={classes.actionButtom}
+      >
+        Learn more
+      </Button>
+    </div>
+  );
+};
+
 export class _MainComponent extends React.Component {
   state = {
     value: initialValue
   };
 
-  // On change, update the app's React state with the new editor value.
   onTextChange = ({ value }) => {
     this.setState({ value });
   };
@@ -56,45 +75,20 @@ export class _MainComponent extends React.Component {
               <Grid container item xs={12}>
                 <Grid item xs={12}>
                   <Paper className={classes.paper}>
-                    <div>
-                      <div className={classes.box}>
-                        <Typography
-                          color="secondary"
-                          gutterBottom
-                          variant={"h6"}
-                        >
-                          Writing Prompt ...
-                        </Typography>
+                    <div className={classes.box}>
+                      {WritingHeader}
+                      <Typography
+                        variant="subtitle1"
+                        gutterBottom
+                        color={"textPrimary"}
+                      >
                         <Editor
                           value={this.state.value}
                           onChange={this.onTextChange}
                         />
-                        <br />
-                        <Typography
-                          color="secondary"
-                          gutterBottom
-                          variant={"h6"}
-                        >
-                          Style To Mimic (Hardcoded) ...
-                        </Typography>
-                        <Typography
-                          variant="subtitle1"
-                          gutterBottom
-                          color={"textPrimary"}
-                        >
-                          {lorem_two_paragraphs}
-                        </Typography>
-                      </div>
-                      <div className={classes.alignRight}>
-                        <Button
-                          color="primary"
-                          variant="contained"
-                          className={classes.actionButtom}
-                        >
-                          Learn more
-                        </Button>
-                      </div>
+                      </Typography>
                     </div>
+                    <LearnMoreButton classes={classes} />
                   </Paper>
                 </Grid>
               </Grid>
