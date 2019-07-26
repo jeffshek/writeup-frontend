@@ -34,7 +34,7 @@ const initialValue = Value.fromJSON({
 });
 
 const WritingHeader = (
-  <Typography color="secondary" gutterBottom variant={"h6"}>
+  <Typography color="secondary" gutterBottom variant={"h5"}>
     Writing Prompt |
   </Typography>
 );
@@ -60,25 +60,25 @@ const SentenceSelection = ({ classes }) => {
       {/*TODO - Switch to Menu / MenuList*/}
       <Typography className={classes.sentenceSelectionBlock} color={"primary"}>
         {" "}
-        Prompt 1: {lorem_twenty_words}{" "}
+        1 | {lorem_twenty_words}{" "}
       </Typography>
       <Typography
         className={classes.sentenceSelectionBlock}
         color={"textSecondary"}
       >
         {" "}
-        Prompt 2: {lorem_twenty_words_alternative}{" "}
+        2 | {lorem_twenty_words_alternative}{" "}
       </Typography>
       <Typography className={classes.sentenceSelectionBlock} color={"primary"}>
         {" "}
-        Prompt 3: {lorem_twenty_words}{" "}
+        3 | {lorem_twenty_words}{" "}
       </Typography>
       <Typography
         className={classes.sentenceSelectionBlock}
         color={"textSecondary"}
       >
         {" "}
-        Prompt 4: {lorem_twenty_words_alternative}{" "}
+        4 | {lorem_twenty_words_alternative}{" "}
       </Typography>
     </Fragment>
   );
