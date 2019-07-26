@@ -75,5 +75,8 @@ export const MainStyles = theme => ({
     position: "absolute",
     top: "40%",
     left: "40%"
+  },
+  sentenceSelectionBlock: {
+    marginTop: "0rem"
   }
 });

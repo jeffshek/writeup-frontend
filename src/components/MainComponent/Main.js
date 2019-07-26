@@ -9,7 +9,12 @@ import Button from "@material-ui/core/Button/Button";
 import { TopbarComponent } from "components/TopbarComponent/Topbar";
 import { Editor } from "slate-react";
 import { Value } from "slate";
-import { lorem_two_paragraphs } from "utilities/lorem";
+import {
+  lorem_one_paragraph,
+  lorem_twenty_words,
+  lorem_twenty_words_alternative,
+  lorem_two_paragraphs
+} from "utilities/lorem";
 
 const initialValue = Value.fromJSON({
   document: {
@@ -45,6 +50,35 @@ const LearnMoreButton = ({ classes }) => {
         Learn more
       </Button>
     </div>
+  );
+};
+
+const SentenceSelection = ({ classes }) => {
+  return (
+    <Fragment>
+      <Typography className={classes.sentenceSelectionBlock} color={"primary"}>
+        {" "}
+        Prompt 1: {lorem_twenty_words}{" "}
+      </Typography>
+      <Typography
+        className={classes.sentenceSelectionBlock}
+        color={"textSecondary"}
+      >
+        {" "}
+        Prompt 2: {lorem_twenty_words_alternative}{" "}
+      </Typography>
+      <Typography className={classes.sentenceSelectionBlock} color={"primary"}>
+        {" "}
+        Prompt 3: {lorem_twenty_words}{" "}
+      </Typography>
+      <Typography
+        className={classes.sentenceSelectionBlock}
+        color={"textSecondary"}
+      >
+        {" "}
+        Prompt 4: {lorem_twenty_words_alternative}{" "}
+      </Typography>
+    </Fragment>
   );
 };
 
@@ -86,6 +120,8 @@ export class _MainComponent extends React.Component {
                           value={this.state.value}
                           onChange={this.onTextChange}
                         />
+                        <br />
+                        <SentenceSelection classes={classes} />
                       </Typography>
                     </div>
                     <LearnMoreButton classes={classes} />
