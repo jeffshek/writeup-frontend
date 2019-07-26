@@ -95,11 +95,45 @@ const SentenceSelection = ({ classes }) => {
 
 export class _MainComponent extends React.Component {
   state = {
-    value: initialValue
+    value: initialValue,
+    currentDetailIndex: 0,
+    numOfListItems: 4
   };
 
   onTextChange = ({ value }) => {
     this.setState({ value });
+  };
+
+  moveUp = () => {
+    if (this.state.currentDetailIndex > 0) {
+      this.setState({ currentDetailIndex: this.state.currentDetailIndex - 1 });
+    }
+
+    if (this.state.currentDetailIndex === 0) {
+      this.setState({ currentDetailIndex: this.state.numOfListItems - 1 });
+    }
+  };
+
+  moveDown = () => {
+    if (this.state.currentDetailIndex < this.state.numOfListItems - 1) {
+      this.setState({ currentDetailIndex: this.state.currentDetailIndex + 1 });
+    }
+
+    if (this.state.currentDetailIndex === this.state.numOfListItems - 1) {
+      this.setState({ currentDetailIndex: 0 });
+    }
+  };
+
+  onKeyPressed = e => {
+    if (e.keyCode == "38") {
+      // up arrow
+      this.moveUp();
+      e.preventDefault();
+    } else if (e.keyCode == "40") {
+      // down arrow
+      this.moveDown();
+      e.preventDefault();
+    }
   };
 
   render() {
@@ -108,7 +142,7 @@ export class _MainComponent extends React.Component {
     return (
       <Fragment>
         <TopbarComponent />
-        <div className={classes.root}>
+        <div className={classes.root} onKeyDown={this.onKeyPressed}>
           <Grid container justify="center">
             <Grid
               spacing={4}
@@ -140,7 +174,9 @@ export class _MainComponent extends React.Component {
                       >
                         Hit Enter (key) or Double Click (mouse)
                       </Typography>
-                      <PromptSelectComponent />
+                      <PromptSelectComponent
+                        selectedIndex={this.state.currentDetailIndex}
+                      />
                     </div>
                     <LearnMoreButton classes={classes} />
                   </Paper>
