@@ -44,8 +44,10 @@ const ListItemPrompt = ({ prompt, index, selected, onClick }) => {
     </StyledListItem>
   );
 };
+
 export const PromptSelectComponent = function SimpleList({
   onClick,
+  onTextClick,
   selectedIndex = 2
 }) {
   const classes = useStyles();
@@ -61,6 +63,7 @@ export const PromptSelectComponent = function SimpleList({
     <div className={classes.root}>
       <List component="nav" aria-label="prompt-selection-list">
         {promptSelections.map((prompt, index) => {
+          const onClick = onTextClick(prompt);
           const itemIsSelected = selectedIndex === index;
           return (
             <ListItemPrompt

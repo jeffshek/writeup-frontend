@@ -59,39 +59,9 @@ const LearnMoreButton = ({ classes }) => {
   );
 };
 
-//const SentenceSelection = ({ classes }) => {
-//  return (
-//    <Fragment>
-//      {/*TODO - Switch to Menu / MenuList*/}
-//      <Typography className={classes.sentenceSelectionBlock} color={"primary"}>
-//        {" "}
-//        1 | {lorem_twenty_words}{" "}
-//      </Typography>
-//      <Typography
-//        className={classes.sentenceSelectionBlock}
-//        color={"textSecondary"}
-//      >
-//        {" "}
-//        2 | {lorem_twenty_words_alternative}{" "}
-//      </Typography>
-//      <Typography className={classes.sentenceSelectionBlock} color={"primary"}>
-//        {" "}
-//        3 | {lorem_twenty_words}{" "}
-//      </Typography>
-//      <Typography
-//        className={classes.sentenceSelectionBlock}
-//        color={"textSecondary"}
-//      >
-//        {" "}
-//        4 | {lorem_twenty_words_alternative}{" "}
-//      </Typography>
-//    </Fragment>
-//  );
-//};
-
 export class _MainComponent extends React.Component {
   state = {
-    value: initialValue,
+    editorValue: initialValue,
     currentDetailIndex: 0,
     numOfListItems: 4
   };
@@ -102,7 +72,7 @@ export class _MainComponent extends React.Component {
   }
 
   onTextChange = ({ value }) => {
-    this.setState({ value });
+    this.setState({ editorValue: value });
   };
 
   moveUp = () => {
@@ -149,6 +119,15 @@ export class _MainComponent extends React.Component {
     this.focusTextInput();
   };
 
+  insertText = ({ text }) => {
+    this.textEditorRef.current.insertText(text);
+  };
+
+  // used as helper utilities for list items to easily add text to editor
+  onTextClick = prompt => props => {
+    this.insertText({ text: prompt });
+  };
+
   focusTextInput = () => {
     // Explicitly focus the text input using the raw DOM API
     // Note: we're accessing "current" to get the DOM node
@@ -181,7 +160,7 @@ export class _MainComponent extends React.Component {
                         color={"textPrimary"}
                       >
                         <Editor
-                          value={this.state.value}
+                          value={this.state.editorValue}
                           onChange={this.onTextChange}
                           autoFocus={true}
                           ref={this.textEditorRef}
@@ -193,7 +172,7 @@ export class _MainComponent extends React.Component {
                         gutterBottom
                         color={"textPrimary"}
                       >
-                        {/*Don't judge me for using bold. I got lazy near the end.*/}
+                        {/*Don't judge me for using bold. I got lazy.*/}
                         Select using <b>Up</b> & <b>Down</b> Keys. Hit{" "}
                         <b>Enter</b> to Select. <b>Double Clicking </b>
                         Works Too!
@@ -201,10 +180,7 @@ export class _MainComponent extends React.Component {
 
                       <PromptSelectComponent
                         selectedIndex={this.state.currentDetailIndex}
-                        // by passing the onClick, after a selection, or if the user
-                        // just hits a key, it will then be passed and removed
-                        //onClick={this.focusTextInput}
-                        // it looks like you can get around this by always reverting control back to the text
+                        onTextClick={this.onTextClick}
                       />
                     </div>
                     <LearnMoreButton classes={classes} />
