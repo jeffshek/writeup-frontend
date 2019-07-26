@@ -48,7 +48,7 @@ const ListItemPrompt = ({ prompt, index, selected, onClick }) => {
 export const PromptSelectComponent = function SimpleList({
   onClick,
   onTextClick,
-  selectedIndex = 2
+  selectedIndex
 }) {
   const classes = useStyles();
 

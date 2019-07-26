@@ -62,7 +62,7 @@ const LearnMoreButton = ({ classes }) => {
 export class _MainComponent extends React.Component {
   state = {
     editorValue: initialValue,
-    currentDetailIndex: 0,
+    currentDetailIndex: null,
     numOfListItems: 4
   };
 
@@ -76,21 +76,26 @@ export class _MainComponent extends React.Component {
   };
 
   moveUp = () => {
-    if (this.state.currentDetailIndex > 0) {
-      this.setState({ currentDetailIndex: this.state.currentDetailIndex - 1 });
-    }
+    const maxIndex = this.state.numOfListItems - 1;
 
-    if (this.state.currentDetailIndex === 0) {
-      this.setState({ currentDetailIndex: this.state.numOfListItems - 1 });
+    // first move, nothing selected
+    if (this.state.currentDetailIndex === null) {
+      this.setState({ currentDetailIndex: 0 });
+    } else if (this.state.currentDetailIndex > 0) {
+      this.setState({ currentDetailIndex: this.state.currentDetailIndex - 1 });
+    } else if (this.state.currentDetailIndex === 0) {
+      this.setState({ currentDetailIndex: maxIndex });
     }
   };
 
   moveDown = () => {
-    if (this.state.currentDetailIndex < this.state.numOfListItems - 1) {
-      this.setState({ currentDetailIndex: this.state.currentDetailIndex + 1 });
-    }
+    const maxIndex = this.state.numOfListItems - 1;
 
-    if (this.state.currentDetailIndex === this.state.numOfListItems - 1) {
+    if (this.state.currentDetailIndex === null) {
+      this.setState({ currentDetailIndex: maxIndex });
+    } else if (this.state.currentDetailIndex < maxIndex) {
+      this.setState({ currentDetailIndex: this.state.currentDetailIndex + 1 });
+    } else if (this.state.currentDetailIndex === maxIndex) {
       this.setState({ currentDetailIndex: 0 });
     }
   };
@@ -119,6 +124,12 @@ export class _MainComponent extends React.Component {
     this.focusTextInput();
   };
 
+  clearSelectedPrompt = () => {
+    // haven't figured out how to deal with async correctly to set the state to
+    // null
+    this.setState({ currentDetailIndex: null });
+  };
+
   insertText = ({ text }) => {
     this.textEditorRef.current.insertText(text);
   };
@@ -126,6 +137,10 @@ export class _MainComponent extends React.Component {
   // used as helper utilities for list items to easily add text to editor
   onTextClick = prompt => props => {
     this.insertText({ text: prompt });
+    this.focusTextInput();
+
+    // after something has been selected, nothing should be selected
+    //this.clearSelectedPrompt()
   };
 
   focusTextInput = () => {
