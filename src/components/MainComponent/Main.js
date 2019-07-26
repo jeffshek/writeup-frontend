@@ -32,7 +32,7 @@ const initialValue = Value.fromJSON({
 
 const WritingHeader = (
   <Typography color="secondary" gutterBottom variant={"h5"}>
-    Writing Prompt |
+    Write.
   </Typography>
 );
 
@@ -193,7 +193,9 @@ export class _MainComponent extends React.Component {
                         gutterBottom
                         color={"textPrimary"}
                       >
-                        Hit Up & Down. Hit Enter to Select. Double Clicking
+                        {/*Don't judge me for using bold. I got lazy near the end.*/}
+                        Select using <b>Up</b> & <b>Down</b> Keys. Hit{" "}
+                        <b>Enter</b> to Select. <b>Double Clicking </b>
                         Works Too!
                       </Typography>
 
