@@ -193,7 +193,8 @@ export class _MainComponent extends React.Component {
                         gutterBottom
                         color={"textPrimary"}
                       >
-                        Hit Enter (key) or Double Click (mouse)
+                        Hit Up & Down. Hit Enter to Select. Double Clicking
+                        Works Too!
                       </Typography>
 
                       <PromptSelectComponent
