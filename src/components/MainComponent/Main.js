@@ -25,7 +25,7 @@ const initialValue = Value.fromJSON({
         nodes: [
           {
             object: "text",
-            text: lorem_two_paragraphs
+            text: lorem_one_paragraph
           }
         ]
       }
@@ -45,9 +45,9 @@ const LearnMoreButton = ({ classes }) => {
       <Button
         color="primary"
         variant="contained"
-        className={classes.actionButtom}
+        className={classes.actionButton}
       >
-        Learn more
+        Actions
       </Button>
     </div>
   );

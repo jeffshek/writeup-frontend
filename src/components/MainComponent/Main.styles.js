@@ -33,11 +33,7 @@ export const MainStyles = theme => ({
     alignItems: "center",
     marginTop: 32
   },
-  outlinedButtom: {
-    textTransform: "uppercase",
-    margin: theme.spacing(1)
-  },
-  actionButtom: {
+  actionButton: {
     textTransform: "uppercase",
     margin: theme.spacing(1),
     width: 152
