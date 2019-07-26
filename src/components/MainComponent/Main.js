@@ -15,6 +15,9 @@ import {
   lorem_twenty_words_alternative,
   lorem_two_paragraphs
 } from "utilities/lorem";
+import { CustomMenu, CustomMenuItem } from "components/MenuComponent/Menu";
+import { PromptSelectComponent } from "components/MainComponent/PromptSelectComponent";
+import Divider from "@material-ui/core/Divider/Divider";
 
 const initialValue = Value.fromJSON({
   document: {
@@ -37,6 +40,14 @@ const WritingHeader = (
   <Typography color="secondary" gutterBottom variant={"h5"}>
     Writing Prompt |
   </Typography>
+);
+
+const DividerSection = (
+  <Fragment>
+    <br />
+    <Divider />
+    <br />
+  </Fragment>
 );
 
 const LearnMoreButton = ({ classes }) => {
@@ -122,8 +133,12 @@ export class _MainComponent extends React.Component {
                           value={this.state.value}
                           onChange={this.onTextChange}
                         />
-                        <br />
-                        <SentenceSelection classes={classes} />
+                        {DividerSection}
+
+                        <Typography variant={"h6"}>
+                          Hit Enter (key) or Double Click (mouse)
+                        </Typography>
+                        <PromptSelectComponent />
                       </Typography>
                     </div>
                     <LearnMoreButton classes={classes} />
