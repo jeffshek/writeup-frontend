@@ -46,8 +46,7 @@ export const MainStyles = theme => ({
     padding: theme.spacing(2)
   },
   box: {
-    marginBottom: 40,
-    //height: 200
+    marginBottom: 20,
     minHeight: 150
   },
   inlining: {

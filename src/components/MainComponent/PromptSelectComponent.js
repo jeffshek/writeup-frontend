@@ -52,10 +52,10 @@ export const PromptSelectComponent = function SimpleList({
 }) {
   const classes = useStyles();
 
-  const promptOne = `${lorem_twenty_words}`;
-  const promptTwo = `${lorem_twenty_words_alternative}`;
-  const promptThree = `${lorem_twenty_words} 3`;
-  const promptFour = `${lorem_twenty_words_alternative} 4`;
+  const promptOne = `${lorem_twenty_words} `;
+  const promptTwo = `${lorem_twenty_words_alternative} `;
+  const promptThree = `${lorem_twenty_words} 3 `;
+  const promptFour = `${lorem_twenty_words_alternative} 4 `;
 
   const promptSelections = [promptOne, promptTwo, promptThree, promptFour];
 

@@ -183,7 +183,7 @@ export class _MainComponent extends React.Component {
                         onTextClick={this.onTextClick}
                       />
                     </div>
-                    <LearnMoreButton classes={classes} />
+                    {/*<LearnMoreButton classes={classes} />*/}
                   </Paper>
                 </Grid>
               </Grid>
