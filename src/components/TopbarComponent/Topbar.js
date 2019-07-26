@@ -208,7 +208,7 @@ class _TopbarComponent extends Component {
               {!this.props.noTabs && (
                 <React.Fragment>
                   <TextTagline classes={classes} />
-                  {this.renderMobileIconContainer()}
+                  {/*{this.renderMobileIconContainer()}*/}
                   {this.renderLeftTabContainer()}
                 </React.Fragment>
               )}

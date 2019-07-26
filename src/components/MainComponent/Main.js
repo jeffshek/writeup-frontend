@@ -47,6 +47,7 @@ const LearnMoreButton = ({ classes }) => {
         variant="contained"
         className={classes.actionButton}
       >
+        {/*TODO - Switch To MenuList Upon Click or Speed Dial*/}
         Actions
       </Button>
     </div>
@@ -56,6 +57,7 @@ const LearnMoreButton = ({ classes }) => {
 const SentenceSelection = ({ classes }) => {
   return (
     <Fragment>
+      {/*TODO - Switch to Menu / MenuList*/}
       <Typography className={classes.sentenceSelectionBlock} color={"primary"}>
         {" "}
         Prompt 1: {lorem_twenty_words}{" "}
