@@ -5,7 +5,6 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/Inbox";
-import DraftsIcon from "@material-ui/icons/Drafts";
 import {
   lorem_twenty_words,
   lorem_twenty_words_alternative
@@ -30,41 +29,41 @@ const StyledListItem = withStyles(theme => ({
   }
 }))(ListItem);
 
-export const PromptSelectComponent = function SimpleList() {
+const ListItemPrompt = ({ prompt, index, selected }) => {
+  return (
+    <StyledListItem button selected={selected} autoFocus={selected}>
+      <ListItemIcon>
+        <InboxIcon />
+      </ListItemIcon>
+      <ListItemText primary={prompt} />
+    </StyledListItem>
+  );
+};
+export const PromptSelectComponent = function SimpleList({
+  selectedIndex = 0
+}) {
   const classes = useStyles();
 
   const promptOne = `${lorem_twenty_words}`;
   const promptTwo = `${lorem_twenty_words_alternative}`;
-  const promptThree = `${lorem_twenty_words}`;
-  const promptFour = `${lorem_twenty_words_alternative}`;
+  const promptThree = `${lorem_twenty_words} 3`;
+  const promptFour = `${lorem_twenty_words_alternative} 4`;
+
+  const promptSelections = [promptOne, promptTwo, promptThree, promptFour];
 
   return (
     <div className={classes.root}>
-      <List component="nav" aria-label="main mailbox folders">
-        <StyledListItem button>
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText primary={promptOne} />
-        </StyledListItem>
-        <StyledListItem button>
-          <ListItemIcon>
-            <DraftsIcon />
-          </ListItemIcon>
-          <ListItemText primary={promptTwo} />
-        </StyledListItem>
-        <StyledListItem button>
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText primary={promptThree} />
-        </StyledListItem>
-        <StyledListItem button>
-          <ListItemIcon>
-            <DraftsIcon />
-          </ListItemIcon>
-          <ListItemText primary={promptFour} />
-        </StyledListItem>
+      <List component="nav" aria-label="prompt-selection-list">
+        {promptSelections.map((prompt, index) => {
+          const itemIsSelected = selectedIndex === index;
+          return (
+            <ListItemPrompt
+              key={index}
+              prompt={prompt}
+              selected={itemIsSelected}
+            />
+          );
+        })}
       </List>
     </div>
   );
