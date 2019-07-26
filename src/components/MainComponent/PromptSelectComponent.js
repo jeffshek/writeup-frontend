@@ -29,9 +29,14 @@ const StyledListItem = withStyles(theme => ({
   }
 }))(ListItem);
 
-const ListItemPrompt = ({ prompt, index, selected }) => {
+const ListItemPrompt = ({ prompt, index, selected, onClick }) => {
   return (
-    <StyledListItem button selected={selected} autoFocus={selected}>
+    <StyledListItem
+      button
+      selected={selected}
+      autoFocus={selected}
+      onClick={onClick}
+    >
       <ListItemIcon>
         <InboxIcon />
       </ListItemIcon>
@@ -40,6 +45,7 @@ const ListItemPrompt = ({ prompt, index, selected }) => {
   );
 };
 export const PromptSelectComponent = function SimpleList({
+  onClick,
   selectedIndex = 2
 }) {
   const classes = useStyles();
@@ -61,6 +67,7 @@ export const PromptSelectComponent = function SimpleList({
               key={index}
               prompt={prompt}
               selected={itemIsSelected}
+              onClick={onClick}
             />
           );
         })}

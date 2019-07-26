@@ -9,11 +9,7 @@ import Button from "@material-ui/core/Button/Button";
 import { TopbarComponent } from "components/TopbarComponent/Topbar";
 import { Editor } from "slate-react";
 import { Value } from "slate";
-import {
-  lorem_one_paragraph,
-  lorem_twenty_words,
-  lorem_twenty_words_alternative
-} from "utilities/lorem";
+import { lorem_one_paragraph } from "utilities/lorem";
 import { PromptSelectComponent } from "components/MainComponent/PromptSelectComponent";
 import Divider from "@material-ui/core/Divider/Divider";
 
@@ -63,35 +59,35 @@ const LearnMoreButton = ({ classes }) => {
   );
 };
 
-const SentenceSelection = ({ classes }) => {
-  return (
-    <Fragment>
-      {/*TODO - Switch to Menu / MenuList*/}
-      <Typography className={classes.sentenceSelectionBlock} color={"primary"}>
-        {" "}
-        1 | {lorem_twenty_words}{" "}
-      </Typography>
-      <Typography
-        className={classes.sentenceSelectionBlock}
-        color={"textSecondary"}
-      >
-        {" "}
-        2 | {lorem_twenty_words_alternative}{" "}
-      </Typography>
-      <Typography className={classes.sentenceSelectionBlock} color={"primary"}>
-        {" "}
-        3 | {lorem_twenty_words}{" "}
-      </Typography>
-      <Typography
-        className={classes.sentenceSelectionBlock}
-        color={"textSecondary"}
-      >
-        {" "}
-        4 | {lorem_twenty_words_alternative}{" "}
-      </Typography>
-    </Fragment>
-  );
-};
+//const SentenceSelection = ({ classes }) => {
+//  return (
+//    <Fragment>
+//      {/*TODO - Switch to Menu / MenuList*/}
+//      <Typography className={classes.sentenceSelectionBlock} color={"primary"}>
+//        {" "}
+//        1 | {lorem_twenty_words}{" "}
+//      </Typography>
+//      <Typography
+//        className={classes.sentenceSelectionBlock}
+//        color={"textSecondary"}
+//      >
+//        {" "}
+//        2 | {lorem_twenty_words_alternative}{" "}
+//      </Typography>
+//      <Typography className={classes.sentenceSelectionBlock} color={"primary"}>
+//        {" "}
+//        3 | {lorem_twenty_words}{" "}
+//      </Typography>
+//      <Typography
+//        className={classes.sentenceSelectionBlock}
+//        color={"textSecondary"}
+//      >
+//        {" "}
+//        4 | {lorem_twenty_words_alternative}{" "}
+//      </Typography>
+//    </Fragment>
+//  );
+//};
 
 export class _MainComponent extends React.Component {
   state = {
@@ -99,6 +95,11 @@ export class _MainComponent extends React.Component {
     currentDetailIndex: 0,
     numOfListItems: 4
   };
+
+  constructor(props) {
+    super(props);
+    this.textEditorRef = React.createRef();
+  }
 
   onTextChange = ({ value }) => {
     this.setState({ value });
@@ -125,15 +126,33 @@ export class _MainComponent extends React.Component {
   };
 
   onKeyPressed = e => {
-    if (e.keyCode == "38") {
-      // up arrow
+    const upKey = 38;
+    const downKey = 40;
+    const escapeKey = 27;
+
+    // TODO - space can sometimes get caught, when a listitem
+    // has been selected
+    const spaceKey = 32;
+
+    if (e.keyCode === upKey) {
       this.moveUp();
       e.preventDefault();
-    } else if (e.keyCode == "40") {
-      // down arrow
+    } else if (e.keyCode === downKey) {
       this.moveDown();
       e.preventDefault();
+    } else if (e.keyCode === escapeKey) {
+      this.focusTextInput();
     }
+
+    // shift every key action back to the text box, this lets
+    // user select prompt or disregard halfway and continue writing
+    this.focusTextInput();
+  };
+
+  focusTextInput = () => {
+    // Explicitly focus the text input using the raw DOM API
+    // Note: we're accessing "current" to get the DOM node
+    this.textEditorRef.current.focus();
   };
 
   render() {
@@ -164,6 +183,8 @@ export class _MainComponent extends React.Component {
                         <Editor
                           value={this.state.value}
                           onChange={this.onTextChange}
+                          autoFocus={true}
+                          ref={this.textEditorRef}
                         />
                         {DividerSection}
                       </Typography>
@@ -174,8 +195,13 @@ export class _MainComponent extends React.Component {
                       >
                         Hit Enter (key) or Double Click (mouse)
                       </Typography>
+
                       <PromptSelectComponent
                         selectedIndex={this.state.currentDetailIndex}
+                        // by passing the onClick, after a selection, or if the user
+                        // just hits a key, it will then be passed and removed
+                        //onClick={this.focusTextInput}
+                        // it looks like you can get around this by always reverting control back to the text
                       />
                     </div>
                     <LearnMoreButton classes={classes} />
