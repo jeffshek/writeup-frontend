@@ -12,10 +12,8 @@ import { Value } from "slate";
 import {
   lorem_one_paragraph,
   lorem_twenty_words,
-  lorem_twenty_words_alternative,
-  lorem_two_paragraphs
+  lorem_twenty_words_alternative
 } from "utilities/lorem";
-import { CustomMenu, CustomMenuItem } from "components/MenuComponent/Menu";
 import { PromptSelectComponent } from "components/MainComponent/PromptSelectComponent";
 import Divider from "@material-ui/core/Divider/Divider";
 
@@ -134,12 +132,15 @@ export class _MainComponent extends React.Component {
                           onChange={this.onTextChange}
                         />
                         {DividerSection}
-
-                        <Typography variant={"h6"}>
-                          Hit Enter (key) or Double Click (mouse)
-                        </Typography>
-                        <PromptSelectComponent />
                       </Typography>
+                      <Typography
+                        variant="subtitle1"
+                        gutterBottom
+                        color={"textPrimary"}
+                      >
+                        Hit Enter (key) or Double Click (mouse)
+                      </Typography>
+                      <PromptSelectComponent />
                     </div>
                     <LearnMoreButton classes={classes} />
                   </Paper>

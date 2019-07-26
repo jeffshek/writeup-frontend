@@ -4,26 +4,13 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import Divider from "@material-ui/core/Divider";
 import InboxIcon from "@material-ui/icons/Inbox";
 import DraftsIcon from "@material-ui/icons/Drafts";
 import {
   lorem_twenty_words,
   lorem_twenty_words_alternative
 } from "utilities/lorem";
-import Typography from "@material-ui/core/Typography/Typography";
-
-const styles = theme => ({
-  table: {
-    minWidth: 700
-  }
-});
-
-class _ListComponent extends React.Component {
-  render() {
-    return <div>Hello</div>;
-  }
-}
+import withStyles from "@material-ui/core/styles/withStyles";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -31,6 +18,17 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper
   }
 }));
+
+const StyledListItem = withStyles(theme => ({
+  root: {
+    "&:focus": {
+      backgroundColor: theme.palette.primary.main,
+      "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
+        color: theme.palette.common.white
+      }
+    }
+  }
+}))(ListItem);
 
 export const PromptSelectComponent = function SimpleList() {
   const classes = useStyles();
@@ -43,30 +41,30 @@ export const PromptSelectComponent = function SimpleList() {
   return (
     <div className={classes.root}>
       <List component="nav" aria-label="main mailbox folders">
-        <ListItem button>
+        <StyledListItem button>
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
           <ListItemText primary={promptOne} />
-        </ListItem>
-        <ListItem button>
+        </StyledListItem>
+        <StyledListItem button>
           <ListItemIcon>
             <DraftsIcon />
           </ListItemIcon>
           <ListItemText primary={promptTwo} />
-        </ListItem>
-        <ListItem button>
+        </StyledListItem>
+        <StyledListItem button>
           <ListItemIcon>
             <InboxIcon />
           </ListItemIcon>
           <ListItemText primary={promptThree} />
-        </ListItem>
-        <ListItem button>
+        </StyledListItem>
+        <StyledListItem button>
           <ListItemIcon>
             <DraftsIcon />
           </ListItemIcon>
           <ListItemText primary={promptFour} />
-        </ListItem>
+        </StyledListItem>
       </List>
     </div>
   );
