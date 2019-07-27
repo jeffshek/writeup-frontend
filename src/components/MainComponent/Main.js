@@ -87,11 +87,14 @@ export class _MainComponent extends React.Component {
     };
   }
 
-  handleWebSocketData = data => {
-    console.log(data);
-  };
+  componentDidMount() {
+    this.websocket = new ReactWebSocket({ url: WebSocketURL, debug: true });
+    this.websocket.setupWebSocket();
+  }
 
-  componentDidMount() {}
+  componentWillUnmount() {
+    this.websocket.dissembleWebSocket();
+  }
 
   onTextChange = ({ value }) => {
     this.setState({ editorValue: value });
@@ -191,10 +194,10 @@ export class _MainComponent extends React.Component {
                   <Paper className={classes.paper}>
                     <div className={classes.box}>
                       {WritingHeader}
-                      <ReactWebSocket
-                        url={WebSocketURL}
-                        onMessage={this.handleWebSocketData}
-                      />
+                      {/*<ReactWebSocket*/}
+                      {/*url={WebSocketURL}*/}
+                      {/*onMessage={this.handleWebSocketData}*/}
+                      {/*/>*/}
                       <Typography
                         variant="subtitle1"
                         gutterBottom

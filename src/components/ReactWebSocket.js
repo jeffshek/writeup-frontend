@@ -16,11 +16,11 @@ export class ReactWebSocket extends React.Component {
     };
   }
 
-  logging(logline) {
+  logMessage = logline => {
     if (this.props.debug === true) {
       console.log(logline);
     }
-  }
+  };
 
   generateInterval(k) {
     if (this.props.reconnectIntervalInMilliSeconds > 0) {
@@ -29,21 +29,21 @@ export class ReactWebSocket extends React.Component {
     return Math.min(30, Math.pow(2, k) - 1) * 1000;
   }
 
-  setupWebsocket = () => {
-    let websocket = this.state.ws;
+  setupWebSocket = () => {
+    let connection = this.state.ws;
 
-    websocket.onopen = () => {
-      this.logging("WebSocket Connected");
+    connection.onopen = () => {
+      this.logMessage("WebSocket Connected");
       if (typeof this.props.onOpen === "function") this.props.onOpen();
     };
 
-    websocket.onmessage = evt => {
+    connection.onmessage = evt => {
       this.props.onMessage(evt.data);
     };
 
     this.shouldReconnect = this.props.reconnect;
-    websocket.onclose = () => {
-      this.logging("WebSocket Disconnected");
+    connection.onclose = () => {
+      this.logMessage("WebSocket Disconnected");
       if (typeof this.props.onClose === "function") this.props.onClose();
 
       if (this.shouldReconnect) {
@@ -53,31 +53,24 @@ export class ReactWebSocket extends React.Component {
           this.setState({
             ws: new WebSocket(this.props.url, this.props.protocol)
           });
-          this.setupWebsocket();
+          this.setupWebSocket();
         }, time);
       }
     };
   };
 
-  componentDidMount() {
-    this.setupWebsocket();
-  }
-
-  componentWillUnmount() {
+  dissembleWebSocket() {
     this.shouldReconnect = false;
     clearTimeout(this.timeoutID);
-    let websocket = this.state.ws;
-    websocket.close();
+
+    let connection = this.state.ws;
+    connection.close();
   }
 
-  sendMessage = message => {
-    let websocket = this.state.ws;
-    websocket.send(message);
-  };
-
-  render() {
-    return <div></div>;
-  }
+  //sendMessage = message => {
+  //  let connection = this.state.ws;
+  //  connection.send(message);
+  //};
 }
 
 ReactWebSocket.defaultProps = {
