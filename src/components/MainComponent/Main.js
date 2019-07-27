@@ -42,8 +42,8 @@ const initialValue = Value.fromJSON({
 const HowToSelectPromptSection = (
   <Typography variant="subtitle1" gutterBottom color={"textPrimary"}>
     {/*Don't judge me for using bold. I got lazy.*/}
-    Select using <b>Up</b> & <b>Down</b> Keys. Hit <b>Enter</b> to Select.{" "}
-    <b>Double Clicking </b>
+    Select using <b>Up</b> & <b>Down</b> Keys. Hit <b>Enter</b> to Insert.{" "}
+    <b>Clicking </b>
     Works Too!
   </Typography>
 );
