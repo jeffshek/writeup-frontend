@@ -31,7 +31,7 @@ const initialValue = Value.fromJSON({
         nodes: [
           {
             object: "text",
-            text: ""
+            text: "This is a story about fire and dragons."
           }
         ]
       }
@@ -89,6 +89,7 @@ function sleep(ms) {
 export class _MainComponent extends React.Component {
   constructor(props) {
     super(props);
+    // need a editor reference since to inset text outside of the editor
     this.textEditorRef = React.createRef();
 
     //const textPrompts = [promptOne, promptTwo, promptThree, promptFour];
@@ -112,6 +113,19 @@ export class _MainComponent extends React.Component {
     });
   };
 
+  sendTextToWebSocket = () => {
+    if (!this.websocket.initialized) {
+      return;
+    }
+
+    // gets a concatenated list of all the text so far
+    const text = this.state.editorValue.document.text;
+
+    const message = { message: text };
+    const messageSerialized = JSON.stringify(message);
+    this.websocket.sendMessage(messageSerialized);
+  };
+
   componentDidMount() {
     this.websocket = new ReactWebSocket({
       url: WebSocketURL,
@@ -119,20 +133,17 @@ export class _MainComponent extends React.Component {
       reconnect: true,
       onMessage: this.handleWebSocketData
     });
+
     this.websocket.setupWebSocket();
 
     // TODO - Need to only connect after websocket has been initialized
-    sleep(5000).then(response => {
+    sleep(4000).then(response => {
       if (!this.websocket.initialized) {
         return;
       }
-
       console.log("Slept");
-      const message = {
-        message: "Today, I went on an adventure to a new country"
-      };
-      const messageSerialized = JSON.stringify(message);
-      this.websocket.sendMessage(messageSerialized);
+
+      this.sendTextToWebSocket();
     });
   }
 
