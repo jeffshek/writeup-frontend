@@ -6,15 +6,14 @@ import PropTypes from "prop-types";
 // Will take this as a shell to understand how WebSocket works in React
 // and then rewrite / clean up a bit.
 
-export class ReactWebsocket extends React.Component {
+export class ReactWebSocket extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      // not sure what protocol is supposed to mean
       ws: new WebSocket(this.props.url, this.props.protocol),
       attempts: 1
     };
-    this.sendMessage = this.sendMessage.bind(this);
-    this.setupWebsocket = this.setupWebsocket.bind(this);
   }
 
   logging(logline) {
@@ -30,11 +29,11 @@ export class ReactWebsocket extends React.Component {
     return Math.min(30, Math.pow(2, k) - 1) * 1000;
   }
 
-  setupWebsocket() {
+  setupWebsocket = () => {
     let websocket = this.state.ws;
 
     websocket.onopen = () => {
-      this.logging("Websocket connected");
+      this.logging("WebSocket Connected");
       if (typeof this.props.onOpen === "function") this.props.onOpen();
     };
 
@@ -44,8 +43,9 @@ export class ReactWebsocket extends React.Component {
 
     this.shouldReconnect = this.props.reconnect;
     websocket.onclose = () => {
-      this.logging("Websocket disconnected");
+      this.logging("WebSocket Disconnected");
       if (typeof this.props.onClose === "function") this.props.onClose();
+
       if (this.shouldReconnect) {
         let time = this.generateInterval(this.state.attempts);
         this.timeoutID = setTimeout(() => {
@@ -57,7 +57,7 @@ export class ReactWebsocket extends React.Component {
         }, time);
       }
     };
-  }
+  };
 
   componentDidMount() {
     this.setupWebsocket();
@@ -70,22 +70,22 @@ export class ReactWebsocket extends React.Component {
     websocket.close();
   }
 
-  sendMessage(message) {
+  sendMessage = message => {
     let websocket = this.state.ws;
     websocket.send(message);
-  }
+  };
 
   render() {
     return <div></div>;
   }
 }
 
-ReactWebsocket.defaultProps = {
-  debug: false,
+ReactWebSocket.defaultProps = {
+  debug: true,
   reconnect: true
 };
 
-ReactWebsocket.propTypes = {
+ReactWebSocket.propTypes = {
   url: PropTypes.string.isRequired,
   onMessage: PropTypes.func.isRequired,
   onOpen: PropTypes.func,

@@ -16,7 +16,7 @@ import {
 } from "utilities/lorem";
 import { PromptSelectComponent } from "components/MainComponent/PromptSelectComponent";
 import Divider from "@material-ui/core/Divider/Divider";
-import { ReactWebsocket } from "components/ReactWebsocket";
+import { ReactWebSocket } from "components/ReactWebSocket";
 
 const WebSocketURL =
   "wss://open.senrigan.io/ws/writeup/gpt2_medium/session/test/";
@@ -191,7 +191,7 @@ export class _MainComponent extends React.Component {
                   <Paper className={classes.paper}>
                     <div className={classes.box}>
                       {WritingHeader}
-                      <ReactWebsocket
+                      <ReactWebSocket
                         url={WebSocketURL}
                         onMessage={this.handleWebSocketData}
                       />
