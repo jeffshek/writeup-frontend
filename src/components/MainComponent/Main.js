@@ -72,6 +72,10 @@ const promptTwo = `${lorem_twenty_words_alternative} `;
 const promptThree = `${lorem_twenty_words} 3 `;
 const promptFour = `${lorem_twenty_words_alternative} 4 `;
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 export class _MainComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -87,9 +91,29 @@ export class _MainComponent extends React.Component {
     };
   }
 
+  handleWebSocketData = data => {
+    //console.log(data)
+    const messageSerialized = JSON.parse(data);
+    //console.log(messageSerialized)
+    const message = messageSerialized["message"];
+    console.log(message);
+  };
+
   componentDidMount() {
-    this.websocket = new ReactWebSocket({ url: WebSocketURL, debug: true });
+    this.websocket = new ReactWebSocket({
+      url: WebSocketURL,
+      debug: true,
+      reconnect: true,
+      onMessage: this.handleWebSocketData
+    });
     this.websocket.setupWebSocket();
+
+    sleep(5000).then(response => {
+      console.log("slept");
+      const message = { message: "Hi Jeff, does this work?" };
+      const messageSerialized = JSON.stringify(message);
+      this.websocket.sendMessage(messageSerialized);
+    });
   }
 
   componentWillUnmount() {

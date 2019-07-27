@@ -10,8 +10,7 @@ export class ReactWebSocket extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // not sure what protocol is supposed to mean
-      ws: new WebSocket(this.props.url, this.props.protocol),
+      ws: new WebSocket(this.props.url),
       attempts: 1
     };
   }
@@ -26,7 +25,9 @@ export class ReactWebSocket extends React.Component {
     if (this.props.reconnectIntervalInMilliSeconds > 0) {
       return this.props.reconnectIntervalInMilliSeconds;
     }
-    return Math.min(30, Math.pow(2, k) - 1) * 1000;
+    // default base results in 1000 milliseconds(?), and increments per attempt
+    const result = Math.min(30, Math.pow(2, k) - 1) * 1000;
+    return result;
   }
 
   setupWebSocket = () => {
@@ -44,6 +45,7 @@ export class ReactWebSocket extends React.Component {
     this.shouldReconnect = this.props.reconnect;
     connection.onclose = () => {
       this.logMessage("WebSocket Disconnected");
+
       if (typeof this.props.onClose === "function") this.props.onClose();
 
       if (this.shouldReconnect) {
@@ -67,10 +69,10 @@ export class ReactWebSocket extends React.Component {
     connection.close();
   }
 
-  //sendMessage = message => {
-  //  let connection = this.state.ws;
-  //  connection.send(message);
-  //};
+  sendMessage = message => {
+    let connection = this.state.ws;
+    connection.send(message);
+  };
 }
 
 ReactWebSocket.defaultProps = {
@@ -81,10 +83,10 @@ ReactWebSocket.defaultProps = {
 ReactWebSocket.propTypes = {
   url: PropTypes.string.isRequired,
   onMessage: PropTypes.func.isRequired,
-  onOpen: PropTypes.func,
-  onClose: PropTypes.func,
+  //onOpen: PropTypes.func,
+  //onClose: PropTypes.func,
   debug: PropTypes.bool,
   reconnect: PropTypes.bool,
-  protocol: PropTypes.string,
+  //protocol: PropTypes.string,
   reconnectIntervalInMilliSeconds: PropTypes.number
 };
