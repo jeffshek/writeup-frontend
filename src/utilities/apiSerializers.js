@@ -6,7 +6,7 @@ export const serializeAPIMessageToPrompts = ({ message }) => {
   });
 
   const textPrompts = [];
-  textPromptKeys.map(key => {
+  textPromptKeys.forEach(key => {
     const textPrompt = message[key];
 
     // it works better with a space
