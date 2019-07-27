@@ -16,6 +16,10 @@ import {
 } from "utilities/lorem";
 import { PromptSelectComponent } from "components/MainComponent/PromptSelectComponent";
 import Divider from "@material-ui/core/Divider/Divider";
+import { ReactWebsocket } from "components/ReactWebsocket";
+
+const WebSocketURL =
+  "wss://open.senrigan.io/ws/writeup/gpt2_medium/session/test/";
 
 const initialValue = Value.fromJSON({
   document: {
@@ -82,6 +86,12 @@ export class _MainComponent extends React.Component {
       textPrompts: textPrompts
     };
   }
+
+  handleWebSocketData = data => {
+    console.log(data);
+  };
+
+  componentDidMount() {}
 
   onTextChange = ({ value }) => {
     this.setState({ editorValue: value });
@@ -181,6 +191,10 @@ export class _MainComponent extends React.Component {
                   <Paper className={classes.paper}>
                     <div className={classes.box}>
                       {WritingHeader}
+                      <ReactWebsocket
+                        url={WebSocketURL}
+                        onMessage={this.handleWebSocketData}
+                      />
                       <Typography
                         variant="subtitle1"
                         gutterBottom
