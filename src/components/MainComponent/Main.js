@@ -17,6 +17,8 @@ import {
   WritingHeader
 } from "components/MainComponent/utilities";
 
+import moment from "moment";
+
 const WebSocketURL =
   "wss://open.senrigan.io/ws/writeup/gpt2_medium/session/test/";
 
@@ -26,25 +28,45 @@ export class _MainComponent extends React.Component {
     // need a editor reference since to inset text outside of the editor
     this.textEditorRef = React.createRef();
 
-    //const textPrompts = [promptOne, promptTwo, promptThree, promptFour];
     const textPrompts = [];
 
     this.state = {
       editorValue: initialValue,
       currentDetailIndex: null,
-      textPrompts: textPrompts
+      textPrompts: textPrompts,
+
+      // with each spacebar key, unsent set to true
+      unsent: false,
+
+      // create a false lastSent to ensure first send is easy
+      lastSent: moment().subtract(5, "seconds")
     };
   }
+
+  enoughTimeSinceLastSend = () => {
+    const delayLimit = moment().subtract(2, "seconds");
+
+    // return true only if we've waited enough time to not hammer
+    // the servers
+    return this.state.lastSent < delayLimit;
+  };
 
   handleWebSocketData = data => {
     const messageSerialized = JSON.parse(data);
     const message = messageSerialized["message"];
 
     const textPrompts = serializeAPIMessageToPrompts({ message });
+    const text = this.state.editorValue.document.text;
 
-    this.setState({
-      textPrompts: textPrompts
-    });
+    // This will only show texts that were meant for the prompt ...
+    // this happens if the user types very quickly and it fires off a lot
+    // of API requests, then we keep on receiving additional websockets that
+    // were for previous points of writing
+    if (message.prompt.trim() === text.trim()) {
+      this.setState({
+        textPrompts: textPrompts
+      });
+    }
   };
 
   sendTextToWebSocket = () => {
@@ -52,13 +74,28 @@ export class _MainComponent extends React.Component {
       return;
     }
 
+    this.setState({
+      unsent: false,
+      lastSent: moment()
+    });
+
     // gets a concatenated list of all the text so far
     const text = this.state.editorValue.document.text;
-
     const message = { message: text };
+
+    console.log("Sending| " + text);
     const messageSerialized = JSON.stringify(message);
 
     this.websocket.sendMessage(messageSerialized);
+  };
+
+  checkToSend = () => {
+    if (this.state.unsent) {
+      const canSend = this.enoughTimeSinceLastSend();
+      if (canSend) {
+        this.sendTextToWebSocket();
+      }
+    }
   };
 
   componentDidMount() {
@@ -74,6 +111,8 @@ export class _MainComponent extends React.Component {
 
     // puts cursor at end for easier resuming
     this.textEditorRef.current.moveToEndOfDocument();
+
+    setInterval(this.checkToSend, 3000);
   }
 
   webSocketConnected = () => {
@@ -115,7 +154,16 @@ export class _MainComponent extends React.Component {
 
   onSpacebarPressed = () => {
     // everytime a spacebar is hit, it's the end of a word
-    this.sendTextToWebSocket();
+    // set unsent here, but if the writer is typing really quickly
+    // then ensure that they can only send one api call a second
+    // otherwise, his/her own api calls will trip
+    this.setState({ unsent: true });
+
+    const canSend = this.enoughTimeSinceLastSend();
+
+    if (canSend) {
+      this.sendTextToWebSocket();
+    }
   };
 
   onKeyPressed = e => {
@@ -170,8 +218,6 @@ export class _MainComponent extends React.Component {
 
     // after something has been selected, no items should be selected
     //this.clearSelectedPrompt()
-
-    // if something has just been selected, it's time to get new options
   };
 
   focusTextInput = () => {

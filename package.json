@@ -9,6 +9,7 @@
     "@material-ui/styles": "^4.2.1",
     "husky": "^3.0.1",
     "immutable": "^4.0.0-rc.12",
+    "moment": "^2.24.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.1",

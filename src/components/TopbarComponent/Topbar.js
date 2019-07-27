@@ -23,9 +23,9 @@ import { TopbarMenu } from "components/TopbarMenu";
 const InlineTagline = ({ classes }) => {
   return (
     <div className={classes.inline}>
-      <Typography variant="h6" color="inherit" noWrap>
+      <Typography variant="h6" color="inherit" noWrap align={"center"}>
         <Link to="/" className={classes.link}>
-          <img width={20} src={logo} alt="writeup.ai logo" />
+          <img width={40} src={logo} alt="writeup.ai logo" />
           <span className={classes.tagline}>writeup.ai</span>
         </Link>
       </Typography>
