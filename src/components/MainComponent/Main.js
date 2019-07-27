@@ -9,7 +9,11 @@ import Button from "@material-ui/core/Button/Button";
 import { TopbarComponent } from "components/TopbarComponent/Topbar";
 import { Editor } from "slate-react";
 import { Value } from "slate";
-import { lorem_one_paragraph } from "utilities/lorem";
+import {
+  lorem_one_paragraph,
+  lorem_twenty_words,
+  lorem_twenty_words_alternative
+} from "utilities/lorem";
 import { PromptSelectComponent } from "components/MainComponent/PromptSelectComponent";
 import Divider from "@material-ui/core/Divider/Divider";
 
@@ -59,16 +63,24 @@ const LearnMoreButton = ({ classes }) => {
   );
 };
 
-export class _MainComponent extends React.Component {
-  state = {
-    editorValue: initialValue,
-    currentDetailIndex: null,
-    numOfListItems: 4
-  };
+const promptOne = `${lorem_twenty_words} `;
+const promptTwo = `${lorem_twenty_words_alternative} `;
+const promptThree = `${lorem_twenty_words} 3 `;
+const promptFour = `${lorem_twenty_words_alternative} 4 `;
 
+export class _MainComponent extends React.Component {
   constructor(props) {
     super(props);
     this.textEditorRef = React.createRef();
+
+    const textPrompts = [promptOne, promptTwo, promptThree, promptFour];
+
+    this.state = {
+      editorValue: initialValue,
+      currentDetailIndex: null,
+      numOfListItems: textPrompts.length,
+      textPrompts: textPrompts
+    };
   }
 
   onTextChange = ({ value }) => {
@@ -192,10 +204,10 @@ export class _MainComponent extends React.Component {
                         <b>Enter</b> to Select. <b>Double Clicking </b>
                         Works Too!
                       </Typography>
-
                       <PromptSelectComponent
                         selectedIndex={this.state.currentDetailIndex}
                         onTextClick={this.onTextClick}
+                        textPrompts={this.state.textPrompts}
                       />
                     </div>
                     {/*<LearnMoreButton classes={classes} />*/}
