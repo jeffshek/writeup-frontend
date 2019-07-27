@@ -17,10 +17,12 @@ test("serializes API response", () => {
   const result = serializeAPIMessageToPrompts({ message: testPrompt });
 
   expect(result.length).toEqual(4);
+
+  // added a space to make it print prettier
   expect(result).toEqual([
-    testPrompt.text_0,
-    testPrompt.text_1,
-    testPrompt.text_2,
-    testPrompt.text_3
+    testPrompt.text_0 + " ",
+    testPrompt.text_1 + " ",
+    testPrompt.text_2 + " ",
+    testPrompt.text_3 + " "
   ]);
 });

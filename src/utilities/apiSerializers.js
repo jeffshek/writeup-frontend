@@ -8,7 +8,10 @@ export const serializeAPIMessageToPrompts = ({ message }) => {
   const textPrompts = [];
   textPromptKeys.map(key => {
     const textPrompt = message[key];
-    textPrompts.push(textPrompt);
+
+    // it works better with a space
+    const textPromptWithSpace = textPrompt + " ";
+    textPrompts.push(textPromptWithSpace);
   });
 
   return textPrompts;

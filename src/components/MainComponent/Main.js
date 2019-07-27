@@ -57,6 +57,7 @@ export class _MainComponent extends React.Component {
 
     const message = { message: text };
     const messageSerialized = JSON.stringify(message);
+
     this.websocket.sendMessage(messageSerialized);
   };
 
@@ -113,7 +114,8 @@ export class _MainComponent extends React.Component {
   };
 
   onSpacebarPressed = () => {
-    console.log("Spacebar Pressed!");
+    // everytime a spacebar is hit, it's the end of a word
+    this.sendTextToWebSocket();
   };
 
   onKeyPressed = e => {
@@ -148,16 +150,28 @@ export class _MainComponent extends React.Component {
   };
 
   insertEditorText = ({ text }) => {
-    this.textEditorRef.current.insertText(text);
+    // This is an ugly hack to hide my JS incompetence
+    let self = this;
+    return new Promise(function(resolve, reject) {
+      self.textEditorRef.current.insertText(text);
+      resolve("Success!");
+    });
   };
 
   // used as helper utilities for list items to easily add text to editor
   onTextClick = prompt => props => {
-    this.insertEditorText({ text: prompt });
+    let waitForEditorTextInsert = this.insertEditorText({ text: prompt });
+
+    waitForEditorTextInsert.then(response => {
+      this.sendTextToWebSocket();
+    });
+
     this.focusTextInput();
 
     // after something has been selected, no items should be selected
     //this.clearSelectedPrompt()
+
+    // if something has just been selected, it's time to get new options
   };
 
   focusTextInput = () => {
