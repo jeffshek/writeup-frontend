@@ -17,6 +17,7 @@ import {
 import { PromptSelectComponent } from "components/MainComponent/PromptSelectComponent";
 import Divider from "@material-ui/core/Divider/Divider";
 import { ReactWebSocket } from "components/ReactWebSocket";
+import { serializeAPIMessageToPrompts } from "utilities/apiSerializers";
 
 const WebSocketURL =
   "wss://open.senrigan.io/ws/writeup/gpt2_medium/session/test/";
@@ -30,13 +31,22 @@ const initialValue = Value.fromJSON({
         nodes: [
           {
             object: "text",
-            text: lorem_one_paragraph
+            text: ""
           }
         ]
       }
     ]
   }
 });
+
+const HowToSelectPromptSection = (
+  <Typography variant="subtitle1" gutterBottom color={"textPrimary"}>
+    {/*Don't judge me for using bold. I got lazy.*/}
+    Select using <b>Up</b> & <b>Down</b> Keys. Hit <b>Enter</b> to Select.{" "}
+    <b>Double Clicking </b>
+    Works Too!
+  </Typography>
+);
 
 const WritingHeader = (
   <Typography color="secondary" gutterBottom variant={"h5"}>
@@ -81,12 +91,12 @@ export class _MainComponent extends React.Component {
     super(props);
     this.textEditorRef = React.createRef();
 
-    const textPrompts = [promptOne, promptTwo, promptThree, promptFour];
+    //const textPrompts = [promptOne, promptTwo, promptThree, promptFour];
+    const textPrompts = [];
 
     this.state = {
       editorValue: initialValue,
       currentDetailIndex: null,
-      numOfListItems: textPrompts.length,
       textPrompts: textPrompts
     };
   }
@@ -94,7 +104,12 @@ export class _MainComponent extends React.Component {
   handleWebSocketData = data => {
     const messageSerialized = JSON.parse(data);
     const message = messageSerialized["message"];
-    console.log(message);
+
+    const textPrompts = serializeAPIMessageToPrompts({ message });
+
+    this.setState({
+      textPrompts: textPrompts
+    });
   };
 
   componentDidMount() {
@@ -108,6 +123,10 @@ export class _MainComponent extends React.Component {
 
     // TODO - Need to only connect after websocket has been initialized
     sleep(5000).then(response => {
+      if (!this.websocket.initialized) {
+        return;
+      }
+
       console.log("Slept");
       const message = {
         message: "Today, I went on an adventure to a new country"
@@ -126,7 +145,7 @@ export class _MainComponent extends React.Component {
   };
 
   moveUp = () => {
-    const maxIndex = this.state.numOfListItems - 1;
+    const maxIndex = this.state.textPrompts.length - 1;
 
     // first move, nothing selected
     if (this.state.currentDetailIndex === null) {
@@ -139,7 +158,7 @@ export class _MainComponent extends React.Component {
   };
 
   moveDown = () => {
-    const maxIndex = this.state.numOfListItems - 1;
+    const maxIndex = this.state.textPrompts.length - 1;
 
     if (this.state.currentDetailIndex === null) {
       this.setState({ currentDetailIndex: maxIndex });
@@ -237,16 +256,8 @@ export class _MainComponent extends React.Component {
                         />
                         {DividerSection}
                       </Typography>
-                      <Typography
-                        variant="subtitle1"
-                        gutterBottom
-                        color={"textPrimary"}
-                      >
-                        {/*Don't judge me for using bold. I got lazy.*/}
-                        Select using <b>Up</b> & <b>Down</b> Keys. Hit{" "}
-                        <b>Enter</b> to Select. <b>Double Clicking </b>
-                        Works Too!
-                      </Typography>
+                      {this.state.textPrompts.length > 0 &&
+                        HowToSelectPromptSection}
                       <PromptSelectComponent
                         selectedIndex={this.state.currentDetailIndex}
                         onTextClick={this.onTextClick}
