@@ -5,86 +5,20 @@ import { withRouter } from "react-router-dom";
 import Paper from "@material-ui/core/Paper/Paper";
 import Grid from "@material-ui/core/Grid/Grid";
 import Typography from "@material-ui/core/Typography/Typography";
-import Button from "@material-ui/core/Button/Button";
 import { TopbarComponent } from "components/TopbarComponent/Topbar";
 import { Editor } from "slate-react";
-import { Value } from "slate";
-import {
-  lorem_one_paragraph,
-  lorem_twenty_words,
-  lorem_twenty_words_alternative
-} from "utilities/lorem";
 import { PromptSelectComponent } from "components/MainComponent/PromptSelectComponent";
-import Divider from "@material-ui/core/Divider/Divider";
 import { ReactWebSocket } from "components/ReactWebSocket";
 import { serializeAPIMessageToPrompts } from "utilities/apiSerializers";
+import {
+  DividerSection,
+  HowToSelectPromptSection,
+  initialValue,
+  WritingHeader
+} from "components/MainComponent/utilities";
 
 const WebSocketURL =
   "wss://open.senrigan.io/ws/writeup/gpt2_medium/session/test/";
-
-const initialValue = Value.fromJSON({
-  document: {
-    nodes: [
-      {
-        object: "block",
-        type: "paragraph",
-        nodes: [
-          {
-            object: "text",
-            text: "This is a story about fire and dragons."
-          }
-        ]
-      }
-    ]
-  }
-});
-
-const HowToSelectPromptSection = (
-  <Typography variant="subtitle1" gutterBottom color={"textPrimary"}>
-    {/*Don't judge me for using bold. I got lazy.*/}
-    Select using <b>Up</b> & <b>Down</b> Keys. Hit <b>Enter</b> to Insert.{" "}
-    <b>Clicking </b>
-    Works Too!
-  </Typography>
-);
-
-const WritingHeader = (
-  <Typography color="secondary" gutterBottom variant={"h5"}>
-    Write.
-  </Typography>
-);
-
-const DividerSection = (
-  <Fragment>
-    <br />
-    <Divider />
-    <br />
-  </Fragment>
-);
-
-const LearnMoreButton = ({ classes }) => {
-  return (
-    <div className={classes.alignRight}>
-      <Button
-        color="primary"
-        variant="contained"
-        className={classes.actionButton}
-      >
-        {/*TODO - Switch To MenuList Upon Click or Speed Dial*/}
-        Actions
-      </Button>
-    </div>
-  );
-};
-
-const promptOne = `${lorem_twenty_words} `;
-const promptTwo = `${lorem_twenty_words_alternative} `;
-const promptThree = `${lorem_twenty_words} 3 `;
-const promptFour = `${lorem_twenty_words_alternative} 4 `;
-
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
 
 export class _MainComponent extends React.Component {
   constructor(props) {
@@ -131,21 +65,19 @@ export class _MainComponent extends React.Component {
       url: WebSocketURL,
       debug: true,
       reconnect: true,
-      onMessage: this.handleWebSocketData
+      onMessage: this.handleWebSocketData,
+      onOpen: this.webSocketConnected
     });
 
     this.websocket.setupWebSocket();
 
-    // TODO - Need to only connect after websocket has been initialized
-    sleep(4000).then(response => {
-      if (!this.websocket.initialized) {
-        return;
-      }
-      console.log("Slept");
-
-      this.sendTextToWebSocket();
-    });
+    // puts cursor at end for easier resuming
+    this.textEditorRef.current.moveToEndOfDocument();
   }
+
+  webSocketConnected = () => {
+    this.sendTextToWebSocket();
+  };
 
   componentWillUnmount() {
     this.websocket.dissembleWebSocket();
@@ -224,7 +156,7 @@ export class _MainComponent extends React.Component {
     this.insertEditorText({ text: prompt });
     this.focusTextInput();
 
-    // after something has been selected, nothing should be selected
+    // after something has been selected, no items should be selected
     //this.clearSelectedPrompt()
   };
 
