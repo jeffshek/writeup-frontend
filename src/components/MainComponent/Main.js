@@ -92,9 +92,7 @@ export class _MainComponent extends React.Component {
   }
 
   handleWebSocketData = data => {
-    //console.log(data)
     const messageSerialized = JSON.parse(data);
-    //console.log(messageSerialized)
     const message = messageSerialized["message"];
     console.log(message);
   };
@@ -108,9 +106,12 @@ export class _MainComponent extends React.Component {
     });
     this.websocket.setupWebSocket();
 
+    // TODO - Need to only connect after websocket has been initialized
     sleep(5000).then(response => {
-      console.log("slept");
-      const message = { message: "Hi Jeff, does this work?" };
+      console.log("Slept");
+      const message = {
+        message: "Today, I went on an adventure to a new country"
+      };
       const messageSerialized = JSON.stringify(message);
       this.websocket.sendMessage(messageSerialized);
     });
@@ -149,13 +150,16 @@ export class _MainComponent extends React.Component {
     }
   };
 
+  onSpacebarPressed = () => {
+    console.log("Spacebar Pressed!");
+  };
+
   onKeyPressed = e => {
     const upKey = 38;
     const downKey = 40;
     const escapeKey = 27;
 
-    // TODO - space can sometimes get caught, when a listitem
-    // has been selected
+    // TODO - space can sometimes get caught, when a listitem has been selected
     const spaceKey = 32;
 
     if (e.keyCode === upKey) {
@@ -166,6 +170,8 @@ export class _MainComponent extends React.Component {
       e.preventDefault();
     } else if (e.keyCode === escapeKey) {
       this.focusTextInput();
+    } else if (e.keyCode === spaceKey) {
+      this.onSpacebarPressed();
     }
 
     // shift every key action back to the text box, this lets
@@ -179,13 +185,13 @@ export class _MainComponent extends React.Component {
     this.setState({ currentDetailIndex: null });
   };
 
-  insertText = ({ text }) => {
+  insertEditorText = ({ text }) => {
     this.textEditorRef.current.insertText(text);
   };
 
   // used as helper utilities for list items to easily add text to editor
   onTextClick = prompt => props => {
-    this.insertText({ text: prompt });
+    this.insertEditorText({ text: prompt });
     this.focusTextInput();
 
     // after something has been selected, nothing should be selected
@@ -218,10 +224,6 @@ export class _MainComponent extends React.Component {
                   <Paper className={classes.paper}>
                     <div className={classes.box}>
                       {WritingHeader}
-                      {/*<ReactWebSocket*/}
-                      {/*url={WebSocketURL}*/}
-                      {/*onMessage={this.handleWebSocketData}*/}
-                      {/*/>*/}
                       <Typography
                         variant="subtitle1"
                         gutterBottom

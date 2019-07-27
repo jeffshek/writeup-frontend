@@ -9,10 +9,10 @@ import PropTypes from "prop-types";
 export class ReactWebSocket extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      ws: new WebSocket(this.props.url),
-      attempts: 1
-    };
+
+    this.ws = new WebSocket(this.props.url);
+    this.attempts = 1;
+    this.initialized = false;
   }
 
   logMessage = logline => {
@@ -31,10 +31,12 @@ export class ReactWebSocket extends React.Component {
   }
 
   setupWebSocket = () => {
-    let connection = this.state.ws;
+    let connection = this.ws;
 
     connection.onopen = () => {
       this.logMessage("WebSocket Connected");
+      this.initialized = true;
+
       if (typeof this.props.onOpen === "function") this.props.onOpen();
     };
 
@@ -49,12 +51,11 @@ export class ReactWebSocket extends React.Component {
       if (typeof this.props.onClose === "function") this.props.onClose();
 
       if (this.shouldReconnect) {
-        let time = this.generateInterval(this.state.attempts);
+        let time = this.generateInterval(this.attempts);
         this.timeoutID = setTimeout(() => {
-          this.setState({ attempts: this.state.attempts + 1 });
-          this.setState({
-            ws: new WebSocket(this.props.url, this.props.protocol)
-          });
+          this.attempts += 1;
+          this.ws = new WebSocket(this.props.url);
+
           this.setupWebSocket();
         }, time);
       }
@@ -65,12 +66,12 @@ export class ReactWebSocket extends React.Component {
     this.shouldReconnect = false;
     clearTimeout(this.timeoutID);
 
-    let connection = this.state.ws;
+    let connection = this.ws;
     connection.close();
   }
 
   sendMessage = message => {
-    let connection = this.state.ws;
+    let connection = this.ws;
     connection.send(message);
   };
 }
