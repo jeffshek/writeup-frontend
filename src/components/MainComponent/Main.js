@@ -18,6 +18,7 @@ import {
 } from "components/MainComponent/utilities";
 
 import moment from "moment";
+import { LinearIndeterminate } from "components/Loading";
 
 const WebSocketURL =
   "wss://open.senrigan.io/ws/writeup/gpt2_medium/session/test/";
@@ -60,8 +61,8 @@ export class _MainComponent extends React.Component {
 
     // This will only show texts that were meant for the prompt ...
     // this happens if the user types very quickly and it fires off a lot
-    // of API requests, then we keep on receiving additional websockets that
-    // were for previous points of writing
+    // of API requests, then we keep on receiving additional messages
+    // from previous words
     if (message.prompt.trim() === text.trim()) {
       this.setState({
         textPrompts: textPrompts
@@ -76,7 +77,8 @@ export class _MainComponent extends React.Component {
 
     this.setState({
       unsent: false,
-      lastSent: moment()
+      lastSent: moment(),
+      textPrompts: []
     });
 
     // gets a concatenated list of all the text so far
@@ -157,7 +159,7 @@ export class _MainComponent extends React.Component {
     // set unsent here, but if the writer is typing really quickly
     // then ensure that they can only send one api call a second
     // otherwise, his/her own api calls will trip
-    this.setState({ unsent: true });
+    this.setState({ unsent: true, textPrompts: [] });
 
     const canSend = this.enoughTimeSinceLastSend();
 
@@ -183,6 +185,7 @@ export class _MainComponent extends React.Component {
     } else if (e.keyCode === escapeKey) {
       this.focusTextInput();
     } else if (e.keyCode === spaceKey) {
+      // TODO - consider maybe including periods other end of sentences?
       this.onSpacebarPressed();
     }
 
@@ -208,6 +211,7 @@ export class _MainComponent extends React.Component {
 
   // used as helper utilities for list items to easily add text to editor
   onTextClick = prompt => props => {
+    // when selecting a new text, empty out the previous prompts
     let waitForEditorTextInsert = this.insertEditorText({ text: prompt });
 
     waitForEditorTextInsert.then(response => {
@@ -261,11 +265,15 @@ export class _MainComponent extends React.Component {
                       </Typography>
                       {this.state.textPrompts.length > 0 &&
                         HowToSelectPromptSection}
-                      <PromptSelectComponent
-                        selectedIndex={this.state.currentDetailIndex}
-                        onTextClick={this.onTextClick}
-                        textPrompts={this.state.textPrompts}
-                      />
+                      {this.state.textPrompts.length > 0 ? (
+                        <PromptSelectComponent
+                          selectedIndex={this.state.currentDetailIndex}
+                          onTextClick={this.onTextClick}
+                          textPrompts={this.state.textPrompts}
+                        />
+                      ) : (
+                        <LinearIndeterminate />
+                      )}
                     </div>
                     {/*<LearnMoreButton classes={classes} />*/}
                   </Paper>

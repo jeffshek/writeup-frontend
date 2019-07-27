@@ -17,7 +17,7 @@ export const initialValue = Value.fromJSON({
         nodes: [
           {
             object: "text",
-            text: "This is a story about fire and dragons. "
+            text: "We are at a tipping point "
           }
         ]
       }
