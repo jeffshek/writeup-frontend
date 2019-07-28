@@ -66,3 +66,5 @@ export const promptFour = `${lorem_twenty_words_alternative} 4 `;
 export function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+export const SPECIAL_CHARACTERS = [",", "!", "."];

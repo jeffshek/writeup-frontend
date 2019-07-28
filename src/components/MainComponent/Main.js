@@ -14,14 +14,18 @@ import {
   DividerSection,
   HowToSelectPromptSection,
   initialValue,
+  SPECIAL_CHARACTERS,
   WritingHeader
 } from "components/MainComponent/utilities";
 
 import moment from "moment";
 import { LinearIndeterminate } from "components/Loading";
 
+// one is a dummy websocket
+//const WebSocketURL =
+//  "wss://open.senrigan.io/ws/writeup/gpt2_medium/session/writeup/";
 const WebSocketURL =
-  "wss://open.senrigan.io/ws/writeup/gpt2_medium/session/test/";
+  "wss://open.senrigan.io/ws/test/writeup/gpt2_medium/session/writeup/";
 
 const GridLayout = ({ classes, children }) => {
   // extracted because i really hate seeing the 20 layers of indent in renders
@@ -87,7 +91,9 @@ export class _MainComponent extends React.Component {
     this.websocket.dissembleWebSocket();
   }
 
+  ////////////////////
   // timing utilities
+  ////////////////////
   enoughTimeSinceLastSend = () => {
     //fast typists shouldn't send multiple API calls to the server,
     //especially if they know what they're about to write
@@ -107,7 +113,9 @@ export class _MainComponent extends React.Component {
     }
   };
 
+  ////////////////////
   // websocket handles
+  ////////////////////
   handleWebSocketData = data => {
     const messageSerialized = JSON.parse(data);
     const message = messageSerialized["message"];
@@ -151,7 +159,9 @@ export class _MainComponent extends React.Component {
     this.websocket.sendMessage(messageSerialized);
   };
 
+  ////////////////////
   // text editor utilities
+  ////////////////////
   onTextChange = ({ value }) => {
     this.setState({ editorValue: value });
   };
@@ -183,7 +193,7 @@ export class _MainComponent extends React.Component {
 
   onSpacebarPressed = () => {
     // everytime a spacebar is hit, it's the end of a word
-    // set unsent here, but if the writer is typing really quickly
+    // set unsent true, but if the writer is typing really quickly
     // then ensure that they can only send one api call a second
     // otherwise, his/her own api calls will trip
     this.setState({ unsent: true, textPrompts: [] });
@@ -231,7 +241,29 @@ export class _MainComponent extends React.Component {
     // This is an ugly hack to hide my JS incompetence
     let self = this;
     return new Promise(function(resolve, reject) {
-      self.textEditorRef.current.insertText(text);
+      // Do a bit of logic here to contain if text character ending
+      // has a space or doesn't ... and if the chosen text contains
+      // an end of text prompt
+      const editor = self.textEditorRef.current;
+
+      const typedText = self.state.editorValue.document.text;
+      const lastCharacterText = typedText.slice(-1);
+      const lastCharacterIsSpace = lastCharacterText === " ";
+
+      // if the text input starts with a . or something denoting
+      // an end of a phrase, remove a space to add the .
+      const firstCharacterOfText = text[0];
+      const firstCharacterOfTextIsSpecial = SPECIAL_CHARACTERS.includes(
+        firstCharacterOfText
+      );
+
+      if (lastCharacterIsSpace && firstCharacterOfTextIsSpecial) {
+        editor.moveAnchorBackward(1).insertText(text);
+      } else {
+        editor.insertText(text);
+      }
+
+      //self.textEditorRef.current.insertText(text);
       resolve("Success!");
     });
   };
