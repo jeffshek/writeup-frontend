@@ -67,4 +67,4 @@ export function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export const SPECIAL_CHARACTERS = [",", "!", "."];
+export const SPECIAL_CHARACTERS = [",", "!", ".", '"'];
