@@ -23,6 +23,26 @@ import { LinearIndeterminate } from "components/Loading";
 const WebSocketURL =
   "wss://open.senrigan.io/ws/writeup/gpt2_medium/session/test/";
 
+const GridLayout = ({ classes, children }) => {
+  return (
+    <Grid container justify="center">
+      <Grid
+        spacing={4}
+        alignItems="center"
+        justify="center"
+        container
+        className={classes.grid}
+      >
+        <Grid container item xs={12}>
+          <Grid item xs={12}>
+            {children}
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
+  );
+};
+
 export class _MainComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -237,50 +257,39 @@ export class _MainComponent extends React.Component {
       <Fragment>
         <TopbarComponent />
         <div className={classes.root} onKeyDown={this.onKeyPressed}>
-          <Grid container justify="center">
-            <Grid
-              spacing={4}
-              alignItems="center"
-              justify="center"
-              container
-              className={classes.grid}
-            >
-              <Grid container item xs={12}>
-                <Grid item xs={12}>
-                  <Paper className={classes.paper}>
-                    <div className={classes.box}>
-                      {WritingHeader}
-                      <Typography
-                        variant="subtitle1"
-                        gutterBottom
-                        color={"textPrimary"}
-                      >
-                        <Editor
-                          value={this.state.editorValue}
-                          onChange={this.onTextChange}
-                          autoFocus={true}
-                          ref={this.textEditorRef}
-                        />
-                        {DividerSection}
-                      </Typography>
-                      {this.state.textPrompts.length > 0 &&
-                        HowToSelectPromptSection}
-                      {this.state.textPrompts.length > 0 ? (
-                        <PromptSelectComponent
-                          selectedIndex={this.state.currentDetailIndex}
-                          onTextClick={this.onTextClick}
-                          textPrompts={this.state.textPrompts}
-                        />
-                      ) : (
-                        <LinearIndeterminate />
-                      )}
-                    </div>
-                    {/*<LearnMoreButton classes={classes} />*/}
-                  </Paper>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
+          <GridLayout classes={classes}>
+            <Paper className={classes.paper}>
+              <div className={classes.box}>
+                {WritingHeader}
+                <Typography
+                  variant="subtitle1"
+                  gutterBottom
+                  color={"textPrimary"}
+                >
+                  <Editor
+                    value={this.state.editorValue}
+                    onChange={this.onTextChange}
+                    autoFocus={true}
+                    ref={this.textEditorRef}
+                  />
+                  {DividerSection}
+                </Typography>
+                {this.state.textPrompts.length > 0 ? (
+                  <Fragment>
+                    {HowToSelectPromptSection}
+                    <PromptSelectComponent
+                      selectedIndex={this.state.currentDetailIndex}
+                      onTextClick={this.onTextClick}
+                      textPrompts={this.state.textPrompts}
+                    />
+                  </Fragment>
+                ) : (
+                  <LinearIndeterminate />
+                )}
+              </div>
+              {/*<LearnMoreButton classes={classes} />*/}
+            </Paper>
+          </GridLayout>
         </div>
       </Fragment>
     );
