@@ -24,6 +24,7 @@ const WebSocketURL =
   "wss://open.senrigan.io/ws/writeup/gpt2_medium/session/test/";
 
 const GridLayout = ({ classes, children }) => {
+  // extracted because i really hate seeing the 20 layers of indent in renders
   return (
     <Grid container justify="center">
       <Grid
@@ -46,7 +47,8 @@ const GridLayout = ({ classes, children }) => {
 export class _MainComponent extends React.Component {
   constructor(props) {
     super(props);
-    // need a editor reference since to inset text outside of the editor
+
+    // editor reference to insert text outside of the editor direct control
     this.textEditorRef = React.createRef();
 
     const textPrompts = [];
@@ -64,7 +66,31 @@ export class _MainComponent extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.websocket = new ReactWebSocket({
+      url: WebSocketURL,
+      debug: true,
+      reconnect: true,
+      onMessage: this.handleWebSocketData,
+      onOpen: this.webSocketConnected
+    });
+
+    this.websocket.setupWebSocket();
+
+    // puts cursor at end for easier resuming
+    this.textEditorRef.current.moveToEndOfDocument();
+
+    setInterval(this.checkToSend, 3000);
+  }
+
+  componentWillUnmount() {
+    this.websocket.dissembleWebSocket();
+  }
+
+  // timing utilities
   enoughTimeSinceLastSend = () => {
+    //fast typists shouldn't send multiple API calls to the server,
+    //especially if they know what they're about to write
     const delayLimit = moment().subtract(2, "seconds");
 
     // return true only if we've waited enough time to not hammer
@@ -72,6 +98,16 @@ export class _MainComponent extends React.Component {
     return this.state.lastSent < delayLimit;
   };
 
+  checkToSend = () => {
+    if (this.state.unsent) {
+      const canSend = this.enoughTimeSinceLastSend();
+      if (canSend) {
+        this.sendTextToWebSocket();
+      }
+    }
+  };
+
+  // websocket handles
   handleWebSocketData = data => {
     const messageSerialized = JSON.parse(data);
     const message = messageSerialized["message"];
@@ -88,6 +124,10 @@ export class _MainComponent extends React.Component {
         textPrompts: textPrompts
       });
     }
+  };
+
+  webSocketConnected = () => {
+    this.sendTextToWebSocket();
   };
 
   sendTextToWebSocket = () => {
@@ -111,40 +151,7 @@ export class _MainComponent extends React.Component {
     this.websocket.sendMessage(messageSerialized);
   };
 
-  checkToSend = () => {
-    if (this.state.unsent) {
-      const canSend = this.enoughTimeSinceLastSend();
-      if (canSend) {
-        this.sendTextToWebSocket();
-      }
-    }
-  };
-
-  componentDidMount() {
-    this.websocket = new ReactWebSocket({
-      url: WebSocketURL,
-      debug: true,
-      reconnect: true,
-      onMessage: this.handleWebSocketData,
-      onOpen: this.webSocketConnected
-    });
-
-    this.websocket.setupWebSocket();
-
-    // puts cursor at end for easier resuming
-    this.textEditorRef.current.moveToEndOfDocument();
-
-    setInterval(this.checkToSend, 3000);
-  }
-
-  webSocketConnected = () => {
-    this.sendTextToWebSocket();
-  };
-
-  componentWillUnmount() {
-    this.websocket.dissembleWebSocket();
-  }
-
+  // text editor utilities
   onTextChange = ({ value }) => {
     this.setState({ editorValue: value });
   };
