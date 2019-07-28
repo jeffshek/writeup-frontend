@@ -22,10 +22,10 @@ import moment from "moment";
 import { LinearIndeterminate } from "components/Loading";
 
 // one is a dummy websocket
-//const WebSocketURL =
-//  "wss://open.senrigan.io/ws/writeup/gpt2_medium/session/writeup/";
 const WebSocketURL =
-  "wss://open.senrigan.io/ws/test/writeup/gpt2_medium/session/writeup/";
+  "wss://open.senrigan.io/ws/writeup/gpt2_medium/session/writeup/";
+//const WebSocketURL =
+//  "wss://open.senrigan.io/ws/test/writeup/gpt2_medium/session/writeup/";
 
 const GridLayout = ({ classes, children }) => {
   // extracted because i really hate seeing the 20 layers of indent in renders

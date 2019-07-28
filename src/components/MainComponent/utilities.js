@@ -17,7 +17,7 @@ export const initialValue = Value.fromJSON({
         nodes: [
           {
             object: "text",
-            text: "We are at a tipping point "
+            text: "Climate change has "
           }
         ]
       }
