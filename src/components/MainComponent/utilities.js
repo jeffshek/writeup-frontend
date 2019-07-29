@@ -9,6 +9,10 @@ import Button from "@material-ui/core/Button/Button";
 import { Value } from "slate";
 import { getRandomItemFromArray } from "utilities/utilities";
 import Grid from "@material-ui/core/Grid/Grid";
+import InboxIcon from "@material-ui/icons/Inbox";
+import ArrowUpIcon from "@material-ui/icons/ArrowUpward";
+import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
+import MouseIcon from "@material-ui/icons/Mouse";
 
 // these are cached for a day to have a much faster loading time
 const PROMPTS_TO_USE = [
@@ -38,9 +42,17 @@ export const initialValue = Value.fromJSON({
 export const HowToSelectPromptSection = (
   <Typography variant="subtitle1" gutterBottom color={"textPrimary"}>
     {/*Don't judge me for using bold. I got lazy.*/}
-    <b>Click to Select. </b>
-    Or Use <b>Up</b> & <b>Down</b>. <b>Enter</b> to Insert.
-    <b> Spacebar</b> triggers suggestions.
+    <b>
+      Click <MouseIcon fontSize={"small"} />{" "}
+    </b>
+    to Select. Or Use{" "}
+    <b>
+      Up
+      <ArrowUpIcon fontSize={"small"} />
+    </b>
+    /<b>Down</b>
+    <ArrowDownwardIcon fontSize={"small"} /> keys. <b>Enter</b> to Insert.
+    <b> Spacebar</b> gets suggestions.
   </Typography>
 );
 export const WritingHeader = (
