@@ -7,6 +7,16 @@ import React, { Fragment } from "react";
 import Divider from "@material-ui/core/Divider/Divider";
 import Button from "@material-ui/core/Button/Button";
 import { Value } from "slate";
+import { getRandomItemFromArray } from "utilities/utilities";
+
+// these are cached for a day to have a much faster loading time
+const PROMPTS_TO_USE = [
+  "The software innovations in the 20th century ",
+  "Climate change has ",
+  "The breakthrough in ",
+  "Cancer research has revolutionized ",
+  "Recent developments in "
+];
 
 export const initialValue = Value.fromJSON({
   document: {
@@ -17,7 +27,7 @@ export const initialValue = Value.fromJSON({
         nodes: [
           {
             object: "text",
-            text: "Climate change has "
+            text: getRandomItemFromArray(PROMPTS_TO_USE)
           }
         ]
       }

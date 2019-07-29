@@ -2,6 +2,22 @@
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=jeffshek/writeup_frontend)](https://dependabot.com)
 ![Code style](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)
 
+### Tech Stack
+
+- Mostly powered by Netlify, Material UI and React.
+- [Netlify](www.netlify.com) hosts writeup's static assets. Because it's amazing.
+- [MaterialUI](http://material-ui.com/) - Thank you for making it easy to build presentable pages.
+- [React](https://reactjs.org/) - Thank you for building an awesome library to construct a web app with.
+- Create React App was used to build this.
+
 ### Design
 
-Design inspirations and code taken from https://alexanmtz.github.io/material-sense/
+- Design inspirations and code taken from [Material-Sense](https://alexanmtz.github.io/material-sense/)
+
+### Backend
+
+- [Python/Django Backend](https://github.com/jeffshek/open) - Open Sourced (mostly).
+
+### File Structure
+
+- I REALLY don't recommend any file layout / naming conventions from this frontend repo. It's still evolving and changing as I think through patterns. There are some parts I'm super embarrassed by.

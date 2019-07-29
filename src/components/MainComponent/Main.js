@@ -105,6 +105,9 @@ export class _MainComponent extends React.Component {
   };
 
   checkToSend = () => {
+    const editorAtEndOfText = this.checkEditorPositionAtEnd();
+    console.log(editorAtEndOfText);
+
     if (this.state.unsent) {
       const canSend = this.enoughTimeSinceLastSend();
       if (canSend) {
@@ -166,6 +169,30 @@ export class _MainComponent extends React.Component {
     this.setState({ editorValue: value });
   };
 
+  checkEditorPositionAtEnd = () => {
+    // pretty sure it shouldn't this hard to check positions, but i haven't
+    // groked all of slatejs documentation because i'm focusing on optimizing
+    // on the backend
+    const currentOffset = this.textEditorRef.current.value.selection.focus
+      .offset;
+    const endTextLength = this.textEditorRef.current.value.endText.text.length;
+
+    /*
+    justification of this function ...
+
+    if slatejs's offset is at the same position as the ending text length
+    means the user typed a word and forgot spacebar. since using spacebar
+    is an odd way to "fire" an api, sometimes users (aka myself) forget to hit
+    spacebar. it's a crappy UX feeling when you forget to hit spacebar, so throw
+    a hack to check if the user (yourself) made this error
+
+    i didn't just fire the API regardless at any cursor position, because
+    there's one killer feature that i wanted to add (ssssh. it's a secret for
+    now). thanks for reading this far tho!
+    */
+    return currentOffset === endTextLength;
+  };
+
   moveUp = () => {
     const maxIndex = this.state.textPrompts.length - 1;
 
@@ -209,8 +236,6 @@ export class _MainComponent extends React.Component {
     const upKey = 38;
     const downKey = 40;
     const escapeKey = 27;
-
-    // TODO - space can sometimes get caught, when a listitem has been selected
     const spaceKey = 32;
 
     if (e.keyCode === upKey) {

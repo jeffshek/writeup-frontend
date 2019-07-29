@@ -13,6 +13,9 @@ export function LinearIndeterminate() {
 
   return (
     <div className={classes.root}>
+      Stuck? Don't forget to hit <b>Spacebar!</b>
+      <br />
+      <br />
       <LinearProgress />
       <br />
       <LinearProgress color="secondary" />
