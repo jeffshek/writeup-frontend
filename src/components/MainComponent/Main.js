@@ -14,6 +14,7 @@ import {
   GridLayout,
   HowToSelectPromptSection,
   initialValue,
+  NetlifyLogo,
   SPECIAL_CHARACTERS,
   WritingHeader
 } from "components/MainComponent/utilities";
@@ -336,6 +337,8 @@ export class _MainComponent extends React.Component {
               </div>
               {/*<LearnMoreButton classes={classes} />*/}
             </Paper>
+            <br />
+            {NetlifyLogo}
           </GridLayout>
         </div>
       </Fragment>

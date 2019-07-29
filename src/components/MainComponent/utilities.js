@@ -67,6 +67,12 @@ export const DividerSection = (
     <br />
   </Fragment>
 );
+
+export const NetlifyLogo = (
+  <a href="https://www.netlify.com">
+    <img src="https://www.netlify.com/img/global/badges/netlify-light.svg" />
+  </a>
+);
 export const LearnMoreButton = ({ classes }) => {
   return (
     <div className={classes.alignRight}>
