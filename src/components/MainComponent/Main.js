@@ -3,7 +3,6 @@ import { MainStyles } from "components/MainComponent/Main.styles";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { withRouter } from "react-router-dom";
 import Paper from "@material-ui/core/Paper/Paper";
-import Grid from "@material-ui/core/Grid/Grid";
 import Typography from "@material-ui/core/Typography/Typography";
 import { TopbarComponent } from "components/TopbarComponent/Topbar";
 import { Editor } from "slate-react";
@@ -12,6 +11,7 @@ import { ReactWebSocket } from "components/ReactWebSocket";
 import { serializeAPIMessageToPrompts } from "utilities/apiSerializers";
 import {
   DividerSection,
+  GridLayout,
   HowToSelectPromptSection,
   initialValue,
   SPECIAL_CHARACTERS,
@@ -26,27 +26,6 @@ const WebSocketURL =
   "wss://open.senrigan.io/ws/writeup/gpt2_medium/session/writeup/";
 //const WebSocketURL =
 //  "wss://open.senrigan.io/ws/test/writeup/gpt2_medium/session/writeup/";
-
-const GridLayout = ({ classes, children }) => {
-  // extracted because i really hate seeing the 20 layers of indent in renders
-  return (
-    <Grid container justify="center">
-      <Grid
-        spacing={4}
-        alignItems="center"
-        justify="center"
-        container
-        className={classes.grid}
-      >
-        <Grid container item xs={12}>
-          <Grid item xs={12}>
-            {children}
-          </Grid>
-        </Grid>
-      </Grid>
-    </Grid>
-  );
-};
 
 export class _MainComponent extends React.Component {
   constructor(props) {
@@ -105,10 +84,14 @@ export class _MainComponent extends React.Component {
   };
 
   checkToSend = () => {
-    const editorAtEndOfText = this.checkEditorPositionAtEnd();
-    console.log(editorAtEndOfText);
+    // i sort of worry I'm writing a huge ddos attack on myself to
+    // slightly improve UX slightly ...
 
-    if (this.state.unsent) {
+    const editorAtEndOfText = this.checkEditorPositionAtEnd();
+    const userForgotToHitSpace =
+      editorAtEndOfText && this.state.textPrompts.length === 0;
+
+    if (this.state.unsent || userForgotToHitSpace) {
       const canSend = this.enoughTimeSinceLastSend();
       if (canSend) {
         this.sendTextToWebSocket();

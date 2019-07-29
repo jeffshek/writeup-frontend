@@ -8,6 +8,7 @@ import Divider from "@material-ui/core/Divider/Divider";
 import Button from "@material-ui/core/Button/Button";
 import { Value } from "slate";
 import { getRandomItemFromArray } from "utilities/utilities";
+import Grid from "@material-ui/core/Grid/Grid";
 
 // these are cached for a day to have a much faster loading time
 const PROMPTS_TO_USE = [
@@ -73,8 +74,24 @@ export const promptTwo = `${lorem_twenty_words_alternative} `;
 export const promptThree = `${lorem_twenty_words} 3 `;
 export const promptFour = `${lorem_twenty_words_alternative} 4 `;
 
-export function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 export const SPECIAL_CHARACTERS = [",", "!", ".", '"'];
+export const GridLayout = ({ classes, children }) => {
+  // extracted because i really hate seeing the 20 layers of indent in renders
+  return (
+    <Grid container justify="center">
+      <Grid
+        spacing={4}
+        alignItems="center"
+        justify="center"
+        container
+        className={classes.grid}
+      >
+        <Grid container item xs={12}>
+          <Grid item xs={12}>
+            {children}
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
+  );
+};
