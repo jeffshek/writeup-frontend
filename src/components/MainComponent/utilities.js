@@ -27,9 +27,9 @@ export const initialValue = Value.fromJSON({
 export const HowToSelectPromptSection = (
   <Typography variant="subtitle1" gutterBottom color={"textPrimary"}>
     {/*Don't judge me for using bold. I got lazy.*/}
-    Select using <b>Up</b> & <b>Down</b>. <b>Enter</b> to Insert. Or{" "}
-    <b>Click. </b>
-    <b>Spacebar</b> triggers suggestions.
+    <b>Click to Select. </b>
+    Or Use <b>Up</b> & <b>Down</b>. <b>Enter</b> to Insert.
+    <b> Spacebar</b> triggers suggestions.
   </Typography>
 );
 export const WritingHeader = (
