@@ -73,5 +73,8 @@ export const MainStyles = theme => ({
   },
   sentenceSelectionBlock: {
     marginTop: "0rem"
+  },
+  footer: {
+    textAlign: "center"
   }
 });

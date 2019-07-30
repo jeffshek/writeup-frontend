@@ -339,6 +339,50 @@ export class _MainComponent extends React.Component {
             </Paper>
             <br />
             {/*{NetlifyLogo}*/}
+            <Paper className={classes.paper}>
+              <div className={classes.footer}>
+                <Typography
+                  variant="subtitle1"
+                  gutterBottom
+                  color={"textPrimary"}
+                >
+                  <b>HUGE </b>thanks to{" "}
+                  <a
+                    href="https://openai.com/blog/better-language-models/"
+                    target={"_blank"}
+                  >
+                    OpenAI
+                  </a>{" "}
+                  for releasing GPT-2 Medium;{" "}
+                  <a
+                    href="https://github.com/huggingface/pytorch-transformers"
+                    target={"_blank"}
+                  >
+                    HuggingFace
+                  </a>{" "}
+                  for their PyTorch implementation.
+                </Typography>
+                <Typography
+                  variant="subtitle1"
+                  gutterBottom
+                  color={"textPrimary"}
+                >
+                  This is{" "}
+                  <a
+                    href="https://github.com/jeffshek/writeup-frontend"
+                    target={"_blank"}
+                  >
+                    open sourced
+                  </a>
+                  . I'll be writing how I built this and the technical
+                  challenges and tradeoffs at my{" "}
+                  <a href="https://senrigan.io/blog/" target={"_blank"}>
+                    blog
+                  </a>
+                  .
+                </Typography>
+              </div>
+            </Paper>
           </GridLayout>
         </div>
       </Fragment>
