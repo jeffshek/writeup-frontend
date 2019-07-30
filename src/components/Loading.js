@@ -13,8 +13,7 @@ export function LinearIndeterminate() {
 
   return (
     <div className={classes.root}>
-      Stuck? Don't forget to hit <b>Spacebar!</b> Or our servers are overloaded
-      ...
+      Stuck? Our servers might be overloaded ... ...
       <br />
       <br />
       <LinearProgress />

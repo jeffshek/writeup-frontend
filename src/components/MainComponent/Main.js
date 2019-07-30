@@ -338,7 +338,6 @@ export class _MainComponent extends React.Component {
               {/*<LearnMoreButton classes={classes} />*/}
             </Paper>
             <br />
-            {/*{NetlifyLogo}*/}
             <Paper className={classes.paper}>
               <div className={classes.footer}>
                 <Typography
@@ -360,7 +359,11 @@ export class _MainComponent extends React.Component {
                   >
                     HuggingFace
                   </a>{" "}
-                  for their PyTorch implementation.
+                  for their PyTorch implementation. Proudly hosted by{" "}
+                  <a href="http://netlify.com" target={"_blank"}>
+                    Netlify
+                  </a>{" "}
+                  (it's amazing).
                 </Typography>
                 <Typography
                   variant="subtitle1"
@@ -374,12 +377,12 @@ export class _MainComponent extends React.Component {
                   >
                     open sourced
                   </a>
-                  . I'll be writing how I built this and the technical
-                  challenges and tradeoffs at my{" "}
+                  . The{" "}
                   <a href="https://senrigan.io/blog/" target={"_blank"}>
                     blog
-                  </a>
-                  .
+                  </a>{" "}
+                  will have a follow up article about the technical challenges
+                  and solutions when building this.
                 </Typography>
               </div>
             </Paper>
