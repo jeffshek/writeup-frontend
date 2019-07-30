@@ -338,7 +338,7 @@ export class _MainComponent extends React.Component {
               {/*<LearnMoreButton classes={classes} />*/}
             </Paper>
             <br />
-            {NetlifyLogo}
+            {/*{NetlifyLogo}*/}
           </GridLayout>
         </div>
       </Fragment>
