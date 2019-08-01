@@ -154,7 +154,11 @@ export const MainFooter = ({ classes }) => {
           and tradeoffs.
         </Typography>
         <Typography variant="body1" gutterBottom color={"textPrimary"}>
-          Powered by Google Cloud Platform and{" "}
+          Powered by{" "}
+          <a href="https://cloud.google.com/" target="_blank">
+            Google Cloud Platform
+          </a>{" "}
+          and{" "}
           <a href="http://netlify.com" target={"_blank"}>
             Netlify
           </a>
