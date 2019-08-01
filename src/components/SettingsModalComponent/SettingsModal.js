@@ -37,43 +37,36 @@ const DividerSection = (
   </Fragment>
 );
 
-export const SettingsModal = () => {
-  // A bastardization of the elegant version from
-  // https://material-ui.com/components/modal/
+export const SettingsModal = ({ modalOpen, setModal }) => {
   const classes = useStyles();
 
   const [modalStyle] = React.useState(getModalStyle);
-  const [open, setOpen] = React.useState(true);
+  const appContext = React.useContext(AppContext);
 
-  const value = React.useContext(AppContext);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
+  const handleSettingsChange = setting => (event, value) => {
+    appContext.handleContextChange(setting)(value);
   };
 
   return (
     <Modal
       aria-labelledby="simple-modal-title"
       aria-describedby="simple-modal-description"
-      open={open}
-      onClose={handleClose}
+      open={modalOpen}
+      onClose={setModal}
     >
       <div style={modalStyle} className={classes.paper}>
         <Typography id="discrete-slider" variant={"h6"}>
-          Temperature | {value.temperature}
+          Temperature | {appContext.temperature}
         </Typography>
 
         <Slider
-          defaultValue={0.5}
+          defaultValue={appContext.temperature}
           aria-labelledby="discrete-slider"
           step={0.1}
           marks
           min={0.1}
           max={1}
+          onChange={handleSettingsChange("temperature")}
           valueLabelDisplay="auto"
         />
         <Typography variant={"body2"}>
@@ -82,36 +75,39 @@ export const SettingsModal = () => {
         {DividerSection}
 
         <Typography id="discrete-slider" variant={"h6"}>
-          Generated Word Length | {value.length}
+          Generated Word Length | {appContext.length}
         </Typography>
         <Slider
-          defaultValue={20}
+          defaultValue={appContext.length}
           aria-labelledby="discrete-slider"
           step={1}
           marks
           min={1}
-          max={40}
+          max={50}
           valueLabelDisplay="auto"
+          onChange={handleSettingsChange("length")}
         />
 
         <Typography variant={"body2"}>
           Amount of words per each suggestion. More words generate slower. Max
-          40.
+          50. Temporarily limited during Product Launch. Can generate up to 1024
+          words.
         </Typography>
 
         {DividerSection}
         <Typography id="discrete-slider" variant={"h6"} gutterBottom>
-          Suggestion Quantity | {value.batch_size}
+          Suggestion Quantity | {appContext.batch_size}
         </Typography>
 
         <Slider
-          defaultValue={5}
+          defaultValue={appContext.batch_size}
           aria-labelledby="discrete-slider"
           step={1}
           marks
           min={1}
           max={10}
           valueLabelDisplay="auto"
+          onChange={handleSettingsChange("batch_size")}
         />
         <Typography variant={"body2"}>
           # of Simultaneously Different Suggestions. More suggestions generate
@@ -121,17 +117,18 @@ export const SettingsModal = () => {
         {DividerSection}
 
         <Typography id="discrete-slider" variant={"h6"}>
-          Frequency | {value.top_k}
+          Frequency | {appContext.top_k}
         </Typography>
 
         <Slider
-          defaultValue={10}
+          defaultValue={appContext.top_k}
           aria-labelledby="discrete-slider"
           step={1}
           marks
           min={1}
           max={40}
           valueLabelDisplay="auto"
+          onChange={handleSettingsChange("top_k")}
         />
         <Typography variant={"body2"}>
           Also known as Top K, a higher value results in more similar

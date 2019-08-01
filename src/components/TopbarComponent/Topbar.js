@@ -52,7 +52,7 @@ class _TopbarComponent extends Component {
   state = {
     value: 0,
     menuDrawer: false,
-    enableModal: true
+    modalOpen: true
   };
 
   handleChange = (event, value) => {
@@ -169,7 +169,7 @@ class _TopbarComponent extends Component {
   };
 
   setModal = () => {
-    this.setState({ enableModal: !this.state.enableModal });
+    this.setState({ modalOpen: !this.state.modalOpen });
   };
 
   renderRightContainer = () => {
@@ -196,11 +196,16 @@ class _TopbarComponent extends Component {
   };
 
   renderModal = () => {
-    if (!this.state.enableModal) {
+    if (!this.state.modalOpen) {
       return null;
     }
 
-    return <SettingsModal />;
+    return (
+      <SettingsModal
+        modalOpen={this.state.modalOpen}
+        setModal={this.setModal}
+      />
+    );
   };
 
   render() {
