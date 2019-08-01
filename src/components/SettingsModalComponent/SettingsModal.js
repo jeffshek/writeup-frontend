@@ -1,7 +1,10 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import { AppContext } from "components/context";
+import Typography from "@material-ui/core/Typography";
+import Slider from "@material-ui/core/Slider";
+import Divider from "@material-ui/core/Divider/Divider";
 
 function getModalStyle() {
   const top = 50;
@@ -25,6 +28,14 @@ const useStyles = makeStyles(theme => ({
     outline: "none"
   }
 }));
+
+const DividerSection = (
+  <Fragment>
+    <br />
+    <Divider />
+    <br />
+  </Fragment>
+);
 
 export const SettingsModal = () => {
   // A bastardization of the elegant version from
@@ -52,8 +63,80 @@ export const SettingsModal = () => {
       onClose={handleClose}
     >
       <div style={modalStyle} className={classes.paper}>
-        <h2 id="modal-title">Configuration Settings</h2>
-        <p id="simple-modal-description">Temperature</p>
+        <Typography id="discrete-slider" variant={"h6"}>
+          Temperature | {value.temperature}
+        </Typography>
+
+        <Slider
+          defaultValue={0.5}
+          aria-labelledby="discrete-slider"
+          step={0.1}
+          marks
+          min={0.1}
+          max={1}
+          valueLabelDisplay="auto"
+        />
+        <Typography variant={"body2"}>
+          Higher temperatures result in more creative suggestions. Max 1.0
+        </Typography>
+        {DividerSection}
+
+        <Typography id="discrete-slider" variant={"h6"}>
+          Generated Word Length | {value.temperature}
+        </Typography>
+        <Slider
+          defaultValue={0.5}
+          aria-labelledby="discrete-slider"
+          step={0.1}
+          marks
+          min={0.1}
+          max={1}
+          valueLabelDisplay="auto"
+        />
+
+        <Typography variant={"body2"}>
+          Amount of words per each suggestion. More words generate slower. Max
+          40.
+        </Typography>
+
+        {DividerSection}
+        <Typography id="discrete-slider" variant={"h6"} gutterBottom>
+          Suggestion Quantity | {value.temperature}
+        </Typography>
+
+        <Slider
+          defaultValue={0.5}
+          aria-labelledby="discrete-slider"
+          step={0.1}
+          marks
+          min={0.1}
+          max={1}
+          valueLabelDisplay="auto"
+        />
+        <Typography variant={"body2"}>
+          # of Simultaneously Different Suggestions. More suggestions generate
+          slower. Max 10.
+        </Typography>
+
+        {DividerSection}
+
+        <Typography id="discrete-slider" variant={"h6"}>
+          Frequency
+        </Typography>
+
+        <Slider
+          defaultValue={0.5}
+          aria-labelledby="discrete-slider"
+          step={0.1}
+          marks
+          min={0.1}
+          max={1}
+          valueLabelDisplay="auto"
+        />
+        <Typography variant={"body2"}>
+          Also known as Top K, a higher value results in more similar
+          suggestions. Max 40.
+        </Typography>
       </div>
     </Modal>
   );

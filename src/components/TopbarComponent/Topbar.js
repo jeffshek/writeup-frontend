@@ -19,6 +19,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import logo from "images/logo.svg";
 import { Menu } from "components/Menu";
 import { SettingsModal } from "components/SettingsModalComponent/SettingsModal";
+import { AppProvider } from "components/context";
 
 const InlineTagline = ({ classes }) => {
   return (
@@ -51,7 +52,7 @@ class _TopbarComponent extends Component {
   state = {
     value: 0,
     menuDrawer: false,
-    enableModal: false
+    enableModal: true
   };
 
   handleChange = (event, value) => {
@@ -206,26 +207,28 @@ class _TopbarComponent extends Component {
     const { classes } = this.props;
 
     return (
-      <AppBar position="absolute" color="default" className={classes.appBar}>
-        <Toolbar>
-          <Grid container spacing={2} alignItems="baseline">
-            <Grid item xs={10} className={classes.flex}>
-              <InlineTagline classes={classes} />
-              {!this.props.noTabs && (
-                <React.Fragment>
-                  <TextTagline classes={classes} />
-                  {/*{this.renderMobileIconContainer()}*/}
-                  {this.renderLeftTabContainer()}
-                </React.Fragment>
-              )}
+      <AppProvider>
+        <AppBar position="absolute" color="default" className={classes.appBar}>
+          <Toolbar>
+            <Grid container spacing={2} alignItems="baseline">
+              <Grid item xs={10} className={classes.flex}>
+                <InlineTagline classes={classes} />
+                {!this.props.noTabs && (
+                  <React.Fragment>
+                    <TextTagline classes={classes} />
+                    {/*{this.renderMobileIconContainer()}*/}
+                    {this.renderLeftTabContainer()}
+                  </React.Fragment>
+                )}
+              </Grid>
+              <Grid item xs={2} className={classes.flex}>
+                {this.renderRightContainer()}
+              </Grid>
+              {this.renderModal()}
             </Grid>
-            <Grid item xs={2} className={classes.flex}>
-              {this.renderRightContainer()}
-            </Grid>
-            {this.renderModal()}
-          </Grid>
-        </Toolbar>
-      </AppBar>
+          </Toolbar>
+        </AppBar>
+      </AppProvider>
     );
   }
 }
