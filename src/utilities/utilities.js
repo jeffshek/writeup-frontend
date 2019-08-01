@@ -6,3 +6,7 @@ export const getRandomItemFromArray = array => {
 export function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+export function getRndInteger(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}

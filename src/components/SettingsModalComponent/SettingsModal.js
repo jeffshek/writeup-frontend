@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
+import { AppContext } from "components/context";
 
 function getModalStyle() {
   const top = 50;
@@ -25,12 +26,15 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SettingsModal() {
+export const SettingsModal = () => {
+  // A bastardization of the elegant version from
+  // https://material-ui.com/components/modal/
   const classes = useStyles();
 
-  // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
+
+  const value = React.useContext(AppContext);
 
   const handleOpen = () => {
     setOpen(true);
@@ -41,25 +45,16 @@ export default function SettingsModal() {
   };
 
   return (
-    <div>
-      <button type="button" onClick={handleOpen}>
-        Open Modal
-      </button>
-      <Modal
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-        open={open}
-        onClose={handleClose}
-      >
-        <div style={modalStyle} className={classes.paper}>
-          <h2 id="modal-title">Text in a modal</h2>
-          <p id="simple-modal-description">
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </p>
-          {/*this pattern kind of blows my mind*/}
-          <SettingsModal />
-        </div>
-      </Modal>
-    </div>
+    <Modal
+      aria-labelledby="simple-modal-title"
+      aria-describedby="simple-modal-description"
+      open={open}
+      onClose={handleClose}
+    >
+      <div style={modalStyle} className={classes.paper}>
+        <h2 id="modal-title">Configuration Settings</h2>
+        <p id="simple-modal-description">Temperature</p>
+      </div>
+    </Modal>
   );
-}
+};

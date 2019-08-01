@@ -9,10 +9,10 @@ import Button from "@material-ui/core/Button/Button";
 import { Value } from "slate";
 import { getRandomItemFromArray } from "utilities/utilities";
 import Grid from "@material-ui/core/Grid/Grid";
-import InboxIcon from "@material-ui/icons/Inbox";
 import ArrowUpIcon from "@material-ui/icons/ArrowUpward";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import MouseIcon from "@material-ui/icons/Mouse";
+import Paper from "@material-ui/core/Paper/Paper";
 
 // these are cached for a day to have a much faster loading time
 const PROMPTS_TO_USE = [
@@ -111,5 +111,52 @@ export const GridLayout = ({ classes, children }) => {
         </Grid>
       </Grid>
     </Grid>
+  );
+};
+export const MainFooter = ({ classes }) => {
+  return (
+    <Paper className={classes.paper}>
+      <div className={classes.footer}>
+        <Typography variant="subtitle1" gutterBottom color={"textPrimary"}>
+          <b>HUGE </b>thanks to{" "}
+          <a
+            href="https://openai.com/blog/better-language-models/"
+            target={"_blank"}
+          >
+            OpenAI
+          </a>{" "}
+          for releasing GPT-2 Medium;{" "}
+          <a
+            href="https://github.com/huggingface/pytorch-transformers"
+            target={"_blank"}
+          >
+            HuggingFace
+          </a>{" "}
+          for their PyTorch implementation.
+        </Typography>
+        <Typography variant="body1" gutterBottom color={"textPrimary"}>
+          Powered by Google Cloud Platform. Frontend hosted by{" "}
+          <a href="http://netlify.com" target={"_blank"}>
+            Netlify
+          </a>{" "}
+          (it's amazing).
+        </Typography>
+        <Typography variant="subtitle1" gutterBottom color={"textPrimary"}>
+          This is{" "}
+          <a
+            href="https://github.com/jeffshek/writeup-frontend"
+            target={"_blank"}
+          >
+            open sourced
+          </a>
+          . The{" "}
+          <a href="https://senrigan.io/blog/" target={"_blank"}>
+            blog
+          </a>{" "}
+          will have a featured article detailing technical challenges, solutions
+          and tradeoffs.
+        </Typography>
+      </div>
+    </Paper>
   );
 };

@@ -76,5 +76,31 @@ export const TopbarStyles = theme => ({
   },
   inlineBlockTagLine: {
     display: "inline-block"
+  },
+  modalStyle: {
+    top: `50%`,
+    left: `50}%`,
+    transform: `translate(-50%, -50%)`
+  },
+  modalPaper: {
+    position: "absolute",
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: "2px solid #000",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 4),
+    outline: "none"
+  },
+  modalContainer: {
+    position: "absolute",
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: "2px solid #000",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 4),
+    outline: "none",
+    top: `50%`,
+    left: `50}%`,
+    transform: `translate(-50%, -50%)`
   }
 });

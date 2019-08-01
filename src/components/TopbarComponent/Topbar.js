@@ -18,7 +18,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import logo from "images/logo.svg";
 import { Menu } from "components/Menu";
-import { TopbarMenu } from "components/TopbarMenu";
+import { SettingsModal } from "components/SettingsModalComponent/SettingsModal";
 
 const InlineTagline = ({ classes }) => {
   return (
@@ -50,7 +50,8 @@ const TextTagline = ({ classes }) => {
 class _TopbarComponent extends Component {
   state = {
     value: 0,
-    menuDrawer: false
+    menuDrawer: false,
+    enableModal: false
   };
 
   handleChange = (event, value) => {
@@ -166,6 +167,10 @@ class _TopbarComponent extends Component {
     );
   };
 
+  setModal = () => {
+    this.setState({ enableModal: !this.state.enableModal });
+  };
+
   renderRightContainer = () => {
     const { classes } = this.props;
 
@@ -177,26 +182,24 @@ class _TopbarComponent extends Component {
           textColor="primary"
           onChange={this.handleChange}
         >
-          {TopbarMenu.map((item, index) => (
-            <Tab
-              key={index}
-              component={item.external ? MaterialLink : Link}
-              href={item.external ? item.pathname : null}
-              to={
-                item.external
-                  ? null
-                  : {
-                      pathname: item.pathname,
-                      search: this.props.location.search
-                    }
-              }
-              classes={{ root: classes.tabItem }}
-              label={item.label}
-            />
-          ))}
+          <Tab
+            key={0}
+            component={MaterialLink}
+            onClick={this.setModal}
+            classes={{ root: classes.tabItem }}
+            label={"Settings"}
+          />
         </Tabs>
       </div>
     );
+  };
+
+  renderModal = () => {
+    if (!this.state.enableModal) {
+      return null;
+    }
+
+    return <SettingsModal />;
   };
 
   render() {
@@ -219,6 +222,7 @@ class _TopbarComponent extends Component {
             <Grid item xs={2} className={classes.flex}>
               {this.renderRightContainer()}
             </Grid>
+            {this.renderModal()}
           </Grid>
         </Toolbar>
       </AppBar>
