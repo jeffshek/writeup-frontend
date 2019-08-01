@@ -137,13 +137,7 @@ export const MainFooter = ({ classes }) => {
           </a>{" "}
           for their PyTorch implementation.
         </Typography>
-        <Typography variant="body1" gutterBottom color={"textPrimary"}>
-          Powered by Google Cloud Platform. Frontend hosted by{" "}
-          <a href="http://netlify.com" target={"_blank"}>
-            Netlify
-          </a>{" "}
-          (it's amazing).
-        </Typography>
+
         <Typography variant="subtitle1" gutterBottom color={"textPrimary"}>
           This is{" "}
           <a
@@ -158,6 +152,13 @@ export const MainFooter = ({ classes }) => {
           </a>{" "}
           will have a featured article detailing technical challenges, solutions
           and tradeoffs.
+        </Typography>
+        <Typography variant="body1" gutterBottom color={"textPrimary"}>
+          Powered by Google Cloud Platform and{" "}
+          <a href="http://netlify.com" target={"_blank"}>
+            Netlify
+          </a>
+          {". "}
         </Typography>
       </div>
     </Paper>
