@@ -147,7 +147,11 @@ export const MainFooter = ({ classes }) => {
             open sourced
           </a>
           . The{" "}
-          <a href="https://senrigan.io/blog/" target={"_blank"}>
+          <a
+            href="https://senrigan.io/blog/"
+            target={"_blank"}
+            rel="noopener noreferrer"
+          >
             blog
           </a>{" "}
           will have a featured article detailing technical challenges, solutions
@@ -155,11 +159,19 @@ export const MainFooter = ({ classes }) => {
         </Typography>
         <Typography variant="body1" gutterBottom color={"textPrimary"}>
           Powered by{" "}
-          <a href="https://cloud.google.com/" target="_blank">
+          <a
+            href="https://cloud.google.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Google Cloud Platform
           </a>{" "}
           and{" "}
-          <a href="http://netlify.com" target={"_blank"}>
+          <a
+            href="http://netlify.com"
+            target={"_blank"}
+            rel="noopener noreferrer"
+          >
             Netlify
           </a>
           {". "}

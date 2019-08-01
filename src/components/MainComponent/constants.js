@@ -2,8 +2,12 @@
 import uuid from "uuid/v4";
 
 // PRODUCTION
+//export const WebSocketURL =
+//  "wss://open.senrigan.io/ws/writeup/gpt2_medium/session/" + uuid() + "/";
+
+// PRODUCTION ASYNC
 export const WebSocketURL =
-  "wss://open.senrigan.io/ws/writeup/gpt2_medium/session/" + uuid() + "/";
+  "wss://open.senrigan.io/ws/async/writeup/gpt2_medium/session/" + uuid() + "/";
 
 // PRODUCTION DUMMY SOCKET
 //export const WebSocketURL =
@@ -12,3 +16,6 @@ export const WebSocketURL =
 // LOCAL DEVELOPER WS
 //export const WebSocketURL =
 //  "ws://127.0.0.1:8008/ws/writeup/gpt2_medium/session/" + uuid() + "/";
+
+//export const WebSocketURL =
+//  "ws://127.0.0.1:8008/ws/async/writeup/gpt2_medium/session/" + uuid() + "/";
