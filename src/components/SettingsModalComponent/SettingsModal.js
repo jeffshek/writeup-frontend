@@ -82,15 +82,15 @@ export const SettingsModal = () => {
         {DividerSection}
 
         <Typography id="discrete-slider" variant={"h6"}>
-          Generated Word Length | {value.temperature}
+          Generated Word Length | {value.length}
         </Typography>
         <Slider
-          defaultValue={0.5}
+          defaultValue={20}
           aria-labelledby="discrete-slider"
-          step={0.1}
+          step={1}
           marks
-          min={0.1}
-          max={1}
+          min={1}
+          max={40}
           valueLabelDisplay="auto"
         />
 
@@ -101,16 +101,16 @@ export const SettingsModal = () => {
 
         {DividerSection}
         <Typography id="discrete-slider" variant={"h6"} gutterBottom>
-          Suggestion Quantity | {value.temperature}
+          Suggestion Quantity | {value.batch_size}
         </Typography>
 
         <Slider
-          defaultValue={0.5}
+          defaultValue={5}
           aria-labelledby="discrete-slider"
-          step={0.1}
+          step={1}
           marks
-          min={0.1}
-          max={1}
+          min={1}
+          max={10}
           valueLabelDisplay="auto"
         />
         <Typography variant={"body2"}>
@@ -121,16 +121,16 @@ export const SettingsModal = () => {
         {DividerSection}
 
         <Typography id="discrete-slider" variant={"h6"}>
-          Frequency
+          Frequency | {value.top_k}
         </Typography>
 
         <Slider
-          defaultValue={0.5}
+          defaultValue={10}
           aria-labelledby="discrete-slider"
-          step={0.1}
+          step={1}
           marks
-          min={0.1}
-          max={1}
+          min={1}
+          max={40}
           valueLabelDisplay="auto"
         />
         <Typography variant={"body2"}>
