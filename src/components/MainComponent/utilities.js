@@ -70,7 +70,10 @@ export const DividerSection = (
 
 export const NetlifyLogo = (
   <a href="https://www.netlify.com">
-    <img src="https://www.netlify.com/img/global/badges/netlify-light.svg" />
+    <img
+      src="https://www.netlify.com/img/global/badges/netlify-light.svg"
+      alt={"Netlify Logo"}
+    />
   </a>
 );
 export const LearnMoreButton = ({ classes }) => {

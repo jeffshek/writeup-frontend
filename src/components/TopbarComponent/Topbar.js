@@ -18,7 +18,6 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import logo from "images/logo.svg";
 import { Menu } from "components/Menu";
-import { SettingsModal } from "components/SettingsModalComponent/SettingsModal";
 import { AppProvider } from "components/context";
 
 const InlineTagline = ({ classes }) => {
@@ -51,8 +50,8 @@ const TextTagline = ({ classes }) => {
 class _TopbarComponent extends Component {
   state = {
     value: 0,
-    menuDrawer: false,
-    modalOpen: true
+    menuDrawer: false
+    //modalOpen: true
   };
 
   handleChange = (event, value) => {
@@ -168,10 +167,6 @@ class _TopbarComponent extends Component {
     );
   };
 
-  setModal = () => {
-    this.setState({ modalOpen: !this.state.modalOpen });
-  };
-
   renderRightContainer = () => {
     const { classes } = this.props;
 
@@ -186,25 +181,12 @@ class _TopbarComponent extends Component {
           <Tab
             key={0}
             component={MaterialLink}
-            onClick={this.setModal}
+            onClick={this.props.setModal}
             classes={{ root: classes.tabItem }}
             label={"Settings"}
           />
         </Tabs>
       </div>
-    );
-  };
-
-  renderModal = () => {
-    if (!this.state.modalOpen) {
-      return null;
-    }
-
-    return (
-      <SettingsModal
-        modalOpen={this.state.modalOpen}
-        setModal={this.setModal}
-      />
     );
   };
 
@@ -229,7 +211,6 @@ class _TopbarComponent extends Component {
               <Grid item xs={2} className={classes.flex}>
                 {this.renderRightContainer()}
               </Grid>
-              {this.renderModal()}
             </Grid>
           </Toolbar>
         </AppBar>

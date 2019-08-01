@@ -42,7 +42,11 @@ export class _MainComponent extends React.Component {
       unsent: false,
 
       // create a false lastSent to ensure first send is easy
-      lastSent: moment().subtract(5, "seconds")
+      lastSent: moment().subtract(5, "seconds"),
+      temperature: 1,
+      top_k: 10,
+      length: 20,
+      batch_size: 5
     };
   }
 
@@ -60,7 +64,7 @@ export class _MainComponent extends React.Component {
     // puts cursor at end for easier resuming
     this.textEditorRef.current.moveToEndOfDocument();
 
-    //setInterval(this.checkToSend, 3000);
+    setInterval(this.checkToSend, 3000);
   }
 
   componentWillUnmount() {
@@ -134,7 +138,14 @@ export class _MainComponent extends React.Component {
 
     // gets a concatenated list of all the text so far
     const text = this.state.editorValue.document.text;
-    const message = { message: text };
+
+    const message = {
+      prompt: text,
+      temperature: this.state.temperature,
+      top_k: this.state.top_k,
+      length: this.state.length,
+      batch_size: this.state.batch_size
+    };
 
     console.log("Sending| " + text);
     const messageSerialized = JSON.stringify(message);
@@ -294,12 +305,39 @@ export class _MainComponent extends React.Component {
     this.textEditorRef.current.focus();
   };
 
+  //////
+  // settings helpers
+  //////
+  setSettings = setting => value => {
+    this.setState({ [setting]: value });
+  };
+
+  setModal = () => {
+    this.setState({ modalOpen: !this.state.modalOpen });
+  };
+
+  renderModal = () => {
+    if (!this.state.modalOpen) {
+      return null;
+    }
+
+    return (
+      <SettingsModal
+        modalOpen={this.state.modalOpen}
+        setModal={this.setModal}
+        settings={this.state}
+        setSettings={this.setSettings}
+      />
+    );
+  };
+
   render() {
     const { classes } = this.props;
 
     return (
       <Fragment>
-        <TopbarComponent />
+        <TopbarComponent setModal={this.setModal} />
+        {this.renderModal()}
 
         <div className={classes.root} onKeyDown={this.onKeyPressed}>
           <GridLayout classes={classes}>
@@ -335,7 +373,6 @@ export class _MainComponent extends React.Component {
               {/*<LearnMoreButton classes={classes} />*/}
             </Paper>
             <br />
-
             <MainFooter classes={classes} />
           </GridLayout>
         </div>

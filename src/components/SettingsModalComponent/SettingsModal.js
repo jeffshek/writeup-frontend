@@ -1,7 +1,6 @@
 import React, { Fragment } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
-import { AppContext } from "components/context";
 import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
 import Divider from "@material-ui/core/Divider/Divider";
@@ -37,14 +36,19 @@ const DividerSection = (
   </Fragment>
 );
 
-export const SettingsModal = ({ modalOpen, setModal }) => {
+export const SettingsModal = ({
+  modalOpen,
+  setModal,
+  settings,
+  setSettings
+}) => {
   const classes = useStyles();
 
   const [modalStyle] = React.useState(getModalStyle);
-  const appContext = React.useContext(AppContext);
+  const appContext = settings;
 
   const handleSettingsChange = setting => (event, value) => {
-    appContext.handleContextChange(setting)(value);
+    setSettings(setting)(value);
   };
 
   return (
@@ -117,7 +121,7 @@ export const SettingsModal = ({ modalOpen, setModal }) => {
         {DividerSection}
 
         <Typography id="discrete-slider" variant={"h6"}>
-          Frequency | {appContext.top_k}
+          Similarity | {appContext.top_k}
         </Typography>
 
         <Slider
