@@ -43,9 +43,9 @@ export class _MainComponent extends React.Component {
 
       // create a false lastSent to ensure first send is easy
       lastSent: moment().subtract(5, "seconds"),
-      temperature: 1,
+      temperature: 0.7,
       top_k: 10,
-      length: 20,
+      length: 40,
       batch_size: 5
     };
   }
