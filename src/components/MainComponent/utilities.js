@@ -175,6 +175,14 @@ export const MainFooter = ({ classes }) => {
             Netlify
           </a>
           {". "}
+          Made by{" "}
+          <a
+            href="https://senrigan.io"
+            target={"_blank"}
+            rel="noopener noreferrer"
+          >
+            Senrigan Analytics
+          </a>
         </Typography>
       </div>
     </Paper>
