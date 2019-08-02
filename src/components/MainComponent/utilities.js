@@ -181,7 +181,7 @@ export const MainFooter = ({ classes }) => {
           {". "}
           Made by{" "}
           <a
-            href="https://senrigan.io"
+            href="https://home.senrigan.io"
             target={"_blank"}
             rel="noopener noreferrer"
           >
