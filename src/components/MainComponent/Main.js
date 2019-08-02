@@ -46,7 +46,7 @@ export class _MainComponent extends React.Component {
       temperature: 0.7,
       top_k: 10,
       length: 40,
-      batch_size: 5
+      batch_size: 4
     };
   }
 
@@ -114,7 +114,7 @@ export class _MainComponent extends React.Component {
     // this happens if the user types very quickly and it fires off a lot
     // of API requests, then we keep on receiving additional messages
     // from previous words
-    if (message.prompt.trim() === text.trim()) {
+    if (message.prompt.trim().slice(-10) === text.trim().slice(-10)) {
       this.setState({
         textPrompts: textPrompts
       });
@@ -137,7 +137,9 @@ export class _MainComponent extends React.Component {
     });
 
     // gets a concatenated list of all the text so far
-    const text = this.state.editorValue.document.text;
+    // but only get the last 1500 characters, otherwise, we run out of
+    // memory on gpu instances
+    const text = this.state.editorValue.document.text.slice(-1500);
 
     const message = {
       prompt: text,
