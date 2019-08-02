@@ -40,24 +40,28 @@ export const initialValue = Value.fromJSON({
   }
 });
 export const HowToSelectPromptSection = (
-  <Typography variant="subtitle1" gutterBottom color={"textPrimary"}>
-    {/*Don't judge me for using <b>. I got lazy.*/}
-    <b>
-      Click <MouseIcon fontSize={"small"} />{" "}
-    </b>
-    to Select. Or Use{" "}
-    <b>
-      Up
-      <ArrowUpIcon fontSize={"small"} />
-    </b>
-    /<b>Down</b>
-    <ArrowDownwardIcon fontSize={"small"} /> keys. <b>Enter</b> to Insert.
-    <b> Spacebar</b> gets suggestions.
-  </Typography>
+  <Fragment>
+    <Typography variant="h5" color={"secondary"}>
+      {/*Don't judge me for using <b>. I got lazy.*/}
+      Step 2. Select a prompt below to continue building your text. Additional
+      prompts will automatically refresh.
+    </Typography>
+
+    <Typography variant="subtitle2" gutterBottom color={"textPrimary"}>
+      To Select, Click <MouseIcon fontSize={"small"} /> Or Use{" "}
+      <b>
+        Up
+        <ArrowUpIcon fontSize={"small"} />
+      </b>
+      /<b> Down</b>
+      <ArrowDownwardIcon fontSize={"small"} /> keys. <b>Enter</b> to Insert.
+      <b> Spacebar</b> gets suggestions.
+    </Typography>
+  </Fragment>
 );
 export const WritingHeader = (
   <Typography color="secondary" gutterBottom variant={"h5"}>
-    Try writing just one word.
+    Step 1. Write one word.
   </Typography>
 );
 export const DividerSection = (
