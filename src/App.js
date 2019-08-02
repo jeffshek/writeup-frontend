@@ -16,6 +16,9 @@ const theme = createMuiTheme({
   }
 });
 
+import ReactGA from "react-ga";
+ReactGA.initialize("UA-135457327-2");
+
 function App() {
   return (
     <div className="App">
