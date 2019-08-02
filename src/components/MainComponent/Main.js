@@ -64,7 +64,7 @@ export class _MainComponent extends React.Component {
     // puts cursor at end for easier resuming
     this.textEditorRef.current.moveToEndOfDocument();
 
-    setInterval(this.checkToSend, 3000);
+    setInterval(this.checkToSend, 1500);
   }
 
   componentWillUnmount() {
@@ -77,7 +77,7 @@ export class _MainComponent extends React.Component {
   enoughTimeSinceLastSend = () => {
     //fast typists shouldn't send multiple API calls to the server,
     //especially if they know what they're about to write
-    const delayLimit = moment().subtract(2, "seconds");
+    const delayLimit = moment().subtract(1, "seconds");
 
     // return true only if we've waited enough time to not hammer
     // the servers
