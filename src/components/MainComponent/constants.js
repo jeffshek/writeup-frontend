@@ -17,5 +17,6 @@ export const WebSocketURL =
 //export const WebSocketURL =
 //  "ws://127.0.0.1:8008/ws/writeup/gpt2_medium/session/" + uuid() + "/";
 
+// LOCAL DEVELOPER ASYNC
 //export const WebSocketURL =
 //  "ws://127.0.0.1:8008/ws/async/writeup/gpt2_medium/session/" + uuid() + "/";
