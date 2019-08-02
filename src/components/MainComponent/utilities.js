@@ -41,7 +41,7 @@ export const initialValue = Value.fromJSON({
 });
 export const HowToSelectPromptSection = (
   <Typography variant="subtitle1" gutterBottom color={"textPrimary"}>
-    {/*Don't judge me for using bold. I got lazy.*/}
+    {/*Don't judge me for using <b>. I got lazy.*/}
     <b>
       Click <MouseIcon fontSize={"small"} />{" "}
     </b>
@@ -57,7 +57,7 @@ export const HowToSelectPromptSection = (
 );
 export const WritingHeader = (
   <Typography color="secondary" gutterBottom variant={"h5"}>
-    Write.
+    Try writing just one word.
   </Typography>
 );
 export const DividerSection = (
