@@ -5,6 +5,8 @@ import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
 import Divider from "@material-ui/core/Divider/Divider";
 
+import Button from "@material-ui/core/Button";
+
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -25,6 +27,12 @@ const useStyles = makeStyles(theme => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 4),
     outline: "none"
+  },
+  button: {
+    marginTop: "1rem",
+    // don't judge me TOO HARD for using float
+    // but you should still judge me a little.
+    float: "right"
   }
 }));
 
@@ -40,7 +48,8 @@ export const SettingsModal = ({
   modalOpen,
   setModal,
   settings,
-  setSettings
+  setSettings,
+  applySettings
 }) => {
   const classes = useStyles();
 
@@ -138,6 +147,14 @@ export const SettingsModal = ({
           Also known as Top K, a higher value results in more similar
           suggestions. Max 40.
         </Typography>
+        <Button
+          variant="contained"
+          color="secondary"
+          className={classes.button}
+          onClick={applySettings}
+        >
+          Apply Settings
+        </Button>
       </div>
     </Modal>
   );

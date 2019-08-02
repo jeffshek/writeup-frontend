@@ -314,6 +314,13 @@ export class _MainComponent extends React.Component {
     this.setState({ [setting]: value });
   };
 
+  applySettings = () => {
+    // This whole function is to make the user feel powerful
+    // it force a websocket call with the updated parameters
+    this.sendTextToWebSocket();
+    this.setModal();
+  };
+
   setModal = () => {
     this.setState({ modalOpen: !this.state.modalOpen });
   };
@@ -329,6 +336,7 @@ export class _MainComponent extends React.Component {
         setModal={this.setModal}
         settings={this.state}
         setSettings={this.setSettings}
+        applySettings={this.applySettings}
       />
     );
   };

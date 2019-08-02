@@ -4,7 +4,6 @@ import { createMuiTheme } from "@material-ui/core/styles";
 import { blue, indigo } from "@material-ui/core/colors";
 import Routes from "routes";
 import CssBaseline from "@material-ui/core/CssBaseline/CssBaseline";
-import ReactGA from "react-ga";
 
 const theme = createMuiTheme({
   palette: {
@@ -16,8 +15,6 @@ const theme = createMuiTheme({
     }
   }
 });
-
-ReactGA.initialize("UA-135457327-2");
 
 function App() {
   return (
