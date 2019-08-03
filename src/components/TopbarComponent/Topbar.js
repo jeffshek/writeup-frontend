@@ -48,10 +48,10 @@ const TextTagline = ({ classes }) => {
 };
 
 class _TopbarComponent extends Component {
+  // should refactor this, don't need 3/4 of this copy/pasted filler
   state = {
     value: 0,
     menuDrawer: false
-    //modalOpen: true
   };
 
   handleChange = (event, value) => {
@@ -170,6 +170,10 @@ class _TopbarComponent extends Component {
   renderRightContainer = () => {
     const { classes } = this.props;
 
+    if (!this.props.showSettings) {
+      return null;
+    }
+
     return (
       <div className={classes.tabContainerRight}>
         <Tabs
@@ -218,6 +222,10 @@ class _TopbarComponent extends Component {
     );
   }
 }
+
+_TopbarComponent.defaultProps = {
+  showSettings: true
+};
 
 export const TopbarComponent = withRouter(
   withStyles(TopbarStyles)(_TopbarComponent)

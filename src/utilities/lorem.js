@@ -11,3 +11,14 @@ export const lorem_twenty_words =
 
 export const lorem_twenty_words_alternative =
   "Phasellus faucibus, ante vitae vulputate fringilla, erat augue tincidunt magna, quis luctus, Lorem ipsum dolor sit amet, Consectetur adipiscing elit";
+
+export const lorem_ipsum_five_paragraphs =
+  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porttitor purus nec pulvinar facilisis. Nulla ut aliquam erat. Nullam pretium est vitae risus feugiat vestibulum. Nunc molestie consectetur risus in cursus. Nulla ornare orci arcu, mattis accumsan sapien lobortis non. Cras cursus quam sit amet iaculis tempus. Phasellus auctor mollis tempus.\n" +
+  "\n" +
+  "Integer vehicula, nisi at viverra iaculis, urna enim sagittis lorem, a maximus enim justo id quam. Curabitur in euismod justo. Ut non feugiat ligula. Maecenas efficitur lectus at faucibus imperdiet. Praesent varius elementum sem, a accumsan libero. Ut dui odio, facilisis id lectus id, ullamcorper varius lorem. Nullam magna odio, dapibus non porta vitae, tincidunt id tellus. Morbi fermentum fermentum tellus, eu scelerisque metus auctor at.\n" +
+  "\n" +
+  "Vivamus dictum tincidunt mi mollis vehicula. Vestibulum vehicula aliquet odio, sed scelerisque nisl blandit quis. Quisque vitae scelerisque mi. Sed eu condimentum risus. Morbi eget risus eu tortor rutrum malesuada id at dui. Maecenas viverra rutrum feugiat. Integer nec urna ultricies urna tristique consectetur. Ut in viverra tellus. Aliquam nec pellentesque tellus. Quisque vestibulum odio id ante tristique, ut bibendum augue fringilla. Cras eu quam finibus, consequat eros id, vestibulum eros. Maecenas a malesuada eros. Pellentesque sollicitudin non nisi eget varius. Donec vitae sagittis turpis, in porttitor arcu.\n" +
+  "\n" +
+  "Integer augue diam, ultricies suscipit molestie sit amet, volutpat eu lorem. Etiam vel orci ex. Duis nisi erat, lobortis non eleifend laoreet, vestibulum in ex. Suspendisse sit amet sagittis elit. Etiam libero metus, molestie at dictum a, aliquam vitae massa. Donec malesuada turpis eget diam volutpat posuere. Phasellus vitae urna elit. Vivamus in ligula euismod, porttitor nisl id, porttitor felis. Sed nec tristique orci. Etiam tempus diam ultricies, maximus mi nec, venenatis libero. Morbi non varius odio. Proin sed rhoncus purus. Etiam lacus nisl, vulputate quis placerat a, aliquet non quam. Duis mollis enim odio. Proin neque arcu, hendrerit id blandit vitae, bibendum et neque.\n" +
+  "\n" +
+  "Integer ac tristique elit. Fusce tempor nisi ante, eget finibus sem finibus eu. Maecenas finibus enim vitae diam consectetur commodo. Nulla viverra aliquet lorem, at dignissim enim efficitur vitae. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum et nibh vel mauris lobortis eleifend quis id libero. Morbi non efficitur nunc.";

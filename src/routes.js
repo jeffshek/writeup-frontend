@@ -1,10 +1,11 @@
-import React from 'react'
-import {HashRouter, Route} from 'react-router-dom'
-import {MainComponent} from "components/MainComponent/Main";
-
+import React from "react";
+import { HashRouter, BrowserRouter, Route } from "react-router-dom";
+import { MainComponent } from "components/MainComponent/Main";
+import { ShareComponent } from "components/ShareComponent/Share";
 
 export default props => (
-  <HashRouter>
-    <Route exact path='/' component={ MainComponent } />
-  </HashRouter>
-)
+  <BrowserRouter>
+    <Route exact path="/" component={MainComponent} />
+    <Route exact path="/shared/prompts/" component={ShareComponent} />
+  </BrowserRouter>
+);

@@ -16,11 +16,11 @@ import Paper from "@material-ui/core/Paper/Paper";
 
 // these are cached for a day to have a much faster loading time
 const PROMPTS_TO_USE = [
-  "The software innovations in the 20th century ",
-  "Climate change has ",
-  "The breakthrough in ",
-  "Cancer research has revolutionized ",
-  "Recent developments in "
+  //"The software innovations in the 20th century ",
+  "Climate change has "
+  //"The breakthrough in ",
+  //"Cancer research has revolutionized ",
+  //"Recent developments in "
 ];
 
 export const initialValue = Value.fromJSON({
@@ -43,8 +43,7 @@ export const HowToSelectPromptSection = (
   <Fragment>
     <Typography variant="h5" color={"secondary"}>
       {/*Don't judge me for using <b>. I got lazy.*/}
-      Step 2. Select a prompt below to continue building your text. Additional
-      prompts will automatically refresh.
+      Step 2. Select a prompt below to continue building your text.
     </Typography>
 
     <Typography variant="subtitle2" gutterBottom color={"textPrimary"}>
@@ -59,11 +58,13 @@ export const HowToSelectPromptSection = (
     </Typography>
   </Fragment>
 );
+
 export const WritingHeader = (
   <Typography color="secondary" gutterBottom variant={"h5"}>
     Step 1. Write one word.
   </Typography>
 );
+
 export const DividerSection = (
   <Fragment>
     <br />
