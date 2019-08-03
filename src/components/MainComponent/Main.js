@@ -141,6 +141,11 @@ export class _MainComponent extends React.Component {
     // memory on gpu instances
     const text = this.state.editorValue.document.text.slice(-1500);
 
+    const textIsBlank = text.trim().length === 0;
+    if (textIsBlank) {
+      return;
+    }
+
     const message = {
       prompt: text,
       temperature: this.state.temperature,
