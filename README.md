@@ -14,9 +14,9 @@
 
 - Design inspirations and code taken from [Material-Sense](https://alexanmtz.github.io/material-sense/)
 
-### Backend
+### Open Sourced Backend (Mostly)
 
-- [Python/Django Backend](https://github.com/jeffshek/open) - Open Sourced (mostly).
+- [Python/Django Backend](https://github.com/jeffshek/open)
 
 ### File Structure
 
