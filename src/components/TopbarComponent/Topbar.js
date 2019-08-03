@@ -37,7 +37,7 @@ const TextTagline = ({ classes }) => {
   return (
     <div className={classes.productLogo}>
       <Typography className={classes.inlineBlockTagLine}>
-        use machine learning algorithms trained on 8 million articles to
+        use machine learning to
       </Typography>{" "}
       <Typography className={classes.strikeInline}>right</Typography>
       <Typography className={classes.inlineBlockTagLine}>

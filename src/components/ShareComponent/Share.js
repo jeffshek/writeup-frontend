@@ -10,11 +10,11 @@ import { lorem_ipsum_five_paragraphs } from "utilities/lorem";
 const TitleHeader = ({ title, author }) => {
   return (
     <Fragment>
-      <Typography color="secondary" variant={"h4"}>
+      <Typography color="secondary" variant={"h3"}>
         {title}
       </Typography>
       <Typography color="secondary" gutterBottom variant={"subtitle1"}>
-        Author: {author} (with a little help from AI)
+        Composed and Written By {author}
       </Typography>
     </Fragment>
   );
@@ -28,11 +28,11 @@ const useStyles = makeStyles(theme => ({
     background: `url(${backgroundShape}) no-repeat`,
     backgroundSize: "cover",
     backgroundPosition: "0 400px",
-    paddingBottom: 200
+    paddingBottom: 100
   },
   grid: {
     width: 1200,
-    marginTop: 40,
+    marginTop: 20,
     [theme.breakpoints.down("sm")]: {
       width: "calc(100% - 20px)"
     }

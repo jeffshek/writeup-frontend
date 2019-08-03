@@ -63,12 +63,12 @@ export class _MainComponent extends React.Component {
 
     // puts cursor at end for easier resuming
     this.textEditorRef.current.moveToEndOfDocument();
-
-    setInterval(this.checkToSend, 1500);
+    this.intervalID = setInterval(this.checkToSend, 1500);
   }
 
   componentWillUnmount() {
     this.websocket.dissembleWebSocket();
+    clearInterval(this.intervalID);
   }
 
   ////////////////////
