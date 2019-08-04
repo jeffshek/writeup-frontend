@@ -23,6 +23,8 @@ import moment from "moment";
 import { LinearIndeterminate } from "components/Loading";
 import { SettingsModal } from "components/SettingsModalComponent/SettingsModal";
 import { WebSocketURL } from "components/MainComponent/constants";
+import Button from "@material-ui/core/Button/Button";
+import Grid from "@material-ui/core/Grid/Grid";
 
 export class _MainComponent extends React.Component {
   constructor(props) {
@@ -46,7 +48,9 @@ export class _MainComponent extends React.Component {
       temperature: 0.7,
       top_k: 10,
       length: 40,
-      batch_size: 4
+      batch_size: 4,
+      settingsModalOpen: false,
+      publishModalOpen: false
     };
   }
 
@@ -323,22 +327,22 @@ export class _MainComponent extends React.Component {
     // This whole function is to make the user feel powerful
     // it force a websocket call with the updated parameters
     this.sendTextToWebSocket();
-    this.setModal();
+    this.setSettingsModal();
   };
 
-  setModal = () => {
-    this.setState({ modalOpen: !this.state.modalOpen });
+  setSettingsModal = () => {
+    this.setState({ settingsModalOpen: !this.state.settingsModalOpen });
   };
 
-  renderModal = () => {
-    if (!this.state.modalOpen) {
+  renderSettingsModal = () => {
+    if (!this.state.settingsModalOpen) {
       return null;
     }
 
     return (
       <SettingsModal
-        modalOpen={this.state.modalOpen}
-        setModal={this.setModal}
+        modalOpen={this.state.settingsModalOpen}
+        setModal={this.setSettingsModal}
         settings={this.state}
         setSettings={this.setSettings}
         applySettings={this.applySettings}
@@ -351,8 +355,8 @@ export class _MainComponent extends React.Component {
 
     return (
       <Fragment>
-        <TopbarComponent setModal={this.setModal} />
-        {this.renderModal()}
+        <TopbarComponent setModal={this.setSettingsModal} />
+        {this.renderSettingsModal()}
 
         <div className={classes.root} onKeyDown={this.onKeyPressed}>
           <GridLayout classes={classes}>
@@ -370,6 +374,20 @@ export class _MainComponent extends React.Component {
                     autoFocus={true}
                     ref={this.textEditorRef}
                   />
+                  <Grid
+                    container
+                    direction="row"
+                    justify="flex-end"
+                    alignItems="center"
+                  >
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      className={classes.button}
+                    >
+                      Publish
+                    </Button>
+                  </Grid>
                   {DividerSection}
                 </Typography>
                 {this.state.textPrompts.length > 0 ? (
@@ -385,9 +403,9 @@ export class _MainComponent extends React.Component {
                   <LinearIndeterminate />
                 )}
               </div>
-              {/*<LearnMoreButton classes={classes} />*/}
             </Paper>
             <br />
+
             <MainFooter classes={classes} />
           </GridLayout>
         </div>
