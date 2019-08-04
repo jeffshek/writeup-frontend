@@ -14,13 +14,13 @@ import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import MouseIcon from "@material-ui/icons/Mouse";
 import Paper from "@material-ui/core/Paper/Paper";
 
-// these are cached for a day to have a much faster loading time
+// these are cached for a day to have a much faster loading time for the user
 const PROMPTS_TO_USE = [
-  //"The software innovations in the 20th century ",
-  "Climate change has "
-  //"The breakthrough in ",
-  //"Cancer research has revolutionized ",
-  //"Recent developments in "
+  "The software innovations in the 20th century ",
+  "Climate change has ",
+  "The breakthrough in ",
+  "Cancer research has revolutionized ",
+  "Recent developments in "
 ];
 
 export const initialValue = Value.fromJSON({

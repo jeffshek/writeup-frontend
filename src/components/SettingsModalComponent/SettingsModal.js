@@ -1,48 +1,13 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
-import Divider from "@material-ui/core/Divider/Divider";
 
 import Button from "@material-ui/core/Button";
-
-function getModalStyle() {
-  const top = 50;
-  const left = 50;
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`
-  };
-}
-
-const useStyles = makeStyles(theme => ({
-  paper: {
-    position: "absolute",
-    width: 400,
-    backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 4),
-    outline: "none"
-  },
-  button: {
-    marginTop: "1rem",
-    // don't judge me TOO HARD for using float
-    // but you should still judge me a little.
-    float: "right"
-  }
-}));
-
-const DividerSection = (
-  <Fragment>
-    <br />
-    <Divider />
-    <br />
-  </Fragment>
-);
+import { DividerSection } from "components/Common/Dividers";
+import { getModalStyle } from "components/Common/Modals";
+import { useModalStyles } from "components/Common/Modals";
 
 export const SettingsModal = ({
   modalOpen,
@@ -51,10 +16,9 @@ export const SettingsModal = ({
   setSettings,
   applySettings
 }) => {
-  const classes = useStyles();
+  const classes = useModalStyles();
 
   const [modalStyle] = React.useState(getModalStyle);
-  const appContext = settings;
 
   const handleSettingsChange = setting => (event, value) => {
     setSettings(setting)(value);
@@ -69,11 +33,11 @@ export const SettingsModal = ({
     >
       <div style={modalStyle} className={classes.paper}>
         <Typography id="discrete-slider" variant={"h6"}>
-          Temperature | {appContext.temperature}
+          Temperature | {settings.temperature}
         </Typography>
 
         <Slider
-          defaultValue={appContext.temperature}
+          defaultValue={settings.temperature}
           aria-labelledby="discrete-slider"
           step={0.1}
           marks
@@ -88,10 +52,10 @@ export const SettingsModal = ({
         {DividerSection}
 
         <Typography id="discrete-slider" variant={"h6"}>
-          Generated Word Length | {appContext.length}
+          Generated Word Length | {settings.length}
         </Typography>
         <Slider
-          defaultValue={appContext.length}
+          defaultValue={settings.length}
           aria-labelledby="discrete-slider"
           step={1}
           marks
@@ -109,11 +73,11 @@ export const SettingsModal = ({
 
         {DividerSection}
         <Typography id="discrete-slider" variant={"h6"} gutterBottom>
-          Suggestion Quantity | {appContext.batch_size}
+          Suggestion Quantity | {settings.batch_size}
         </Typography>
 
         <Slider
-          defaultValue={appContext.batch_size}
+          defaultValue={settings.batch_size}
           aria-labelledby="discrete-slider"
           step={1}
           marks
@@ -130,11 +94,11 @@ export const SettingsModal = ({
         {DividerSection}
 
         <Typography id="discrete-slider" variant={"h6"}>
-          Similarity | {appContext.top_k}
+          Similarity | {settings.top_k}
         </Typography>
 
         <Slider
-          defaultValue={appContext.top_k}
+          defaultValue={settings.top_k}
           aria-labelledby="discrete-slider"
           step={1}
           marks

@@ -25,6 +25,7 @@ import { SettingsModal } from "components/SettingsModalComponent/SettingsModal";
 import { WebSocketURL } from "components/MainComponent/constants";
 import Button from "@material-ui/core/Button/Button";
 import Grid from "@material-ui/core/Grid/Grid";
+import { PublishModal } from "components/PublishModalComponent/PublishModal";
 
 export class _MainComponent extends React.Component {
   constructor(props) {
@@ -105,7 +106,7 @@ export class _MainComponent extends React.Component {
   };
 
   ////////////////////
-  // websocket handles
+  // websocket handling
   ////////////////////
   handleWebSocketData = data => {
     const messageSerialized = JSON.parse(data);
@@ -317,7 +318,7 @@ export class _MainComponent extends React.Component {
   };
 
   //////
-  // settings helpers
+  // settings & modal helpers
   //////
   setSettings = setting => value => {
     this.setState({ [setting]: value });
@@ -325,13 +326,18 @@ export class _MainComponent extends React.Component {
 
   applySettings = () => {
     // This whole function is to make the user feel powerful
-    // it force a websocket call with the updated parameters
+    // it forces a websocket call with the updated setting choices
+    // kind of unnecessary lol
     this.sendTextToWebSocket();
     this.setSettingsModal();
   };
 
   setSettingsModal = () => {
     this.setState({ settingsModalOpen: !this.state.settingsModalOpen });
+  };
+
+  setPublishModal = () => {
+    this.setState({ publishModalOpen: !this.state.publishModalOpen });
   };
 
   renderSettingsModal = () => {
@@ -350,6 +356,21 @@ export class _MainComponent extends React.Component {
     );
   };
 
+  renderPublishModal = () => {
+    if (!this.state.publishModalOpen) {
+      return null;
+    }
+
+    return (
+      <PublishModal
+        modalOpen={this.state.publishModalOpen}
+        setModal={this.setPublishModal}
+        settings={this.state}
+        setSettings={this.setSettings}
+      />
+    );
+  };
+
   render() {
     const { classes } = this.props;
 
@@ -357,7 +378,7 @@ export class _MainComponent extends React.Component {
       <Fragment>
         <TopbarComponent setModal={this.setSettingsModal} />
         {this.renderSettingsModal()}
-
+        {this.renderPublishModal()}
         <div className={classes.root} onKeyDown={this.onKeyPressed}>
           <GridLayout classes={classes}>
             <Paper className={classes.paper}>
@@ -384,6 +405,7 @@ export class _MainComponent extends React.Component {
                       variant="contained"
                       color="secondary"
                       className={classes.button}
+                      onClick={this.setPublishModal}
                     >
                       Publish
                     </Button>
