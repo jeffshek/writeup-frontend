@@ -4,6 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { DividerSection } from "components/Common/Dividers";
 import { getModalStyle, useModalStyles } from "components/Common/Modals";
+import TextField from "@material-ui/core/TextField/TextField";
 
 export const PublishModal = ({
   modalOpen,
@@ -32,8 +33,34 @@ export const PublishModal = ({
           Publish Changes
         </Typography>
         <Typography variant={"body1"}>
-          Show your composition to the world.
+          Present your composition to the world.
         </Typography>
+        <form className={classes.container} noValidate autoComplete="off">
+          <TextField
+            id="outlined-full-width"
+            label="Title"
+            className={classes.textField}
+            value={""}
+            //value={"Title"}
+            helperText="Shown at the beginning of your article."
+            //onChange={handleChange('name')}
+            fullWidth
+            margin="normal"
+            variant="outlined"
+          />
+          <TextField
+            id="outlined-full-width"
+            label="Email"
+            className={classes.textField}
+            //value={values.name}
+            value={""}
+            helperText="If you want to show your email next to your article. Optional."
+            //onChange={handleChange('name')}
+            fullWidth
+            margin="normal"
+            variant="outlined"
+          />
+        </form>
         <Button
           variant="contained"
           color="secondary"

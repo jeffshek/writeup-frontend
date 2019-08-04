@@ -14,7 +14,7 @@ export function getModalStyle() {
 export const useModalStyles = makeStyles(theme => ({
   paper: {
     position: "absolute",
-    width: 400,
+    width: 600,
     backgroundColor: theme.palette.background.paper,
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
@@ -26,5 +26,9 @@ export const useModalStyles = makeStyles(theme => ({
     // don't judge me TOO HARD for using float
     // but you should still judge me a little.
     float: "right"
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1)
   }
 }));
