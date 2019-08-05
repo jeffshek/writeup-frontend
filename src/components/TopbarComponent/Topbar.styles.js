@@ -79,7 +79,7 @@ export const TopbarStyles = theme => ({
   },
   modalStyle: {
     top: `50%`,
-    left: `50}%`,
+    left: `50%`,
     transform: `translate(-50%, -50%)`
   },
   modalPaper: {
@@ -100,7 +100,7 @@ export const TopbarStyles = theme => ({
     padding: theme.spacing(2, 4, 4),
     outline: "none",
     top: `50%`,
-    left: `50}%`,
+    left: `50%`,
     transform: `translate(-50%, -50%)`
   }
 });
