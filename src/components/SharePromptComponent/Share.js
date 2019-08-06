@@ -96,7 +96,7 @@ const Footer = () => {
           >
             Open Sourced
           </a>
-          {". "}Created by{" "}
+          {". "}Made with ♥ by{" "}
           <a
             href="https://senrigan.io"
             target={"_blank"}

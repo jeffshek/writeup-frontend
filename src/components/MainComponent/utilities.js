@@ -121,11 +121,24 @@ export const GridLayout = ({ classes, children }) => {
     </Grid>
   );
 };
+
+export const SenriganAnalyticsFooter = (
+  <Typography variant="body1" color={"textPrimary"}>
+    Made with ♥ by{" "}
+    <a
+      href="https://home.senrigan.io"
+      target={"_blank"}
+      rel="noopener noreferrer"
+    >
+      Senrigan Analytics
+    </a>
+  </Typography>
+);
 export const MainFooter = ({ classes }) => {
   return (
     <Paper className={classes.paper}>
       <div className={classes.footer}>
-        <Typography variant="subtitle1" gutterBottom color={"textPrimary"}>
+        <Typography variant="subtitle1" color={"textPrimary"}>
           <b>HUGE </b>thanks to{" "}
           <a
             href="https://openai.com/blog/better-language-models/"
@@ -142,16 +155,8 @@ export const MainFooter = ({ classes }) => {
           </a>{" "}
           for their PyTorch implementation.
         </Typography>
-
-        <Typography variant="subtitle1" gutterBottom color={"textPrimary"}>
-          This is{" "}
-          <a
-            href="https://github.com/jeffshek/writeup-frontend"
-            target={"_blank"}
-          >
-            open sourced
-          </a>
-          . The{" "}
+        <Typography variant="subtitle1" color={"textPrimary"}>
+          The{" "}
           <a
             href="https://senrigan.io/blog/"
             target={"_blank"}
@@ -162,8 +167,14 @@ export const MainFooter = ({ classes }) => {
           will have a featured article detailing technical challenges, solutions
           and tradeoffs.
         </Typography>
-        <Typography variant="body1" gutterBottom color={"textPrimary"}>
-          Powered by{" "}
+        <Typography variant="body1" color={"textPrimary"}>
+          <a
+            href="https://github.com/jeffshek/writeup-frontend"
+            target={"_blank"}
+          >
+            Open Sourced
+          </a>
+          {". "}Powered by{" "}
           <a
             href="https://cloud.google.com/"
             target="_blank"
@@ -180,15 +191,8 @@ export const MainFooter = ({ classes }) => {
             Netlify
           </a>
           {". "}
-          Made by{" "}
-          <a
-            href="https://home.senrigan.io"
-            target={"_blank"}
-            rel="noopener noreferrer"
-          >
-            Senrigan Analytics
-          </a>
         </Typography>
+        {SenriganAnalyticsFooter}
       </div>
     </Paper>
   );
