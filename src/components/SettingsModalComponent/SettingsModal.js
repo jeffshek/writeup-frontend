@@ -1,13 +1,11 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/core/Slider";
 
 import Button from "@material-ui/core/Button";
 import { DividerSection } from "components/Common/Dividers";
-import { getModalStyle } from "components/Common/ModalStyling";
-import { useModalStyles } from "components/Common/ModalStyling";
+import { getModalStyle, useModalStyles } from "components/Common/ModalStyling";
 
 export const SettingsModal = ({
   modalOpen,

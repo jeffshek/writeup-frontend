@@ -51,8 +51,9 @@ export class _MainComponent extends React.Component {
       temperature: 0.5,
       top_k: 10,
       // 45 felt like a good number
-      length: 45,
-      batch_size: 4,
+      // 17 just loads way faster
+      length: 19,
+      batch_size: 7,
       settingsModalOpen: false,
       publishModalOpen: false,
       tutorialModalOpen: true
