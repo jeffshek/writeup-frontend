@@ -11,6 +11,13 @@ export function getModalStyle() {
   };
 }
 
+const buttonStyling = {
+  marginTop: "1rem",
+  // don't judge me TOO HARD for using float
+  // but you should still judge me a little.
+  float: "right"
+};
+
 export const useModalStyles = makeStyles(theme => ({
   paper: {
     position: "absolute",
@@ -21,14 +28,22 @@ export const useModalStyles = makeStyles(theme => ({
     padding: theme.spacing(2, 4, 4),
     outline: "none"
   },
-  button: {
-    marginTop: "1rem",
-    // don't judge me TOO HARD for using float
-    // but you should still judge me a little.
-    float: "right"
-  },
+  button: buttonStyling,
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1)
   }
+}));
+
+export const useTutorialModalStyles = makeStyles(theme => ({
+  paper: {
+    position: "absolute",
+    width: 800,
+    backgroundColor: theme.palette.background.paper,
+    border: "2px solid #000",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 4),
+    outline: "none"
+  },
+  button: buttonStyling
 }));

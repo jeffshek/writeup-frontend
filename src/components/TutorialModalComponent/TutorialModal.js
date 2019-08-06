@@ -2,9 +2,14 @@ import React from "react";
 import Modal from "@material-ui/core/Modal";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import { DividerSection } from "components/Common/Dividers";
-import { getModalStyle, useModalStyles } from "components/Common/Modals";
-import TextField from "@material-ui/core/TextField/TextField";
+import {
+  getModalStyle,
+  useTutorialModalStyles
+} from "components/Common/ModalStyling";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from "react-responsive-carousel";
+
+import tutorial_demo from "images/tutorial_demo_3.gif";
 
 export const TutorialModal = ({
   modalOpen,
@@ -13,7 +18,7 @@ export const TutorialModal = ({
   setSettings,
   applySettings
 }) => {
-  const classes = useModalStyles();
+  const classes = useTutorialModalStyles();
 
   const [modalStyle] = React.useState(getModalStyle);
   const handleSettingsChange = setting => (event, value) => {
@@ -28,16 +33,23 @@ export const TutorialModal = ({
       onClose={setModal}
     >
       <div style={modalStyle} className={classes.paper}>
+        <br />
         <Typography variant={"h4"} align={"center"} gutterBottom>
           Tutorial
         </Typography>
+        <Carousel>
+          <div>
+            <img src={tutorial_demo} />
+            {/*<p className="legend">Basic Explanation</p>*/}
+          </div>
+        </Carousel>
         <Button
           variant="contained"
           color="secondary"
           className={classes.button}
           onClick={applySettings}
         >
-          Close Me!
+          Close
         </Button>
       </div>
     </Modal>

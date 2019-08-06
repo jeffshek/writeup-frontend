@@ -47,13 +47,14 @@ export class _MainComponent extends React.Component {
 
       // create a false lastSent to ensure first send is easy
       lastSent: moment().subtract(5, "seconds"),
-      temperature: 0.7,
+      temperature: 0.5,
       top_k: 10,
-      length: 40,
+      // 45 felt like a good number
+      length: 45,
       batch_size: 4,
       settingsModalOpen: false,
       publishModalOpen: false,
-      tutorialModalOpen: false
+      tutorialModalOpen: true
     };
   }
 
@@ -331,7 +332,7 @@ export class _MainComponent extends React.Component {
     // it forces a websocket call with the updated setting choices
     // kind of unnecessary lol
     this.sendTextToWebSocket();
-    this.setModal("settingsModalOpen");
+    this.setModal("settingsModalOpen")();
   };
 
   setModal = modalStateName => () => {
@@ -390,7 +391,7 @@ export class _MainComponent extends React.Component {
       <Fragment>
         {this.renderSettingsModal()}
         {/*{this.renderPublishModal()}*/}
-        {/*{this.renderTutorialModal()}*/}
+        {this.renderTutorialModal()}
       </Fragment>
     );
   };
