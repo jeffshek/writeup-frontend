@@ -35,7 +35,7 @@ export const TutorialModal = ({
       <div style={modalStyle} className={classes.paper}>
         <br />
         <Typography variant={"h4"} align={"center"} gutterBottom>
-          the boring tutorial ...
+          📃 the boring tutorial ...
         </Typography>
         <Carousel>
           <div>
