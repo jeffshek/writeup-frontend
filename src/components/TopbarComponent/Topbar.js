@@ -9,15 +9,8 @@ import Toolbar from "@material-ui/core/Toolbar";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import MenuIcon from "@material-ui/icons/Menu";
-import IconButton from "@material-ui/core/IconButton";
-import List from "@material-ui/core/List";
-import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import { Link as MaterialLink } from "@material-ui/core";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 import logo from "images/logo.svg";
-import { Menu } from "components/Menu";
 import { AppProvider } from "components/context";
 
 const InlineTagline = ({ classes }) => {
@@ -187,7 +180,7 @@ class _TopbarComponent extends Component {
             component={MaterialLink}
             onClick={this.props.setModal}
             classes={{ root: classes.tabItem }}
-            label={"Settings"}
+            label={"Customize"}
           />
         </Tabs>
       </div>

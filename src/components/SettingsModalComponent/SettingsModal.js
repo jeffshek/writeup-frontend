@@ -33,7 +33,7 @@ export const SettingsModal = ({
     >
       <div style={modalStyle} className={classes.paper}>
         <Typography id="discrete-slider" variant={"h6"}>
-          Temperature | {settings.temperature}
+          Creativity | {settings.temperature}
         </Typography>
 
         <Slider
@@ -47,7 +47,8 @@ export const SettingsModal = ({
           valueLabelDisplay="auto"
         />
         <Typography variant={"body2"}>
-          Higher temperatures result in more creative suggestions. Max 1.0
+          Higher creativity (aka, temperatures) result in more creative
+          suggestions. Max 1.0
         </Typography>
         {DividerSection}
 
@@ -94,7 +95,7 @@ export const SettingsModal = ({
         {DividerSection}
 
         <Typography id="discrete-slider" variant={"h6"}>
-          Similarity | {settings.top_k}
+          Consistency | {settings.top_k}
         </Typography>
 
         <Slider
