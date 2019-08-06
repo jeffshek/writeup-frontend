@@ -22,3 +22,4 @@
 ### File Structure
 
 - I REALLY don't recommend any file layout / naming conventions from this frontend repo. It's still evolving and changing as I think through patterns. There are some parts I'm super embarrassed by.
+- I'm much more of a backend engineer, so I'm pretty embarrassed by the quality of some of my code here ... Don't judge me too hard.

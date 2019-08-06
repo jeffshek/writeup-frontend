@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import { MainComponent } from "components/MainComponent/Main";
-import { ShareComponent } from "components/ShareComponent/Share";
+import { ShareComponent } from "components/SharePromptComponent/Share";
 
 export default props => (
   <BrowserRouter>
