@@ -8,7 +8,7 @@ export const MainStyles = theme => ({
     background: `url(${backgroundShape}) no-repeat`,
     backgroundSize: "cover",
     backgroundPosition: "0 400px",
-    paddingBottom: 200
+    paddingBottom: 50
   },
   grid: {
     width: 1200,
