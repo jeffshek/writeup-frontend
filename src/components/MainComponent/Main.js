@@ -26,6 +26,7 @@ import { WebSocketURL } from "components/MainComponent/constants";
 import Button from "@material-ui/core/Button/Button";
 import Grid from "@material-ui/core/Grid/Grid";
 import { PublishModal } from "components/PublishModalComponent/PublishModal";
+import { TutorialModal } from "components/TutorialModalComponent/TutorialModal";
 
 export class _MainComponent extends React.Component {
   constructor(props) {
@@ -51,7 +52,8 @@ export class _MainComponent extends React.Component {
       length: 40,
       batch_size: 4,
       settingsModalOpen: false,
-      publishModalOpen: false
+      publishModalOpen: false,
+      tutorialModalOpen: true
     };
   }
 
@@ -329,15 +331,12 @@ export class _MainComponent extends React.Component {
     // it forces a websocket call with the updated setting choices
     // kind of unnecessary lol
     this.sendTextToWebSocket();
-    this.setSettingsModal();
+    this.setModal("settingsModalOpen");
   };
 
-  setSettingsModal = () => {
-    this.setState({ settingsModalOpen: !this.state.settingsModalOpen });
-  };
-
-  setPublishModal = () => {
-    this.setState({ publishModalOpen: !this.state.publishModalOpen });
+  setModal = modalStateName => () => {
+    const currentModalState = this.state[modalStateName];
+    this.setState({ [modalStateName]: !currentModalState });
   };
 
   renderSettingsModal = () => {
@@ -348,7 +347,7 @@ export class _MainComponent extends React.Component {
     return (
       <SettingsModal
         modalOpen={this.state.settingsModalOpen}
-        setModal={this.setSettingsModal}
+        setModal={this.setModal("settingsModalOpen")}
         settings={this.state}
         setSettings={this.setSettings}
         applySettings={this.applySettings}
@@ -364,10 +363,35 @@ export class _MainComponent extends React.Component {
     return (
       <PublishModal
         modalOpen={this.state.publishModalOpen}
-        setModal={this.setPublishModal}
+        setModal={this.setModal("publishModalOpen")}
         settings={this.state}
         setSettings={this.setSettings}
       />
+    );
+  };
+
+  renderTutorialModal = () => {
+    if (!this.state.tutorialModalOpen) {
+      return null;
+    }
+
+    return (
+      <TutorialModal
+        modalOpen={this.state.tutorialModalOpen}
+        setModal={this.setModal("tutorialModalOpen")}
+        settings={this.state}
+        setSettings={this.setSettings}
+      />
+    );
+  };
+
+  renderModals = () => {
+    return (
+      <Fragment>
+        {this.renderSettingsModal()}
+        {this.renderPublishModal()}
+        {this.renderTutorialModal()}
+      </Fragment>
     );
   };
 
@@ -376,9 +400,8 @@ export class _MainComponent extends React.Component {
 
     return (
       <Fragment>
-        <TopbarComponent setModal={this.setSettingsModal} />
-        {this.renderSettingsModal()}
-        {this.renderPublishModal()}
+        <TopbarComponent setModal={this.setModal("settingsModalOpen")} />
+        {this.renderModals()}
         <div className={classes.root} onKeyDown={this.onKeyPressed}>
           <GridLayout classes={classes}>
             <Paper className={classes.paper}>
@@ -405,7 +428,7 @@ export class _MainComponent extends React.Component {
                       variant="contained"
                       color="secondary"
                       className={classes.button}
-                      onClick={this.setPublishModal}
+                      onClick={this.setModal("publishModalOpen")}
                     >
                       Publish
                     </Button>
