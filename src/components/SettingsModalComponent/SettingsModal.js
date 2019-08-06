@@ -6,8 +6,8 @@ import Slider from "@material-ui/core/Slider";
 
 import Button from "@material-ui/core/Button";
 import { DividerSection } from "components/Common/Dividers";
-import { getModalStyle } from "components/Common/Modals";
-import { useModalStyles } from "components/Common/Modals";
+import { getModalStyle } from "components/Common/ModalStyling";
+import { useModalStyles } from "components/Common/ModalStyling";
 
 export const SettingsModal = ({
   modalOpen,

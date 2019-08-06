@@ -4,9 +4,8 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import {
   getModalStyle,
-  useModalStyles,
   useTutorialModalStyles
-} from "components/Common/Modals";
+} from "components/Common/ModalStyling";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 
