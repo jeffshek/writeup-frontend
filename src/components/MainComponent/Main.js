@@ -53,7 +53,7 @@ export class _MainComponent extends React.Component {
       batch_size: 4,
       settingsModalOpen: false,
       publishModalOpen: false,
-      tutorialModalOpen: true
+      tutorialModalOpen: false
     };
   }
 
@@ -389,9 +389,26 @@ export class _MainComponent extends React.Component {
     return (
       <Fragment>
         {this.renderSettingsModal()}
-        {this.renderPublishModal()}
-        {this.renderTutorialModal()}
+        {/*{this.renderPublishModal()}*/}
+        {/*{this.renderTutorialModal()}*/}
       </Fragment>
+    );
+  };
+
+  renderPublishButton = () => {
+    const classes = this.props;
+
+    return (
+      <Grid container direction="row" justify="flex-end" alignItems="center">
+        <Button
+          variant="contained"
+          color="secondary"
+          className={classes.button}
+          onClick={this.setModal("publishModalOpen")}
+        >
+          Publish
+        </Button>
+      </Grid>
     );
   };
 
@@ -418,21 +435,7 @@ export class _MainComponent extends React.Component {
                     autoFocus={true}
                     ref={this.textEditorRef}
                   />
-                  <Grid
-                    container
-                    direction="row"
-                    justify="flex-end"
-                    alignItems="center"
-                  >
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      className={classes.button}
-                      onClick={this.setModal("publishModalOpen")}
-                    >
-                      Publish
-                    </Button>
-                  </Grid>
+                  {/*{this.renderPublishButton()}*/}
                   {DividerSection}
                 </Typography>
                 {this.state.textPrompts.length > 0 ? (
