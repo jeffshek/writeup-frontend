@@ -12,6 +12,7 @@ import { serializeAPIMessageToPrompts } from "utilities/apiSerializers";
 import {
   DividerSection,
   GridLayout,
+  HowToSelectPromptBottomSection,
   HowToSelectPromptSection,
   initialValue,
   MainFooter,
@@ -413,6 +414,30 @@ export class _MainComponent extends React.Component {
     );
   };
 
+  renderHeaderAndTutorial = () => {
+    const { classes } = this.props;
+    return (
+      <Grid
+        container
+        direction="row"
+        justify="space-between"
+        alignItems="center"
+      >
+        <Grid item>{WritingHeader}</Grid>
+        <Grid item>
+          <Button
+            variant="contained"
+            color="secondary"
+            className={classes.button}
+            onClick={this.setModal("tutorialModalOpen")}
+          >
+            Tutorial
+          </Button>
+        </Grid>
+      </Grid>
+    );
+  };
+
   render() {
     const { classes } = this.props;
 
@@ -424,38 +449,23 @@ export class _MainComponent extends React.Component {
           <GridLayout classes={classes}>
             <Paper className={classes.paper}>
               <div className={classes.box}>
-                <Grid
-                  container
-                  direction="row"
-                  justify="space-between"
-                  alignItems="center"
-                >
-                  <Grid item>{WritingHeader}</Grid>
-                  <Grid item>
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      className={classes.button}
-                      onClick={this.setModal("tutorialModalOpen")}
-                    >
-                      Tutorial
-                    </Button>
-                  </Grid>
-                </Grid>
-                <Typography
-                  variant="subtitle1"
-                  gutterBottom
-                  color={"textPrimary"}
-                >
-                  <Editor
-                    value={this.state.editorValue}
-                    onChange={this.onTextChange}
-                    autoFocus={true}
-                    ref={this.textEditorRef}
-                  />
-                  {/*{this.renderPublishButton()}*/}
-                  {DividerSection}
-                </Typography>
+                {this.renderHeaderAndTutorial()}
+                <div className={classes.textBox}>
+                  <Typography
+                    variant="subtitle1"
+                    gutterBottom
+                    color={"textPrimary"}
+                  >
+                    <Editor
+                      value={this.state.editorValue}
+                      onChange={this.onTextChange}
+                      autoFocus={true}
+                      ref={this.textEditorRef}
+                    />
+                    {/*{this.renderPublishButton()}*/}
+                  </Typography>
+                </div>
+                {DividerSection}
                 {this.state.textPrompts.length > 0 ? (
                   <Fragment>
                     {HowToSelectPromptSection}
@@ -464,6 +474,7 @@ export class _MainComponent extends React.Component {
                       onTextClick={this.onTextClick}
                       textPrompts={this.state.textPrompts}
                     />
+                    {HowToSelectPromptBottomSection}
                   </Fragment>
                 ) : (
                   <LinearIndeterminate />

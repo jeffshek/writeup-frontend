@@ -5,6 +5,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/Inbox";
+import AddIcon from "@material-ui/icons/AddCircle";
 import withStyles from "@material-ui/core/styles/withStyles";
 
 const useStyles = makeStyles(theme => ({
@@ -34,7 +35,7 @@ const ListItemPrompt = ({ prompt, index, selected, onClick }) => {
       onClick={onClick}
     >
       <ListItemIcon>
-        <InboxIcon />
+        <AddIcon />
       </ListItemIcon>
       <ListItemText primary={prompt} />
     </StyledListItem>
