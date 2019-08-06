@@ -47,7 +47,7 @@ export const TutorialModal = ({
           variant="contained"
           color="secondary"
           className={classes.button}
-          onClick={applySettings}
+          onClick={setModal}
         >
           Close
         </Button>

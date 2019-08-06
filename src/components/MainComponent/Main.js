@@ -424,7 +424,24 @@ export class _MainComponent extends React.Component {
           <GridLayout classes={classes}>
             <Paper className={classes.paper}>
               <div className={classes.box}>
-                {WritingHeader}
+                <Grid
+                  container
+                  direction="row"
+                  justify="space-between"
+                  alignItems="center"
+                >
+                  <Grid item>{WritingHeader}</Grid>
+                  <Grid item>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      className={classes.button}
+                      onClick={this.setModal("tutorialModalOpen")}
+                    >
+                      Tutorial
+                    </Button>
+                  </Grid>
+                </Grid>
                 <Typography
                   variant="subtitle1"
                   gutterBottom
