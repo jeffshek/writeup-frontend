@@ -61,7 +61,7 @@ export const HowToSelectPromptSection = (
 
 export const WritingHeader = (
   <Typography color="secondary" gutterBottom variant={"h5"}>
-    Step 1. Write one word.
+    Step 1. Write a word (or a few).
   </Typography>
 );
 
