@@ -395,7 +395,7 @@ export class _MainComponent extends React.Component {
     return (
       <Fragment>
         {this.renderSettingsModal()}
-        {/*{this.renderPublishModal()}*/}
+        {this.renderPublishModal()}
         {this.renderTutorialModal()}
       </Fragment>
     );
@@ -430,7 +430,8 @@ export class _MainComponent extends React.Component {
         <Grid item>{WritingHeader}</Grid>
         <Grid item>
           <Button
-            variant="contained"
+            //variant="contained"
+            variant="outlined"
             color="secondary"
             className={classes.button}
             onClick={this.setModal("tutorialModalOpen")}
@@ -466,7 +467,7 @@ export class _MainComponent extends React.Component {
                       autoFocus={true}
                       ref={this.textEditorRef}
                     />
-                    {/*{this.renderPublishButton()}*/}
+                    {this.renderPublishButton()}
                   </Typography>
                 </div>
                 {DividerSection}
