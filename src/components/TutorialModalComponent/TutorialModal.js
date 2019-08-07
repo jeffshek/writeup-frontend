@@ -35,11 +35,14 @@ export const TutorialModal = ({
       <div style={modalStyle} className={classes.paper}>
         <br />
         <Typography variant={"h4"} align={"center"} gutterBottom>
-          📃 the boring tutorial ...
+          <span role="img" aria-label="notebook">
+            📃
+          </span>{" "}
+          the boring tutorial ...
         </Typography>
         <Carousel>
           <div>
-            <img src={tutorial_demo} />
+            <img src={tutorial_demo} alt={"tutorial of features"} />
             {/*<p className="legend">Basic Explanation</p>*/}
           </div>
         </Carousel>

@@ -339,7 +339,10 @@ export class _MainComponent extends React.Component {
 
   setModal = modalStateName => () => {
     const currentModalState = this.state[modalStateName];
-    this.setState({ [modalStateName]: !currentModalState });
+    this.setState(
+      { [modalStateName]: !currentModalState },
+      this.focusTextInput
+    );
   };
 
   renderSettingsModal = () => {
