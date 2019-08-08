@@ -18,14 +18,30 @@ import { publishPrompt } from "services/api";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-const PromptPublishedSuccess = ({ promptUUID }) => {
+const PromptPublishedSuccess = ({ promptUUID, title }) => {
   if (!promptUUID) {
     return null;
   }
 
+  const url = `https://writeup.ai/prompts/${promptUUID}`;
+
   return (
     <Fragment>
-      <Typography variant={"h6"}>Published!</Typography>
+      <br />
+      <Typography variant={"h4"} gutterBottom>
+        Your Article Has Been Published!{" "}
+        <span role="img" aria-label="party">
+          🎉
+        </span>
+      </Typography>
+      <br />
+      <Typography variant={"h6"}>Title: {title}</Typography>
+      <Typography variant={"h6"} style={{ display: "inline" }}>
+        Link:{" "}
+        <a href={"https:/www.google.com"} target={"_blank"}>
+          {url}
+        </a>
+      </Typography>
     </Fragment>
   );
 };
@@ -43,6 +59,7 @@ export const PublishModal = ({
   const [state, setState] = React.useState({
     publishedUUID: ""
   });
+  const { title, instagram, share_state, text } = settings;
 
   const handleTextChange = name => event => {
     const value = event.target.value;
@@ -51,7 +68,7 @@ export const PublishModal = ({
 
   const publishAction = () => {
     setSettings("publishDisabled")(true);
-    const { title, instagram, share_state, text } = settings;
+    //const { title, instagram, share_state, text } = settings;
     publishPrompt({ title, instagram, share_state, text }).then(response => {
       setState({ publishedUUID: response.uuid });
     });
@@ -73,7 +90,10 @@ export const PublishModal = ({
         onClose={setModal}
       >
         <div style={modalStyle} className={classes.paper}>
-          <PromptPublishedSuccess promptUUID={state.publishedUUID} />
+          <PromptPublishedSuccess
+            promptUUID={state.publishedUUID}
+            title={title}
+          />
         </div>
       </Modal>
     );

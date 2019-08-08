@@ -56,13 +56,13 @@ export class _MainComponent extends React.Component {
       length: 19,
       batch_size: 7,
       settingsModalOpen: false,
-      publishModalOpen: true,
+      publishModalOpen: false,
       tutorialModalOpen: false,
       // during saving, let only one request happen
       publishDisabled: false,
 
       // publish sections
-      title: "Publish A Story",
+      title: "",
       email: "",
       website: "",
       instagram: "",
