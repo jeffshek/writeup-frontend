@@ -28,6 +28,7 @@ import Button from "@material-ui/core/Button/Button";
 import Grid from "@material-ui/core/Grid/Grid";
 import { PublishModal } from "components/PublishModalComponent/PublishModal";
 import { TutorialModal } from "components/TutorialModalComponent/TutorialModal";
+import { Helmet } from "react-helmet";
 
 export class _MainComponent extends React.Component {
   constructor(props) {
@@ -463,6 +464,10 @@ export class _MainComponent extends React.Component {
 
     return (
       <Fragment>
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>writeup.ai | write fast.</title>
+        </Helmet>
         <TopbarComponent setModal={this.setModal("settingsModalOpen")} />
         {this.renderModals()}
         <div className={classes.root} onKeyDown={this.onKeyPressed}>
