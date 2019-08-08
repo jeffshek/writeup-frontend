@@ -1,11 +1,11 @@
 import React from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import { MainComponent } from "components/MainComponent/Main";
-import { ShareComponent } from "components/SharePromptComponent/Share";
+import { PublishedPromptComponent } from "components/pages/PublishedPrompt";
 
 export default props => (
   <BrowserRouter>
     <Route exact path="/" component={MainComponent} />
-    <Route exact path="/prompts/:uuid/" component={ShareComponent} />
+    <Route exact path="/prompts/:uuid/" component={PublishedPromptComponent} />
   </BrowserRouter>
 );

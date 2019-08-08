@@ -1,11 +1,12 @@
 import React, { Fragment } from "react";
-import { TopbarComponent } from "components/TopbarComponent/Topbar";
-import { GridLayout } from "components/MainComponent/utilities";
+import { TopbarComponent } from "../TopbarComponent/Topbar";
+import { GridLayout } from "../MainComponent/utilities";
 import Paper from "@material-ui/core/Paper/Paper";
 import { makeStyles } from "@material-ui/core";
-import backgroundShape from "images/shape.svg";
+import backgroundShape from "../../images/shape.svg";
 import Typography from "@material-ui/core/Typography";
-import { lorem_ipsum_five_paragraphs } from "utilities/lorem";
+import { lorem_ipsum_five_paragraphs } from "../../utilities/lorem";
+import { withRouter } from "react-router-dom";
 
 const titleStyles = makeStyles(theme => ({
   composed: {
@@ -19,17 +20,22 @@ const TitleHeader = ({ title, author }) => {
 
   return (
     <Fragment>
-      <Typography color="secondary" variant={"h3"}>
-        {title}
-      </Typography>
-      <Typography
-        color="secondary"
-        gutterBottom
-        variant={"subtitle1"}
-        className={classes.composed}
-      >
-        Composed and Written By {author}
-      </Typography>
+      {title ? (
+        <Typography color="secondary" variant={"h3"}>
+          {title}
+        </Typography>
+      ) : null}
+
+      {author ? (
+        <Typography
+          color="secondary"
+          gutterBottom
+          variant={"subtitle1"}
+          className={classes.composed}
+        >
+          Composed and Written By {author}
+        </Typography>
+      ) : null}
     </Fragment>
   );
 };
@@ -62,7 +68,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const SharedArticle = ({ text }) => {
+const PromptText = ({ text }) => {
   return (
     <Fragment>
       <Typography style={{ whiteSpace: "pre-line" }} color={"textPrimary"}>
@@ -110,8 +116,18 @@ const Footer = () => {
   );
 };
 
-export const ShareComponent = () => {
+export const _PublishedPromptComponent = props => {
   const classes = useStyles();
+  const prompt_uuid = props.match.params.uuid;
+  const [state, setState] = React.useState({
+    text: "",
+    prompt_uuid: prompt_uuid,
+    title: "",
+    email: "",
+    website: "",
+    instagram: "",
+    twitter: ""
+  });
 
   return (
     <Fragment>
@@ -120,8 +136,8 @@ export const ShareComponent = () => {
         <GridLayout classes={classes}>
           <Paper className={classes.paper}>
             <div className={classes.box}>
-              <TitleHeader title={"The Beginning"} author={"Jeff"} />
-              <SharedArticle text={lorem_ipsum_five_paragraphs} />
+              <TitleHeader title={state.title} author={state.email} />
+              <PromptText text={lorem_ipsum_five_paragraphs} />
             </div>
           </Paper>
           <br />
@@ -131,3 +147,5 @@ export const ShareComponent = () => {
     </Fragment>
   );
 };
+
+export const PublishedPromptComponent = withRouter(_PublishedPromptComponent);
