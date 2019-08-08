@@ -35,7 +35,7 @@ export const useModalStyles = makeStyles(theme => ({
   }
 }));
 
-export const useTutorialModalStyles = makeStyles(theme => ({
+export const useWideModalStyles = makeStyles(theme => ({
   paper: {
     position: "absolute",
     width: 800,
@@ -55,11 +55,8 @@ export const useTutorialModalStyles = makeStyles(theme => ({
   selectEmpty: {
     marginTop: theme.spacing(2)
   },
-  rightGridButton: {
-    marginRight: "2rem"
-  },
+  rightGridButton: {},
   circularProgress: {
-    //margin: theme.spacing(2),
     padding: theme.spacing(1)
   }
 }));

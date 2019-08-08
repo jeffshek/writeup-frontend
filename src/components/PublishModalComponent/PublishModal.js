@@ -4,7 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import {
   getModalStyle,
-  useTutorialModalStyles
+  useWideModalStyles
 } from "components/Common/ModalStyling";
 import TextField from "@material-ui/core/TextField/TextField";
 import Grid from "@material-ui/core/Grid";
@@ -38,7 +38,7 @@ export const PublishModal = ({
   applySettings,
   publishDisabled
 }) => {
-  const classes = useTutorialModalStyles();
+  const classes = useWideModalStyles();
   const [modalStyle] = React.useState(getModalStyle);
   const [state, setState] = React.useState({
     publishedUUID: ""
@@ -201,10 +201,17 @@ export const PublishModal = ({
             <Grid item xs={6} />
           </Grid>
         </form>
-        <PromptPublishedSuccess promptUUID={state.publishedUUID} />
-
-        <Grid container direction="row" justify="flex-end" alignItems="center">
-          <Grid item xs={1} />
+        <Grid
+          container
+          direction="row"
+          justify="flex-end"
+          alignItems="flex-end"
+        >
+          <Grid item xs={1}>
+            {publishDisabled ? (
+              <CircularProgress className={classes.circularProgress} />
+            ) : null}
+          </Grid>
           <Grid item xs={2}>
             <Button
               variant="contained"
@@ -213,9 +220,6 @@ export const PublishModal = ({
               onClick={publishAction}
               disabled={publishDisabled}
             >
-              {publishDisabled ? (
-                <CircularProgress className={classes.circularProgress} />
-              ) : null}
               Publish!
             </Button>
           </Grid>
