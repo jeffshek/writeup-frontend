@@ -15,6 +15,10 @@
 
 - Design inspirations and code taken from [Material-Sense](https://alexanmtz.github.io/material-sense/)
 
+### Code Quality
+
+- This was written pretty quickly, so I'm not that proud of this repo's code quality. I wouldn't use it for inspiration. I'm much prouder of the backend repo than I am of the frontend.
+
 ### Open Sourced Backend (Mostly)
 
 - [Python/Django Backend](https://github.com/jeffshek/open)

@@ -467,7 +467,7 @@ export class _MainComponent extends React.Component {
                       autoFocus={true}
                       ref={this.textEditorRef}
                     />
-                    {this.renderPublishButton()}
+                    {/*{this.renderPublishButton()}*/}
                   </Typography>
                 </div>
                 {DividerSection}
@@ -487,7 +487,6 @@ export class _MainComponent extends React.Component {
               </div>
             </Paper>
             <br />
-
             <MainFooter classes={classes} />
           </GridLayout>
         </div>
