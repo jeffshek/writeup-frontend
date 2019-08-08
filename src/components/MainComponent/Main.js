@@ -49,14 +49,17 @@ export class _MainComponent extends React.Component {
       // create a false lastSent to ensure first send is easy
       lastSent: moment().subtract(5, "seconds"),
       temperature: 0.5,
+      // lower top_k made all the prompts look the same
       top_k: 30,
       // 45 felt like a good number
       // 17 just loads way faster
       length: 19,
       batch_size: 7,
       settingsModalOpen: false,
-      publishModalOpen: false,
-      tutorialModalOpen: true
+      publishModalOpen: true,
+      tutorialModalOpen: false,
+      // during saving, let only one request happen
+      publishDisabled: false
     };
   }
 
@@ -375,6 +378,7 @@ export class _MainComponent extends React.Component {
         setModal={this.setModal("publishModalOpen")}
         settings={this.state}
         setSettings={this.setSettings}
+        publishDisabled={this.state.publishDisabled}
       />
     );
   };
@@ -470,7 +474,7 @@ export class _MainComponent extends React.Component {
                       autoFocus={true}
                       ref={this.textEditorRef}
                     />
-                    {/*{this.renderPublishButton()}*/}
+                    {this.renderPublishButton()}
                   </Typography>
                 </div>
                 {DividerSection}
