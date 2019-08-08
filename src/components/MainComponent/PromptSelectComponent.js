@@ -16,6 +16,7 @@ const useStyles = makeStyles(theme => ({
 
 const StyledListItem = withStyles(theme => ({
   root: {
+    padding: "0.25rem",
     "&:focus": {
       backgroundColor: theme.palette.primary.main,
       "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
