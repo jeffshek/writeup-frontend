@@ -1,12 +1,12 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { TopbarComponent } from "../TopbarComponent/Topbar";
 import { GridLayout } from "../MainComponent/utilities";
 import Paper from "@material-ui/core/Paper/Paper";
 import { makeStyles } from "@material-ui/core";
 import backgroundShape from "../../images/shape.svg";
 import Typography from "@material-ui/core/Typography";
-import { lorem_ipsum_five_paragraphs } from "../../utilities/lorem";
 import { withRouter } from "react-router-dom";
+import { getPrompt } from "services/resources";
 
 const titleStyles = makeStyles(theme => ({
   composed: {
@@ -129,6 +129,21 @@ export const _PublishedPromptComponent = props => {
     twitter: ""
   });
 
+  const fetchPromptData = () => {
+    getPrompt({ prompt_uuid }).then(response => {
+      setState({
+        text: response.text,
+        email: response.email,
+        instagram: response.instagram,
+        title: response.title,
+        twitter: response.twitter,
+        website: response.website
+      });
+    });
+  };
+
+  useEffect(() => fetchPromptData());
+
   return (
     <Fragment>
       <TopbarComponent showSettings={false} />
@@ -136,8 +151,9 @@ export const _PublishedPromptComponent = props => {
         <GridLayout classes={classes}>
           <Paper className={classes.paper}>
             <div className={classes.box}>
+              {state.text ? null : "Loading ... "}
               <TitleHeader title={state.title} author={state.email} />
-              <PromptText text={lorem_ipsum_five_paragraphs} />
+              <PromptText text={state.text} />
             </div>
           </Paper>
           <br />

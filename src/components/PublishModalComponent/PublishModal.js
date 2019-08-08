@@ -59,7 +59,8 @@ export const PublishModal = ({
   const [state, setState] = React.useState({
     publishedUUID: ""
   });
-  const { title, instagram, share_state, text } = settings;
+  const { title, instagram, share_state } = settings;
+  const text = settings.editorValue.document.text;
 
   const handleTextChange = name => event => {
     const value = event.target.value;
@@ -68,7 +69,7 @@ export const PublishModal = ({
 
   const publishAction = () => {
     setSettings("publishDisabled")(true);
-    //const { title, instagram, share_state, text } = settings;
+
     publishPrompt({ title, instagram, share_state, text }).then(response => {
       setState({ publishedUUID: response.uuid });
     });
@@ -76,7 +77,7 @@ export const PublishModal = ({
 
   const onSelectChange = event => {
     const value = event.target.value;
-    setSettings("share_option")(value);
+    setSettings("share_state")(value);
   };
 
   const genericHelperTextLabel = "Shown beside your article. Optional";
@@ -199,7 +200,7 @@ export const PublishModal = ({
               <FormControl className={classes.formControl}>
                 <InputLabel htmlFor="age-simple">Share Status</InputLabel>
                 <Select
-                  value={settings.share_option}
+                  value={settings.share_state}
                   inputProps={{
                     name: "publishOptions",
                     //id:   "age-simple", iuno what this really does

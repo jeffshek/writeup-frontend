@@ -67,7 +67,7 @@ export class _MainComponent extends React.Component {
       website: "",
       instagram: "",
       twitter: "",
-      share_option: "published"
+      share_state: "published"
     };
   }
 
