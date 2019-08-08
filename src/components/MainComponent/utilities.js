@@ -105,7 +105,7 @@ export const promptTwo = `${lorem_twenty_words_alternative} `;
 export const promptThree = `${lorem_twenty_words} 3 `;
 export const promptFour = `${lorem_twenty_words_alternative} 4 `;
 
-export const SPECIAL_CHARACTERS = [",", "!", ".", '"'];
+export const SPECIAL_CHARACTERS = [",", "!", ".", '"', "-"];
 export const GridLayout = ({ classes, children }) => {
   // extracted because i really hate seeing the 20 layers of indent in renders
   return (

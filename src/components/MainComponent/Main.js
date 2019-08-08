@@ -49,7 +49,7 @@ export class _MainComponent extends React.Component {
       // create a false lastSent to ensure first send is easy
       lastSent: moment().subtract(5, "seconds"),
       temperature: 0.5,
-      top_k: 10,
+      top_k: 30,
       // 45 felt like a good number
       // 17 just loads way faster
       length: 19,
@@ -289,8 +289,11 @@ export class _MainComponent extends React.Component {
       const firstCharacterOfTextIsSpecial = SPECIAL_CHARACTERS.includes(
         firstCharacterOfText
       );
+      const firstCharacterOfTextIsSpace = firstCharacterOfText === " ";
 
       if (lastCharacterIsSpace && firstCharacterOfTextIsSpecial) {
+        editor.moveAnchorBackward(1).insertText(text);
+      } else if (firstCharacterOfTextIsSpace && lastCharacterIsSpace) {
         editor.moveAnchorBackward(1).insertText(text);
       } else {
         editor.insertText(text);
