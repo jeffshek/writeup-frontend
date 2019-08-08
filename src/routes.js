@@ -6,6 +6,6 @@ import { ShareComponent } from "components/SharePromptComponent/Share";
 export default props => (
   <BrowserRouter>
     <Route exact path="/" component={MainComponent} />
-    <Route exact path="/shared/prompts/:uuid/" component={ShareComponent} />
+    <Route exact path="/prompts/:uuid/" component={ShareComponent} />
   </BrowserRouter>
 );
