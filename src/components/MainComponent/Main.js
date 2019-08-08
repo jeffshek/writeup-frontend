@@ -59,7 +59,15 @@ export class _MainComponent extends React.Component {
       publishModalOpen: true,
       tutorialModalOpen: false,
       // during saving, let only one request happen
-      publishDisabled: false
+      publishDisabled: false,
+
+      // publish sections
+      title: "",
+      email: "",
+      website: "",
+      instagram: "",
+      twitter: "",
+      share_option: ""
     };
   }
 

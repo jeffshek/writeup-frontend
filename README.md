@@ -17,7 +17,7 @@
 
 ### Code Quality
 
-- This was written pretty quickly, so I'm not that proud of this repo's code quality. I wouldn't use it for inspiration. I'm much prouder of the backend repo than I am of the frontend.
+- This was written pretty quickly, so I'm not that proud of some antipatterns I used in repo. I wouldn't use it for inspiration. I'm much prouder of the backend repo than I am of the frontend.
 
 ### Open Sourced Backend (Mostly)
 
