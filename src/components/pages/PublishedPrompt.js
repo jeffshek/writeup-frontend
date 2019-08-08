@@ -151,7 +151,6 @@ export const _PublishedPromptComponent = props => {
         <meta charSet="utf-8" />
         <title>writeup.ai | {state.title} </title>
       </Helmet>
-
       <TopbarComponent showSettings={false} />
       <div className={classes.root}>
         <GridLayout classes={classes}>
