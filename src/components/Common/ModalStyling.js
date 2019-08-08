@@ -54,5 +54,12 @@ export const useTutorialModalStyles = makeStyles(theme => ({
   },
   selectEmpty: {
     marginTop: theme.spacing(2)
+  },
+  rightGridButton: {
+    marginRight: "2rem"
+  },
+  circularProgress: {
+    //margin: theme.spacing(2),
+    padding: theme.spacing(1)
   }
 }));

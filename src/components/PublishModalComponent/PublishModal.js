@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import Modal from "@material-ui/core/Modal";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
@@ -14,6 +14,21 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import { publishPrompt } from "services/api";
+
+import CircularProgress from "@material-ui/core/CircularProgress";
+
+const PromptPublishedSuccess = ({ promptUUID }) => {
+  if (!promptUUID) {
+    return null;
+  }
+
+  return (
+    <Fragment>
+      <Typography variant={"h6"}>Published!</Typography>
+    </Fragment>
+  );
+};
 
 export const PublishModal = ({
   modalOpen,
@@ -25,6 +40,9 @@ export const PublishModal = ({
 }) => {
   const classes = useTutorialModalStyles();
   const [modalStyle] = React.useState(getModalStyle);
+  const [state, setState] = React.useState({
+    publishedUUID: ""
+  });
 
   const handleTextChange = name => event => {
     const value = event.target.value;
@@ -32,19 +50,34 @@ export const PublishModal = ({
   };
 
   const publishAction = () => {
-    console.log("Publishing Actions");
     setSettings("publishDisabled")(true);
+    const { title, instagram, share_state, text } = settings;
+    publishPrompt({ title, instagram, share_state, text }).then(response => {
+      setState({ publishedUUID: response.uuid });
+    });
   };
 
   const onSelectChange = event => {
-    //[event.target.name]: event.target.value,
-    //const name = event.target.name;
     const value = event.target.value;
-    //console.log(name, value);
     setSettings("share_option")(value);
   };
 
   const genericHelperTextLabel = "Shown beside your article. Optional";
+
+  if (state.publishedUUID) {
+    return (
+      <Modal
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+        open={modalOpen}
+        onClose={setModal}
+      >
+        <div style={modalStyle} className={classes.paper}>
+          <PromptPublishedSuccess promptUUID={state.publishedUUID} />
+        </div>
+      </Modal>
+    );
+  }
 
   return (
     <Modal
@@ -81,7 +114,7 @@ export const PublishModal = ({
             </Grid>
           </Grid>
           <Typography variant={"h6"}>
-            Get Famous For Your Writing (Optional)
+            Get Known For Your Writing (Optional)
           </Typography>
           <Grid container direction="row" justify="center" alignItems="center">
             <Grid item xs={5}>
@@ -139,7 +172,7 @@ export const PublishModal = ({
               />
             </Grid>
           </Grid>
-
+          <br />
           <Typography variant={"h6"}>Sharing Options</Typography>
           <Grid container direction="row" justify="center" alignItems="center">
             <Grid item xs={5}>
@@ -168,15 +201,25 @@ export const PublishModal = ({
             <Grid item xs={6} />
           </Grid>
         </form>
-        <Button
-          variant="contained"
-          color="secondary"
-          className={classes.button}
-          onClick={publishAction}
-          disabled={publishDisabled}
-        >
-          Publish!
-        </Button>
+        <PromptPublishedSuccess promptUUID={state.publishedUUID} />
+
+        <Grid container direction="row" justify="flex-end" alignItems="center">
+          <Grid item xs={1} />
+          <Grid item xs={2}>
+            <Button
+              variant="contained"
+              color="secondary"
+              className={classes.rightGridButton}
+              onClick={publishAction}
+              disabled={publishDisabled}
+            >
+              {publishDisabled ? (
+                <CircularProgress className={classes.circularProgress} />
+              ) : null}
+              Publish!
+            </Button>
+          </Grid>
+        </Grid>
       </div>
     </Modal>
   );

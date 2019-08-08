@@ -62,12 +62,12 @@ export class _MainComponent extends React.Component {
       publishDisabled: false,
 
       // publish sections
-      title: "",
+      title: "Publish A Story",
       email: "",
       website: "",
       instagram: "",
       twitter: "",
-      share_option: ""
+      share_option: "published"
     };
   }
 
@@ -75,7 +75,7 @@ export class _MainComponent extends React.Component {
     this.websocket = new ReactWebSocket({
       url: WebSocketURL,
       debug: true,
-      reconnect: true,
+      shouldReconnect: true,
       onMessage: this.handleWebSocketData,
       onOpen: this.webSocketConnected
     });

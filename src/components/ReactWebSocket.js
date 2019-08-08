@@ -22,16 +22,16 @@ export class ReactWebSocket extends React.Component {
   };
 
   generateInterval(k) {
-    if (this.props.reconnectIntervalInMilliSeconds > 0) {
-      return this.props.reconnectIntervalInMilliSeconds;
-    }
-    // default base results in 1000 milliseconds(?), and increments per attempt
-    const result = Math.min(30, Math.pow(2, k) - 1) * 1000;
+    // i copied this from online, this thing is unreadable
+    // default base results in 5000 milliseconds(?), and increments per attempt
+    const result = Math.min(30, Math.pow(2, k) - 1) * 5000;
     return result;
   }
 
   setupWebSocket = () => {
     let connection = this.ws;
+
+    this.generateInterval(this.attempts);
 
     connection.onopen = () => {
       this.logMessage("WebSocket Connected");
@@ -46,9 +46,8 @@ export class ReactWebSocket extends React.Component {
     connection.onclose = () => {
       this.logMessage("WebSocket Disconnected");
 
-      //if (typeof this.props.onClose === "function") this.props.onClose();
-
       if (this.props.shouldReconnect) {
+        console.log("WebSocket Disconnected, Trying To Reconnect");
         let time = this.generateInterval(this.attempts);
         this.timeoutID = setTimeout(() => {
           this.attempts += 1;
