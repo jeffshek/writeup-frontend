@@ -51,7 +51,7 @@ export const SettingsModal = ({
         {DividerSection}
 
         <Typography id="discrete-slider" variant={"h6"}>
-          Generated Word Length | {settings.length}
+          Generated Sentence Length | {settings.length}
         </Typography>
         <Slider
           defaultValue={settings.length}
@@ -86,14 +86,13 @@ export const SettingsModal = ({
           onChange={handleSettingsChange("batch_size")}
         />
         <Typography variant={"body2"}>
-          # of Simultaneously Different Suggestions. More suggestions generate
-          slower. Max 10.
+          # of Simultaneously Different Suggestions. Max 10.
         </Typography>
 
         {DividerSection}
 
         <Typography id="discrete-slider" variant={"h6"}>
-          Consistency | {settings.top_k}
+          Prompt Diversity | {settings.top_k}
         </Typography>
 
         <Slider
@@ -107,8 +106,8 @@ export const SettingsModal = ({
           onChange={handleSettingsChange("top_k")}
         />
         <Typography variant={"body2"}>
-          Also known as Top K, a higher value results in more similar
-          suggestions. Max 40.
+          Also known as Top K, a higher value results in different similar
+          suggestions amongst prompts. Max 40.
         </Typography>
         <Button
           variant="contained"
