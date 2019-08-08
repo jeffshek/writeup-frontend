@@ -7,6 +7,7 @@ import backgroundShape from "../../images/shape.svg";
 import Typography from "@material-ui/core/Typography";
 import { withRouter } from "react-router-dom";
 import { getPrompt } from "services/resources";
+import { Helmet } from "react-helmet";
 
 const titleStyles = makeStyles(theme => ({
   composed: {
@@ -142,10 +143,15 @@ export const _PublishedPromptComponent = props => {
     });
   };
 
-  useEffect(() => fetchPromptData());
+  useEffect(() => fetchPromptData(), []);
 
   return (
     <Fragment>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>writeup.ai | {state.title} </title>
+      </Helmet>
+
       <TopbarComponent showSettings={false} />
       <div className={classes.root}>
         <GridLayout classes={classes}>
