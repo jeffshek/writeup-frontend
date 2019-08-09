@@ -6,7 +6,7 @@ import Paper from "@material-ui/core/Paper/Paper";
 import Typography from "@material-ui/core/Typography/Typography";
 import { TopbarComponent } from "components/TopbarComponent/Topbar";
 import { Editor } from "slate-react";
-import { PromptSelectComponent } from "components/MainComponent/PromptSelectComponent";
+import { PromptSelectComponent } from "components/PromptSelectComponent";
 import { ReactWebSocket } from "components/ReactWebSocket";
 import { serializeAPIMessageToPrompts } from "utilities/apiSerializers";
 import {
@@ -16,14 +16,16 @@ import {
   HowToSelectPromptSection,
   initialValue,
   MainFooter,
-  SPECIAL_CHARACTERS,
   WritingHeader
-} from "components/MainComponent/utilities";
+} from "components/MainComponent/Layouts";
 
 import moment from "moment";
 import { LinearIndeterminate } from "components/Loading";
 import { SettingsModal } from "components/Modals/SettingsModal";
-import { WebSocketURL } from "components/MainComponent/constants";
+import {
+  SPECIAL_CHARACTERS,
+  WebSocketURL
+} from "components/MainComponent/constants";
 import Button from "@material-ui/core/Button/Button";
 import Grid from "@material-ui/core/Grid/Grid";
 import { PublishModal } from "components/Modals/PublishModal";
@@ -33,6 +35,8 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 
 // this file is a beast and should be refactored into 2-3 separate files, sorry
+// an area of difficulty is writing apps have a lot of "state" management
+// which makes it harder to refactor and parse
 
 export class _MainComponent extends React.Component {
   constructor(props) {

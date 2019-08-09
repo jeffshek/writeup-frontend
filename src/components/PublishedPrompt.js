@@ -1,17 +1,17 @@
 import React, { Fragment, useEffect } from "react";
-import { TopbarComponent } from "../TopbarComponent/Topbar";
-import { GridLayout } from "../MainComponent/utilities";
+import { TopbarComponent } from "./TopbarComponent/Topbar";
+import { GridLayout } from "./MainComponent/Layouts";
 import Paper from "@material-ui/core/Paper/Paper";
 import { makeStyles } from "@material-ui/core";
-import backgroundShape from "../../images/shape.svg";
+import backgroundShape from "../images/shape.svg";
 import Typography from "@material-ui/core/Typography";
 import { withRouter } from "react-router-dom";
-import { getPrompt } from "services/resources";
+import { getPrompt } from "../services/resources";
 import { Helmet } from "react-helmet";
 
-import TwitterIcon from "images/icons/twitter.png";
-import InstagramIcon from "images/icons/instagram.png";
-import WebsiteIcon from "images/icons/website.png";
+import TwitterIcon from "../images/icons/twitter.png";
+import InstagramIcon from "../images/icons/instagram.png";
+import WebsiteIcon from "../images/icons/website.png";
 import Grid from "@material-ui/core/Grid";
 
 const titleStyles = makeStyles(theme => ({
