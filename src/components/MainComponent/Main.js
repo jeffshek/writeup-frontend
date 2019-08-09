@@ -68,7 +68,7 @@ export class _MainComponent extends React.Component {
       // publish sections
       //title: "Of Lions and Monkeys",
       //email: "email@gmail.com",
-      //website: "senrigan.io",
+      //website: "www.senrigan.io",
       //instagram: "shekgram",
       //twitter: "shekkery",
       //share_state: "published"

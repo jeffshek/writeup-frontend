@@ -9,34 +9,103 @@ import { withRouter } from "react-router-dom";
 import { getPrompt } from "services/resources";
 import { Helmet } from "react-helmet";
 
+import TwitterIcon from "images/icons/twitter.png";
+import InstagramIcon from "images/icons/instagram.png";
+import WebsiteIcon from "images/icons/website.png";
+import Grid from "@material-ui/core/Grid";
+
 const titleStyles = makeStyles(theme => ({
   composed: {
     marginLeft: "2rem",
-    marginBottom: "2rem"
+    marginBottom: "0rem"
   }
 }));
 
-const TitleHeader = ({ title, author }) => {
+const TitleHeader = ({ title, author, twitter, website, instagram }) => {
   const classes = titleStyles();
+
+  const twitterURL = `https://www.twitter.com/${twitter}`;
+  const instagramURL = `https://www.instagram.com/${instagram}`;
+  const websiteURL = `//${website}`;
 
   return (
     <Fragment>
-      {title ? (
-        <Typography color="secondary" variant={"h3"}>
-          {title}
-        </Typography>
-      ) : null}
+      <Grid
+        container
+        direction="row"
+        justify="space-between"
+        alignItems="center"
+      >
+        <Grid item>
+          {title ? (
+            <Typography color="secondary" variant={"h3"}>
+              {title}
+            </Typography>
+          ) : null}
 
-      {author ? (
-        <Typography
-          color="secondary"
-          gutterBottom
-          variant={"subtitle1"}
-          className={classes.composed}
-        >
-          Composed and Written By {author}
-        </Typography>
-      ) : null}
+          {author ? (
+            <Typography
+              color="secondary"
+              variant={"subtitle1"}
+              className={classes.composed}
+            >
+              Composed and Written By {author}
+            </Typography>
+          ) : null}
+        </Grid>
+        <Grid item>
+          <div className={classes.composed}>
+            {twitter ? (
+              <Typography
+                color="secondary"
+                variant={"subtitle1"}
+                display={"inline"}
+                style={{ marginRight: ".25rem" }}
+              >
+                <a
+                  href={twitterURL}
+                  target={"_blank"}
+                  rel="noopener noreferrer"
+                >
+                  <img src={TwitterIcon} />
+                </a>
+              </Typography>
+            ) : null}
+            {instagram ? (
+              <Typography
+                color="secondary"
+                variant={"subtitle1"}
+                display={"inline"}
+                style={{ marginRight: ".25rem" }}
+              >
+                <a
+                  href={instagramURL}
+                  target={"_blank"}
+                  rel="noopener noreferrer"
+                >
+                  <img src={InstagramIcon} />
+                </a>
+              </Typography>
+            ) : null}
+            {website ? (
+              <Typography
+                color="secondary"
+                variant={"subtitle1"}
+                display={"inline"}
+                style={{ marginRight: ".25rem" }}
+              >
+                <a
+                  href={websiteURL}
+                  target={"_blank"}
+                  rel="noopener noreferrer"
+                >
+                  <img src={WebsiteIcon} />
+                </a>
+              </Typography>
+            ) : null}
+          </div>
+        </Grid>
+      </Grid>
     </Fragment>
   );
 };
@@ -161,7 +230,14 @@ export const _PublishedPromptComponent = props => {
           <Paper className={classes.paper}>
             <div className={classes.box}>
               {state.text ? null : "Loading ... "}
-              <TitleHeader title={state.title} author={state.email} />
+              <TitleHeader
+                title={state.title}
+                author={state.email}
+                instagram={state.instagram}
+                twitter={state.twitter}
+                website={state.website}
+              />
+              <br />
               <PromptText text={state.text} />
             </div>
           </Paper>
