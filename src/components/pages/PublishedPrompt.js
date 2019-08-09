@@ -1,11 +1,13 @@
-import React, { Fragment } from "react";
-import { TopbarComponent } from "components/TopbarComponent/Topbar";
-import { GridLayout } from "components/MainComponent/utilities";
+import React, { Fragment, useEffect } from "react";
+import { TopbarComponent } from "../TopbarComponent/Topbar";
+import { GridLayout } from "../MainComponent/utilities";
 import Paper from "@material-ui/core/Paper/Paper";
 import { makeStyles } from "@material-ui/core";
-import backgroundShape from "images/shape.svg";
+import backgroundShape from "../../images/shape.svg";
 import Typography from "@material-ui/core/Typography";
-import { lorem_ipsum_five_paragraphs } from "utilities/lorem";
+import { withRouter } from "react-router-dom";
+import { getPrompt } from "services/resources";
+import { Helmet } from "react-helmet";
 
 const titleStyles = makeStyles(theme => ({
   composed: {
@@ -19,17 +21,22 @@ const TitleHeader = ({ title, author }) => {
 
   return (
     <Fragment>
-      <Typography color="secondary" variant={"h3"}>
-        {title}
-      </Typography>
-      <Typography
-        color="secondary"
-        gutterBottom
-        variant={"subtitle1"}
-        className={classes.composed}
-      >
-        Composed and Written By {author}
-      </Typography>
+      {title ? (
+        <Typography color="secondary" variant={"h3"}>
+          {title}
+        </Typography>
+      ) : null}
+
+      {author ? (
+        <Typography
+          color="secondary"
+          gutterBottom
+          variant={"subtitle1"}
+          className={classes.composed}
+        >
+          Composed and Written By {author}
+        </Typography>
+      ) : null}
     </Fragment>
   );
 };
@@ -62,7 +69,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const SharedArticle = ({ text }) => {
+const PromptText = ({ text }) => {
   return (
     <Fragment>
       <Typography style={{ whiteSpace: "pre-line" }} color={"textPrimary"}>
@@ -110,18 +117,48 @@ const Footer = () => {
   );
 };
 
-export const ShareComponent = () => {
+export const _PublishedPromptComponent = props => {
   const classes = useStyles();
+  const prompt_uuid = props.match.params.uuid;
+  const [state, setState] = React.useState({
+    text: "",
+    prompt_uuid: prompt_uuid,
+    title: "",
+    email: "",
+    website: "",
+    instagram: "",
+    twitter: ""
+  });
+
+  const fetchPromptData = () => {
+    getPrompt({ prompt_uuid }).then(response => {
+      setState({
+        text: response.text,
+        email: response.email,
+        instagram: response.instagram,
+        title: response.title,
+        twitter: response.twitter,
+        website: response.website
+      });
+    });
+  };
+
+  useEffect(() => fetchPromptData(), []);
 
   return (
     <Fragment>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>writeup.ai | {state.title} </title>
+      </Helmet>
       <TopbarComponent showSettings={false} />
       <div className={classes.root}>
         <GridLayout classes={classes}>
           <Paper className={classes.paper}>
             <div className={classes.box}>
-              <TitleHeader title={"The Beginning"} author={"Jeff"} />
-              <SharedArticle text={lorem_ipsum_five_paragraphs} />
+              {state.text ? null : "Loading ... "}
+              <TitleHeader title={state.title} author={state.email} />
+              <PromptText text={state.text} />
             </div>
           </Paper>
           <br />
@@ -131,3 +168,5 @@ export const ShareComponent = () => {
     </Fragment>
   );
 };
+
+export const PublishedPromptComponent = withRouter(_PublishedPromptComponent);

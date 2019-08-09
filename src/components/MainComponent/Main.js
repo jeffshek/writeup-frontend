@@ -28,6 +28,7 @@ import Button from "@material-ui/core/Button/Button";
 import Grid from "@material-ui/core/Grid/Grid";
 import { PublishModal } from "components/PublishModalComponent/PublishModal";
 import { TutorialModal } from "components/TutorialModalComponent/TutorialModal";
+import { Helmet } from "react-helmet";
 
 export class _MainComponent extends React.Component {
   constructor(props) {
@@ -49,6 +50,7 @@ export class _MainComponent extends React.Component {
       // create a false lastSent to ensure first send is easy
       lastSent: moment().subtract(5, "seconds"),
       temperature: 0.5,
+      // lower top_k made all the prompts look the same
       top_k: 30,
       // 45 felt like a good number
       // 17 just loads way faster
@@ -56,7 +58,17 @@ export class _MainComponent extends React.Component {
       batch_size: 7,
       settingsModalOpen: false,
       publishModalOpen: false,
-      tutorialModalOpen: true
+      tutorialModalOpen: true,
+      // during saving, let only one request happen
+      publishDisabled: false,
+
+      // publish sections
+      title: "",
+      email: "",
+      website: "",
+      instagram: "",
+      twitter: "",
+      share_state: "published"
     };
   }
 
@@ -64,7 +76,7 @@ export class _MainComponent extends React.Component {
     this.websocket = new ReactWebSocket({
       url: WebSocketURL,
       debug: true,
-      reconnect: true,
+      shouldReconnect: true,
       onMessage: this.handleWebSocketData,
       onOpen: this.webSocketConnected
     });
@@ -375,6 +387,7 @@ export class _MainComponent extends React.Component {
         setModal={this.setModal("publishModalOpen")}
         settings={this.state}
         setSettings={this.setSettings}
+        publishDisabled={this.state.publishDisabled}
       />
     );
   };
@@ -451,6 +464,10 @@ export class _MainComponent extends React.Component {
 
     return (
       <Fragment>
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>writeup.ai | write fast.</title>
+        </Helmet>
         <TopbarComponent setModal={this.setModal("settingsModalOpen")} />
         {this.renderModals()}
         <div className={classes.root} onKeyDown={this.onKeyPressed}>
