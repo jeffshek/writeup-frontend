@@ -1,10 +1,22 @@
 import { openAPI } from "services/api";
 
-export const publishPrompt = ({ text, instagram, share_state }) => {
+export const publishPrompt = ({
+  text,
+  instagram,
+  title,
+  email,
+  twitter,
+  website,
+  share_state
+}) => {
   const url = "api/writeup/v1/prompts/";
   const postParams = {
     text: text,
     instagram: instagram,
+    title: title,
+    email: email,
+    twitter: twitter,
+    website: website,
     share_state: share_state
   };
   return openAPI

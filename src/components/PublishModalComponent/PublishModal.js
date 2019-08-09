@@ -59,7 +59,7 @@ export const PublishModal = ({
   const [state, setState] = React.useState({
     publishedUUID: ""
   });
-  const { title, instagram, share_state } = settings;
+  const { title, instagram, email, twitter, website, share_state } = settings;
   const text = settings.editorValue.document.text;
 
   const handleTextChange = name => event => {
@@ -70,7 +70,15 @@ export const PublishModal = ({
   const publishAction = () => {
     setSettings("publishDisabled")(true);
 
-    publishPrompt({ title, instagram, share_state, text }).then(response => {
+    publishPrompt({
+      title,
+      instagram,
+      email,
+      twitter,
+      website,
+      share_state,
+      text
+    }).then(response => {
       setState({ publishedUUID: response.uuid });
     });
   };
