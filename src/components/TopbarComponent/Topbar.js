@@ -11,7 +11,6 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { Link as MaterialLink } from "@material-ui/core";
 import logo from "images/logo.svg";
-import { AppProvider } from "components/context";
 
 const InlineTagline = ({ classes }) => {
   return (
@@ -191,27 +190,25 @@ class _TopbarComponent extends Component {
     const { classes } = this.props;
 
     return (
-      <AppProvider>
-        <AppBar position="absolute" color="default" className={classes.appBar}>
-          <Toolbar>
-            <Grid container spacing={2} alignItems="baseline">
-              <Grid item xs={10} className={classes.flex}>
-                <InlineTagline classes={classes} />
-                {!this.props.noTabs && (
-                  <React.Fragment>
-                    <TextTagline classes={classes} />
-                    {/*{this.renderMobileIconContainer()}*/}
-                    {/*{this.renderLeftTabContainer()}*/}
-                  </React.Fragment>
-                )}
-              </Grid>
-              <Grid item xs={2} className={classes.flex}>
-                {this.renderRightContainer()}
-              </Grid>
+      <AppBar position="absolute" color="default" className={classes.appBar}>
+        <Toolbar>
+          <Grid container spacing={2} alignItems="baseline">
+            <Grid item xs={10} className={classes.flex}>
+              <InlineTagline classes={classes} />
+              {!this.props.noTabs && (
+                <React.Fragment>
+                  <TextTagline classes={classes} />
+                  {/*{this.renderMobileIconContainer()}*/}
+                  {/*{this.renderLeftTabContainer()}*/}
+                </React.Fragment>
+              )}
             </Grid>
-          </Toolbar>
-        </AppBar>
-      </AppProvider>
+            <Grid item xs={2} className={classes.flex}>
+              {this.renderRightContainer()}
+            </Grid>
+          </Grid>
+        </Toolbar>
+      </AppBar>
     );
   }
 }

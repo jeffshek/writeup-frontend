@@ -22,12 +22,12 @@ import {
 
 import moment from "moment";
 import { LinearIndeterminate } from "components/Loading";
-import { SettingsModal } from "components/SettingsModalComponent/SettingsModal";
+import { SettingsModal } from "components/Modals/SettingsModal";
 import { WebSocketURL } from "components/MainComponent/constants";
 import Button from "@material-ui/core/Button/Button";
 import Grid from "@material-ui/core/Grid/Grid";
-import { PublishModal } from "components/PublishModalComponent/PublishModal";
-import { TutorialModal } from "components/TutorialModalComponent/TutorialModal";
+import { PublishModal } from "components/Modals/PublishModal";
+import { TutorialModal } from "components/Modals/TutorialModal";
 import { Helmet } from "react-helmet";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
@@ -249,7 +249,7 @@ export class _MainComponent extends React.Component {
     const maxIndex = this.state.textPrompts.length - 1;
 
     if (this.state.currentDetailIndex === null) {
-      this.setState({ currentDetailIndex: maxIndex });
+      this.setState({ currentDetailIndex: 0 });
     } else if (this.state.currentDetailIndex < maxIndex) {
       this.setState({ currentDetailIndex: this.state.currentDetailIndex + 1 });
     } else if (this.state.currentDetailIndex === maxIndex) {
@@ -330,7 +330,6 @@ export class _MainComponent extends React.Component {
         editor.insertText(text);
       }
 
-      //self.textEditorRef.current.insertText(text);
       resolve("Success!");
     });
   };

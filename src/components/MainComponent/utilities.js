@@ -101,10 +101,6 @@ export const LearnMoreButton = ({ classes }) => {
     </div>
   );
 };
-export const promptOne = `${lorem_twenty_words} `;
-export const promptTwo = `${lorem_twenty_words_alternative} `;
-export const promptThree = `${lorem_twenty_words} 3 `;
-export const promptFour = `${lorem_twenty_words_alternative} 4 `;
 
 export const SPECIAL_CHARACTERS = [",", "!", ".", '"', "-", "'"];
 export const GridLayout = ({ classes, children }) => {
