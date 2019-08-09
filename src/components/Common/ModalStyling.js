@@ -58,5 +58,8 @@ export const useWideModalStyles = makeStyles(theme => ({
   rightGridButton: {},
   circularProgress: {
     padding: theme.spacing(1)
+  },
+  copiedContainer: {
+    textAlign: "center"
   }
 }));

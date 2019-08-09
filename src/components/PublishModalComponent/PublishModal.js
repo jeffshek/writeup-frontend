@@ -15,17 +15,24 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import { publishPrompt } from "services/resources";
-
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 const writeUpURL = process.env.REACT_APP_URL;
 
 const PromptPublishedSuccess = ({ promptUUID, title }) => {
+  const [state, setState] = React.useState({
+    copied: false
+  });
+  const classes = useWideModalStyles();
+
   if (!promptUUID) {
     return null;
   }
 
-  const url = `${writeUpURL}/prompts/${promptUUID}`;
+  const url = `${writeUpURL}/prompts/${promptUUID}/`;
+
+  const buttonText = state.copied ? "Copied!" : "Copy Link to Clipboard";
 
   return (
     <Fragment>
@@ -44,6 +51,17 @@ const PromptPublishedSuccess = ({ promptUUID, title }) => {
           {url}
         </a>
       </Typography>
+      <div className={classes.copiedContainer}>
+        <CopyToClipboard text={url} onCopy={() => setState({ copied: true })}>
+          <Button
+            variant="outlined"
+            color="secondary"
+            style={{ marginTop: "1rem" }}
+          >
+            {buttonText}
+          </Button>
+        </CopyToClipboard>
+      </div>
     </Fragment>
   );
 };

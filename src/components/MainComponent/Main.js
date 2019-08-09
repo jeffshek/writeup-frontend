@@ -30,6 +30,8 @@ import { PublishModal } from "components/PublishModalComponent/PublishModal";
 import { TutorialModal } from "components/TutorialModalComponent/TutorialModal";
 import { Helmet } from "react-helmet";
 
+// this file is a beast and should be refactored into 2-3 separate files, sorry
+
 export class _MainComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -487,7 +489,7 @@ export class _MainComponent extends React.Component {
                       autoFocus={true}
                       ref={this.textEditorRef}
                     />
-                    {/*{this.renderPublishButton()}*/}
+                    {this.renderPublishButton()}
                   </Typography>
                 </div>
                 {DividerSection}

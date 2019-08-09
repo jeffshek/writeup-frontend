@@ -12,6 +12,7 @@
     "immutable": "^4.0.0-rc.12",
     "moment": "^2.24.0",
     "react": "^16.8.6",
+    "react-copy-to-clipboard": "^5.0.1",
     "react-device-detect": "^1.7.5",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.1",
