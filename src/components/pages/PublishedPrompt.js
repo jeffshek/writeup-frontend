@@ -12,6 +12,7 @@ import { Helmet } from "react-helmet";
 import TwitterIcon from "images/icons/twitter.png";
 import InstagramIcon from "images/icons/instagram.png";
 import WebsiteIcon from "images/icons/website.png";
+import Grid from "@material-ui/core/Grid";
 
 const titleStyles = makeStyles(theme => ({
   composed: {
@@ -29,58 +30,75 @@ const TitleHeader = ({ title, author, twitter, website, instagram }) => {
 
   return (
     <Fragment>
-      {title ? (
-        <Typography color="secondary" variant={"h3"}>
-          {title}
-        </Typography>
-      ) : null}
+      <Grid
+        container
+        direction="row"
+        justify="space-between"
+        alignItems="center"
+      >
+        <Grid item>
+          {title ? (
+            <Typography color="secondary" variant={"h3"}>
+              {title}
+            </Typography>
+          ) : null}
 
-      {author ? (
-        <Typography
-          color="secondary"
-          variant={"subtitle1"}
-          className={classes.composed}
-        >
-          Composed and Written By {author}
-        </Typography>
-      ) : null}
-      <div className={classes.composed}>
-        {twitter ? (
-          <Typography
-            color="secondary"
-            variant={"subtitle1"}
-            display={"inline"}
-            style={{ marginRight: ".25rem" }}
-          >
-            <a href={twitterURL} target={"_blank"} rel="noopener noreferrer">
-              <img src={TwitterIcon} />
-            </a>
-          </Typography>
-        ) : null}
+          {author ? (
+            <Typography
+              color="secondary"
+              variant={"subtitle1"}
+              className={classes.composed}
+            >
+              Composed and Written By {author}
+            </Typography>
+          ) : null}
+        </Grid>
+        <Grid item>
+          <div className={classes.composed}>
+            {twitter ? (
+              <Typography
+                color="secondary"
+                variant={"subtitle1"}
+                display={"inline"}
+                style={{ marginRight: ".25rem" }}
+              >
+                <a
+                  href={twitterURL}
+                  target={"_blank"}
+                  rel="noopener noreferrer"
+                >
+                  <img src={TwitterIcon} />
+                </a>
+              </Typography>
+            ) : null}
 
-        <Typography
-          color="secondary"
-          variant={"subtitle1"}
-          display={"inline"}
-          style={{ marginRight: ".25rem" }}
-        >
-          <a href={instagramURL} target={"_blank"} rel="noopener noreferrer">
-            <img src={InstagramIcon} />
-          </a>
-        </Typography>
-        <Typography
-          color="secondary"
-          variant={"subtitle1"}
-          display={"inline"}
-          style={{ marginRight: ".25rem" }}
-        >
-          <a href={websiteURL} target={"_blank"} rel="noopener noreferrer">
-            <img src={WebsiteIcon} />
-          </a>
-        </Typography>
-      </div>
-      <br />
-      <br />
+            <Typography
+              color="secondary"
+              variant={"subtitle1"}
+              display={"inline"}
+              style={{ marginRight: ".25rem" }}
+            >
+              <a
+                href={instagramURL}
+                target={"_blank"}
+                rel="noopener noreferrer"
+              >
+                <img src={InstagramIcon} />
+              </a>
+            </Typography>
+            <Typography
+              color="secondary"
+              variant={"subtitle1"}
+              display={"inline"}
+              style={{ marginRight: ".25rem" }}
+            >
+              <a href={websiteURL} target={"_blank"} rel="noopener noreferrer">
+                <img src={WebsiteIcon} />
+              </a>
+            </Typography>
+          </div>
+        </Grid>
+      </Grid>
     </Fragment>
   );
 };
@@ -212,6 +230,7 @@ export const _PublishedPromptComponent = props => {
                 twitter={state.twitter}
                 website={state.website}
               />
+              <br />
               <PromptText text={state.text} />
             </div>
           </Paper>
