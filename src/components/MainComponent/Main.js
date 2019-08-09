@@ -59,26 +59,27 @@ export class _MainComponent extends React.Component {
       length: 19,
       batch_size: 7,
       settingsModalOpen: false,
-      publishModalOpen: false,
-      tutorialModalOpen: true,
+      // turn off when pushing!
+      publishModalOpen: true,
+      tutorialModalOpen: false,
       // during saving, let only one request happen
       publishDisabled: false,
 
       // when doing test, uncomment this
       // publish sections
-      //title: "Of Lions and Monkeys",
-      //email: "email@gmail.com",
-      //website: "senrigan.io",
-      //instagram: "shekgram",
-      //twitter: "shekkery",
-      //share_state: "published"
+      title: "Of Lions and Monkeys",
+      email: "email@gmail.com",
+      website: "www.senrigan.io",
+      instagram: "shekgram",
+      twitter: "shekkery",
+      share_state: "published"
 
-      title: "",
-      email: "",
-      website: "",
-      instagram: "",
-      twitter: "",
-      share_state: "published_link_access_only"
+      //title: "",
+      //email: "",
+      //website: "",
+      //instagram: "",
+      //twitter: "",
+      //share_state: "published_link_access_only"
     };
   }
 

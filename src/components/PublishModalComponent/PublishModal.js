@@ -78,13 +78,19 @@ const WebsiteComponent = ({ website }) => {
     return null;
   }
 
-  // in case they just put google.com, it will go to writeup.ai/google.com
-  const url = `//${website}`;
+  const urlPrefix = website.slice(0, 3);
+
+  let urlSerialized = "";
+  if (urlPrefix === "htt") {
+    urlSerialized = website;
+  } else {
+    urlSerialized = `http://${website}`;
+  }
 
   return (
     <Typography variant={"subtitle1"}>
       Website:{" "}
-      <a href={url} target={"_blank"}>
+      <a href={urlSerialized} target={"_blank"} rel="noopener noreferrer">
         {website}
       </a>
     </Typography>
@@ -189,6 +195,10 @@ export const PublishModal = ({
     setSettings(name)(value);
   };
 
+  const enablePublish = () => {
+    setSettings("publishDisabled")(false);
+  };
+
   const publishAction = () => {
     setSettings("publishDisabled")(true);
 
@@ -202,6 +212,7 @@ export const PublishModal = ({
       text
     }).then(response => {
       setState({ publishedUUID: response.uuid });
+      setSettings("publishDisabled")(false);
     });
   };
 
@@ -337,7 +348,6 @@ export const PublishModal = ({
                   value={settings.share_state}
                   inputProps={{
                     name: "publishOptions",
-                    //id:   "age-simple", iuno what this really does
                     id: "publish-options"
                   }}
                   onChange={onSelectChange}
