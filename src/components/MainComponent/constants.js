@@ -16,3 +16,16 @@ export const WebSocketURL =
 // LOCAL DEVELOPER DUMMY ASYNC
 //export const WebSocketURL =
 //  "ws://127.0.0.1:8008/ws/test/writeup/gpt2_medium/session/" + uuid() + "/";
+// these are cached for a day to have a much faster loading time for the user
+
+export const PROMPTS_TO_USE = [
+  "The software innovations in the 20th century ",
+  "Climate change has ",
+  "The breakthrough in ",
+  "Cancer research has revolutionized ",
+  "Recent developments in ",
+  "BANG! The earthquake shattered ",
+  "We know now that "
+];
+
+export const SPECIAL_CHARACTERS = [",", "!", ".", '"', "-", "'"];

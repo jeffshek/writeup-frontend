@@ -2,14 +2,11 @@ import React from "react";
 import Modal from "@material-ui/core/Modal";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import {
-  getModalStyle,
-  useWideModalStyles
-} from "components/Common/ModalStyling";
+import { getModalStyle, useWideModalStyles } from "./ModalStyling";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 
-import tutorial_demo from "images/tutorial_demo_3.gif";
+import tutorial_demo from "../../images/tutorial_demo_3.gif";
 
 export const TutorialModal = ({
   modalOpen,

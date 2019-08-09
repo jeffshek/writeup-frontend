@@ -6,7 +6,7 @@ import Paper from "@material-ui/core/Paper/Paper";
 import Typography from "@material-ui/core/Typography/Typography";
 import { TopbarComponent } from "components/TopbarComponent/Topbar";
 import { Editor } from "slate-react";
-import { PromptSelectComponent } from "components/MainComponent/PromptSelectComponent";
+import { PromptSelectComponent } from "components/PromptSelectComponent";
 import { ReactWebSocket } from "components/ReactWebSocket";
 import { serializeAPIMessageToPrompts } from "utilities/apiSerializers";
 import {
@@ -16,23 +16,27 @@ import {
   HowToSelectPromptSection,
   initialValue,
   MainFooter,
-  SPECIAL_CHARACTERS,
   WritingHeader
-} from "components/MainComponent/utilities";
+} from "components/MainComponent/Layouts";
 
 import moment from "moment";
 import { LinearIndeterminate } from "components/Loading";
-import { SettingsModal } from "components/SettingsModalComponent/SettingsModal";
-import { WebSocketURL } from "components/MainComponent/constants";
+import { SettingsModal } from "components/Modals/SettingsModal";
+import {
+  SPECIAL_CHARACTERS,
+  WebSocketURL
+} from "components/MainComponent/constants";
 import Button from "@material-ui/core/Button/Button";
 import Grid from "@material-ui/core/Grid/Grid";
-import { PublishModal } from "components/PublishModalComponent/PublishModal";
-import { TutorialModal } from "components/TutorialModalComponent/TutorialModal";
+import { PublishModal } from "components/Modals/PublishModal";
+import { TutorialModal } from "components/Modals/TutorialModal";
 import { Helmet } from "react-helmet";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 
 // this file is a beast and should be refactored into 2-3 separate files, sorry
+// an area of difficulty is writing apps have a lot of "state" management
+// which makes it harder to refactor and parse
 
 export class _MainComponent extends React.Component {
   constructor(props) {
@@ -100,7 +104,7 @@ export class _MainComponent extends React.Component {
 
     // puts cursor at end for easier resuming
     this.textEditorRef.current.moveToEndOfDocument();
-    this.intervalID = setInterval(this.checkToSend, 3000);
+    this.intervalID = setInterval(this.checkToSend, 2000);
   }
 
   handleSwitchCheck = name => event => {
@@ -249,7 +253,7 @@ export class _MainComponent extends React.Component {
     const maxIndex = this.state.textPrompts.length - 1;
 
     if (this.state.currentDetailIndex === null) {
-      this.setState({ currentDetailIndex: maxIndex });
+      this.setState({ currentDetailIndex: 0 });
     } else if (this.state.currentDetailIndex < maxIndex) {
       this.setState({ currentDetailIndex: this.state.currentDetailIndex + 1 });
     } else if (this.state.currentDetailIndex === maxIndex) {
@@ -330,7 +334,6 @@ export class _MainComponent extends React.Component {
         editor.insertText(text);
       }
 
-      //self.textEditorRef.current.insertText(text);
       resolve("Success!");
     });
   };

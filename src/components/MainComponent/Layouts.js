@@ -1,7 +1,3 @@
-import {
-  lorem_twenty_words,
-  lorem_twenty_words_alternative
-} from "utilities/lorem";
 import Typography from "@material-ui/core/Typography/Typography";
 import React, { Fragment } from "react";
 import Divider from "@material-ui/core/Divider/Divider";
@@ -13,16 +9,7 @@ import ArrowUpIcon from "@material-ui/icons/ArrowUpward";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import MouseIcon from "@material-ui/icons/Mouse";
 import Paper from "@material-ui/core/Paper/Paper";
-
-// these are cached for a day to have a much faster loading time for the user
-const PROMPTS_TO_USE = [
-  "The software innovations in the 20th century ",
-  "Climate change has ",
-  "The breakthrough in ",
-  "Cancer research has revolutionized ",
-  "Recent developments in ",
-  "BANG! The earthquake shattered "
-];
+import { PROMPTS_TO_USE } from "components/MainComponent/constants";
 
 export const initialValue = Value.fromJSON({
   document: {
@@ -101,12 +88,7 @@ export const LearnMoreButton = ({ classes }) => {
     </div>
   );
 };
-export const promptOne = `${lorem_twenty_words} `;
-export const promptTwo = `${lorem_twenty_words_alternative} `;
-export const promptThree = `${lorem_twenty_words} 3 `;
-export const promptFour = `${lorem_twenty_words_alternative} 4 `;
 
-export const SPECIAL_CHARACTERS = [",", "!", ".", '"', "-", "'"];
 export const GridLayout = ({ classes, children }) => {
   // extracted because i really hate seeing the 20 layers of indent in renders
   return (

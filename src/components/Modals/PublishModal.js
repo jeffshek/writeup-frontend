@@ -2,10 +2,7 @@ import React, { Fragment } from "react";
 import Modal from "@material-ui/core/Modal";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import {
-  getModalStyle,
-  useWideModalStyles
-} from "components/Common/ModalStyling";
+import { getModalStyle, useWideModalStyles } from "./ModalStyling";
 import TextField from "@material-ui/core/TextField/TextField";
 import Grid from "@material-ui/core/Grid";
 
@@ -14,11 +11,11 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import FormHelperText from "@material-ui/core/FormHelperText";
-import { publishPrompt } from "services/resources";
+import { publishPrompt } from "../../services/resources";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
-import { DividerSection } from "components/Common/Dividers";
+import { DividerSection } from "../Layouts";
 
 const writeUpURL = process.env.REACT_APP_URL;
 
