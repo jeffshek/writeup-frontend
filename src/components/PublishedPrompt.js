@@ -67,7 +67,7 @@ const TitleHeader = ({ title, author, twitter, website, instagram }) => {
                   target={"_blank"}
                   rel="noopener noreferrer"
                 >
-                  <img src={TwitterIcon} />
+                  <img src={TwitterIcon} alt={"Twitter Icon"} />
                 </a>
               </Typography>
             ) : null}
@@ -83,7 +83,7 @@ const TitleHeader = ({ title, author, twitter, website, instagram }) => {
                   target={"_blank"}
                   rel="noopener noreferrer"
                 >
-                  <img src={InstagramIcon} />
+                  <img src={InstagramIcon} alt={"Instagram Icon"} />
                 </a>
               </Typography>
             ) : null}
@@ -99,7 +99,7 @@ const TitleHeader = ({ title, author, twitter, website, instagram }) => {
                   target={"_blank"}
                   rel="noopener noreferrer"
                 >
-                  <img src={WebsiteIcon} />
+                  <img src={WebsiteIcon} alt={"Website Icon"} />
                 </a>
               </Typography>
             ) : null}

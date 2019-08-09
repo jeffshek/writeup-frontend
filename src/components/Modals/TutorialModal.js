@@ -16,11 +16,7 @@ export const TutorialModal = ({
   applySettings
 }) => {
   const classes = useWideModalStyles();
-
   const [modalStyle] = React.useState(getModalStyle);
-  const handleSettingsChange = setting => (event, value) => {
-    setSettings(setting)(value);
-  };
 
   return (
     <Modal
