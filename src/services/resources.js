@@ -25,7 +25,14 @@ export const publishPrompt = ({
       return response.data;
     })
     .catch(error => {
-      console.log(error.response);
+      if (error.response.status === 429) {
+        alert("Too Many Requests. Please Try Again In An Hour.");
+        console.log(
+          "The API's request limit has been exceeded. Please try again in the next hour."
+        );
+      }
+
+      throw error.response;
     });
 };
 

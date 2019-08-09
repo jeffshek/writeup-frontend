@@ -195,10 +195,6 @@ export const PublishModal = ({
     setSettings(name)(value);
   };
 
-  const enablePublish = () => {
-    setSettings("publishDisabled")(false);
-  };
-
   const publishAction = () => {
     setSettings("publishDisabled")(true);
 
@@ -210,10 +206,16 @@ export const PublishModal = ({
       website,
       share_state,
       text
-    }).then(response => {
-      setState({ publishedUUID: response.uuid });
-      setSettings("publishDisabled")(false);
-    });
+    })
+      .then(response => {
+        if (response.uuid) {
+          setState({ publishedUUID: response.uuid });
+          setSettings("publishDisabled")(false);
+        }
+      })
+      .catch(response => {
+        console.log(response);
+      });
   };
 
   const onSelectChange = event => {
@@ -341,7 +343,7 @@ export const PublishModal = ({
           <br />
           <Typography variant={"h6"}>Sharing Options</Typography>
           <Grid container direction="row" justify="center" alignItems="center">
-            <Grid item xs={5}>
+            <Grid item xs={7}>
               <FormControl className={classes.formControl}>
                 <InputLabel htmlFor="age-simple">Share Status</InputLabel>
                 <Select
@@ -364,7 +366,7 @@ export const PublishModal = ({
                 </FormHelperText>
               </FormControl>
             </Grid>
-            <Grid item xs={6} />
+            <Grid item xs={4} />
           </Grid>
         </form>
         <Grid
