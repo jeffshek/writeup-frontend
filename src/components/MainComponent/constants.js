@@ -24,7 +24,8 @@ export const PROMPTS_TO_USE = [
   "The breakthrough in ",
   "Cancer research has revolutionized ",
   "Recent developments in ",
-  "BANG! The earthquake shattered "
+  "BANG! The earthquake shattered ",
+  "We know now that "
 ];
 
 export const SPECIAL_CHARACTERS = [",", "!", ".", '"', "-", "'"];
