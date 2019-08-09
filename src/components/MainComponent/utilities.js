@@ -137,6 +137,15 @@ export const SenriganAnalyticsFooter = (
     >
       Senrigan Analytics
     </a>
+    {". "}
+    Tweet @{" "}
+    <a
+      href="https://www.twitter.com/shekkery"
+      target={"_blank"}
+      rel="noopener noreferrer"
+    >
+      shekkery
+    </a>
   </Typography>
 );
 export const MainFooter = ({ classes }) => {

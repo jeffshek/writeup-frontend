@@ -59,8 +59,8 @@ export class _MainComponent extends React.Component {
       length: 19,
       batch_size: 7,
       settingsModalOpen: false,
-      publishModalOpen: true,
-      tutorialModalOpen: false,
+      publishModalOpen: false,
+      tutorialModalOpen: true,
       // during saving, let only one request happen
       publishDisabled: false,
 
