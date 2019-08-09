@@ -52,7 +52,8 @@ export const MainStyles = theme => ({
   textBox: {
     backgroundColor: theme.palette.grey["100"],
     padding: "0.5rem",
-    marginTop: "0.5rem"
+    marginTop: "0.5rem",
+    marginBottom: "0.5rem"
   },
   inlining: {
     display: "inline-block",
