@@ -130,20 +130,24 @@ export const _PublishedPromptComponent = props => {
     twitter: ""
   });
 
-  const fetchPromptData = () => {
-    getPrompt({ prompt_uuid }).then(response => {
-      setState({
-        text: response.text,
-        email: response.email,
-        instagram: response.instagram,
-        title: response.title,
-        twitter: response.twitter,
-        website: response.website
+  // react data hooks recommend functions nested inside useEffect to prevent
+  // issues w/stale data or some odd-other edge cases
+  useEffect(() => {
+    function fetchPromptData() {
+      getPrompt({ prompt_uuid }).then(response => {
+        setState({
+          text: response.text,
+          email: response.email,
+          instagram: response.instagram,
+          title: response.title,
+          twitter: response.twitter,
+          website: response.website
+        });
       });
-    });
-  };
+    }
 
-  useEffect(() => fetchPromptData(), []);
+    fetchPromptData();
+  }, [prompt_uuid]);
 
   return (
     <Fragment>

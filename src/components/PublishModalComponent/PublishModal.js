@@ -18,15 +18,14 @@ import { publishPrompt } from "services/resources";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-//const writeUpURL = "https://writeup.ai"
-const writeUpURL = "http://localhost:3000";
+const writeUpURL = process.env.REACT_APP_URL;
 
 const PromptPublishedSuccess = ({ promptUUID, title }) => {
   if (!promptUUID) {
     return null;
   }
 
-  const url = `${writeUpURL}/${promptUUID}`;
+  const url = `${writeUpURL}/prompts/${promptUUID}`;
 
   return (
     <Fragment>
@@ -41,7 +40,7 @@ const PromptPublishedSuccess = ({ promptUUID, title }) => {
       <Typography variant={"h6"}>Title: {title}</Typography>
       <Typography variant={"h6"} style={{ display: "inline" }}>
         Link:{" "}
-        <a href={"https:/www.google.com"} target={"_blank"}>
+        <a href={url} target={"_blank"}>
           {url}
         </a>
       </Typography>

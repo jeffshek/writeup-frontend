@@ -24,7 +24,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && echo '/*    /index.html   200' > build/_redirects",
+    "build": "react-scripts build",
+    "build:production": "cp ./.env.production ./.env && react-scripts build && echo '/*    /index.html   200' > build/_redirects",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint src"
