@@ -30,7 +30,7 @@ export const initialValue = Value.fromJSON({
 
 export const HowToSelectPromptBottomSection = (
   <Typography variant="subtitle2" gutterBottom color={"textPrimary"}>
-    To Select, Click <MouseIcon fontSize={"small"} /> Or Use{" "}
+    Use{" "}
     <b>
       Up
       <ArrowUpIcon fontSize={"small"} />
