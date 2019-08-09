@@ -29,6 +29,8 @@ import Grid from "@material-ui/core/Grid/Grid";
 import { PublishModal } from "components/PublishModalComponent/PublishModal";
 import { TutorialModal } from "components/TutorialModalComponent/TutorialModal";
 import { Helmet } from "react-helmet";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from "@material-ui/core/Switch";
 
 // this file is a beast and should be refactored into 2-3 separate files, sorry
 
@@ -48,6 +50,9 @@ export class _MainComponent extends React.Component {
 
       // with each spacebar key, unsent set to true
       unsent: false,
+
+      // ux settings
+      arrowKeysSelect: true,
 
       // create a false lastSent to ensure first send is easy
       lastSent: moment().subtract(5, "seconds"),
@@ -97,6 +102,10 @@ export class _MainComponent extends React.Component {
     this.textEditorRef.current.moveToEndOfDocument();
     this.intervalID = setInterval(this.checkToSend, 3000);
   }
+
+  handleSwitchCheck = name => event => {
+    this.setState({ [name]: event.target.checked });
+  };
 
   componentWillUnmount() {
     this.websocket.dissembleWebSocket();
@@ -268,10 +277,10 @@ export class _MainComponent extends React.Component {
     const escapeKey = 27;
     const spaceKey = 32;
 
-    if (e.keyCode === upKey) {
+    if (e.keyCode === upKey && this.state.arrowKeysSelect) {
       this.moveUp();
       e.preventDefault();
-    } else if (e.keyCode === downKey) {
+    } else if (e.keyCode === downKey && this.state.arrowKeysSelect) {
       this.moveDown();
       e.preventDefault();
     } else if (e.keyCode === escapeKey) {
@@ -497,13 +506,34 @@ export class _MainComponent extends React.Component {
                       autoFocus={true}
                       ref={this.textEditorRef}
                     />
-                    {this.renderPublishButton()}
                   </Typography>
                 </div>
+                {this.renderPublishButton()}
                 {DividerSection}
                 {this.state.textPrompts.length > 0 ? (
                   <Fragment>
-                    {HowToSelectPromptSection}
+                    <Grid
+                      container
+                      direction="row"
+                      justify="space-between"
+                      alignItems="center"
+                    >
+                      <Grid item>{HowToSelectPromptSection}</Grid>
+                      <Grid item>
+                        <FormControlLabel
+                          control={
+                            <Switch
+                              checked={this.state.arrowKeysSelect}
+                              onChange={this.handleSwitchCheck(
+                                "arrowKeysSelect"
+                              )}
+                              value="arrowKeysSelect"
+                            />
+                          }
+                          label="Enable Arrow Keys Selection"
+                        />
+                      </Grid>
+                    </Grid>
                     <PromptSelectComponent
                       selectedIndex={this.state.currentDetailIndex}
                       onTextClick={this.onTextClick}
