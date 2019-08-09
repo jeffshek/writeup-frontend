@@ -18,12 +18,15 @@ import { publishPrompt } from "services/resources";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 
+//const writeUpURL = "https://writeup.ai"
+const writeUpURL = "http://localhost:3000";
+
 const PromptPublishedSuccess = ({ promptUUID, title }) => {
   if (!promptUUID) {
     return null;
   }
 
-  const url = `https://writeup.ai/prompts/${promptUUID}`;
+  const url = `${writeUpURL}/${promptUUID}`;
 
   return (
     <Fragment>
