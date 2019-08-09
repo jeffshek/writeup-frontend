@@ -17,10 +17,88 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import { publishPrompt } from "services/resources";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import FileCopyIcon from "@material-ui/icons/FileCopy";
+import { DividerSection } from "components/Common/Dividers";
 
 const writeUpURL = process.env.REACT_APP_URL;
 
-const PromptPublishedSuccess = ({ promptUUID, title }) => {
+const InstagramComponent = ({ instagram }) => {
+  if (!instagram) {
+    return null;
+  }
+
+  const url = `https://www.instagram.com/${instagram}`;
+
+  return (
+    <Typography variant={"subtitle1"}>
+      Instagram:{" "}
+      <a href={url} target={"_blank"}>
+        {instagram}
+      </a>
+    </Typography>
+  );
+};
+
+const TwitterComponent = ({ twitter }) => {
+  if (!twitter) {
+    return null;
+  }
+
+  const url = `https://www.twitter.com/${twitter}`;
+
+  return (
+    <Typography variant={"subtitle1"}>
+      Twitter:{" "}
+      <a href={url} target={"_blank"}>
+        {twitter}
+      </a>
+    </Typography>
+  );
+};
+
+const EmailComponent = ({ email }) => {
+  if (!email) {
+    return null;
+  }
+
+  const url = `mailto:${email}`;
+
+  return (
+    <Typography variant={"subtitle1"}>
+      Email:{" "}
+      <a href={url} target={"_blank"}>
+        {email}
+      </a>
+    </Typography>
+  );
+};
+
+const WebsiteComponent = ({ website }) => {
+  if (!website) {
+    return null;
+  }
+
+  // in case they just put google.com, it will go to writeup.ai/google.com
+  const url = `//${website}`;
+
+  return (
+    <Typography variant={"subtitle1"}>
+      Website:{" "}
+      <a href={url} target={"_blank"}>
+        {website}
+      </a>
+    </Typography>
+  );
+};
+
+const PromptPublishedSuccess = ({
+  promptUUID,
+  title,
+  instagram,
+  email,
+  twitter,
+  website
+}) => {
   const [state, setState] = React.useState({
     copied: false
   });
@@ -32,21 +110,44 @@ const PromptPublishedSuccess = ({ promptUUID, title }) => {
 
   const url = `${writeUpURL}/prompts/${promptUUID}/`;
 
-  const buttonText = state.copied ? "Copied!" : "Copy Link to Clipboard";
+  const buttonText = state.copied ? "Copied! " : "Copy Link to Clipboard ";
 
   return (
     <Fragment>
+      <div style={{ textAlign: "center" }}>
+        <Typography
+          variant={"h4"}
+          gutterBottom
+          align={"center"}
+          display={"inline"}
+          style={{ textDecoration: "underline" }}
+        >
+          {title}
+        </Typography>
+        <Typography
+          variant={"h5"}
+          gutterBottom
+          align={"center"}
+          display={"inline"}
+        >
+          {" "}
+          Is Published!{" "}
+          <span role="img" aria-label="party">
+            🎉
+          </span>
+        </Typography>
+      </div>
+
+      {DividerSection}
+
+      <EmailComponent email={email} />
+      <WebsiteComponent website={website} />
+      <InstagramComponent instagram={instagram} />
+      <TwitterComponent twitter={twitter} />
       <br />
-      <Typography variant={"h4"} gutterBottom>
-        Your Article Has Been Published!{" "}
-        <span role="img" aria-label="party">
-          🎉
-        </span>
-      </Typography>
-      <br />
-      <Typography variant={"h6"}>Title: {title}</Typography>
-      <Typography variant={"h6"} style={{ display: "inline" }}>
-        Link:{" "}
+
+      <Typography variant={"subtitle1"} style={{ display: "inline" }}>
+        Shareable Link:{" "}
         <a href={url} target={"_blank"}>
           {url}
         </a>
@@ -59,6 +160,7 @@ const PromptPublishedSuccess = ({ promptUUID, title }) => {
             style={{ marginTop: "1rem" }}
           >
             {buttonText}
+            <FileCopyIcon />
           </Button>
         </CopyToClipboard>
       </div>
@@ -122,6 +224,10 @@ export const PublishModal = ({
           <PromptPublishedSuccess
             promptUUID={state.publishedUUID}
             title={title}
+            instagram={instagram}
+            twitter={twitter}
+            website={website}
+            email={email}
           />
         </div>
       </Modal>
@@ -243,7 +349,8 @@ export const PublishModal = ({
                 </Select>
                 <FormHelperText>
                   "Published" Articles Will Let Others Find and Share Your
-                  Writing
+                  Writing. If you want to see what this looks like before, use
+                  "Hidden" instead.
                 </FormHelperText>
               </FormControl>
             </Grid>
