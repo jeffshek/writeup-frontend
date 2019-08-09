@@ -71,31 +71,38 @@ const TitleHeader = ({ title, author, twitter, website, instagram }) => {
                 </a>
               </Typography>
             ) : null}
-
-            <Typography
-              color="secondary"
-              variant={"subtitle1"}
-              display={"inline"}
-              style={{ marginRight: ".25rem" }}
-            >
-              <a
-                href={instagramURL}
-                target={"_blank"}
-                rel="noopener noreferrer"
+            {instagram ? (
+              <Typography
+                color="secondary"
+                variant={"subtitle1"}
+                display={"inline"}
+                style={{ marginRight: ".25rem" }}
               >
-                <img src={InstagramIcon} />
-              </a>
-            </Typography>
-            <Typography
-              color="secondary"
-              variant={"subtitle1"}
-              display={"inline"}
-              style={{ marginRight: ".25rem" }}
-            >
-              <a href={websiteURL} target={"_blank"} rel="noopener noreferrer">
-                <img src={WebsiteIcon} />
-              </a>
-            </Typography>
+                <a
+                  href={instagramURL}
+                  target={"_blank"}
+                  rel="noopener noreferrer"
+                >
+                  <img src={InstagramIcon} />
+                </a>
+              </Typography>
+            ) : null}
+            {website ? (
+              <Typography
+                color="secondary"
+                variant={"subtitle1"}
+                display={"inline"}
+                style={{ marginRight: ".25rem" }}
+              >
+                <a
+                  href={websiteURL}
+                  target={"_blank"}
+                  rel="noopener noreferrer"
+                >
+                  <img src={WebsiteIcon} />
+                </a>
+              </Typography>
+            ) : null}
           </div>
         </Grid>
       </Grid>
