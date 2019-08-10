@@ -1,8 +1,7 @@
 import axios from "axios";
 
 export const openAPI = axios.create({
-  //baseURL: "open.sernigan.io/",
-  baseURL: "http://localhost:8008/",
+  baseURL: process.env.REACT_API_URL,
   headers: {
     "Content-Type": "application/json"
   }
