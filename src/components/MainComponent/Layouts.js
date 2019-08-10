@@ -7,7 +7,6 @@ import { getRandomItemFromArray } from "utilities/utilities";
 import Grid from "@material-ui/core/Grid/Grid";
 import ArrowUpIcon from "@material-ui/icons/ArrowUpward";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
-import MouseIcon from "@material-ui/icons/Mouse";
 import Paper from "@material-ui/core/Paper/Paper";
 import { PROMPTS_TO_USE } from "components/MainComponent/constants";
 

@@ -58,9 +58,9 @@ class _TopbarComponent extends Component {
   //  this.setState({ menuDrawer: false });
   //};
 
-  componentDidMount() {
-    window.scrollTo(0, 0);
-  }
+  //componentDidMount() {
+  //  window.scrollTo(0, 0);
+  //}
 
   //current = () => {
   //  if (this.props.currentPath === "/home") {
@@ -174,6 +174,13 @@ class _TopbarComponent extends Component {
           textColor="primary"
           onChange={this.handleChange}
         >
+          {/*<Tab*/}
+          {/*key={0}*/}
+          {/*component={MaterialLink}*/}
+          {/*onClick={this.props.setModal}*/}
+          {/*classes={{ root: classes.tabItem }}*/}
+          {/*label={"Best Prompts"}*/}
+          {/*/>*/}
           <Tab
             key={0}
             component={MaterialLink}
@@ -193,7 +200,7 @@ class _TopbarComponent extends Component {
       <AppBar position="absolute" color="default" className={classes.appBar}>
         <Toolbar>
           <Grid container spacing={2} alignItems="baseline">
-            <Grid item xs={10} className={classes.flex}>
+            <Grid item xs={9} className={classes.flex}>
               <InlineTagline classes={classes} />
               {!this.props.noTabs && (
                 <React.Fragment>
@@ -203,7 +210,7 @@ class _TopbarComponent extends Component {
                 </React.Fragment>
               )}
             </Grid>
-            <Grid item xs={2} className={classes.flex}>
+            <Grid item xs={3} className={classes.flex}>
               {this.renderRightContainer()}
             </Grid>
           </Grid>
