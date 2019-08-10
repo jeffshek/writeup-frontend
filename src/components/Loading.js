@@ -8,8 +8,12 @@ const useStyles = makeStyles({
   }
 });
 
-export function LinearIndeterminate() {
+export const LinearIndeterminate = ({ show }) => {
   const classes = useStyles();
+
+  if (!show) {
+    return null;
+  }
 
   return (
     <div className={classes.root}>
@@ -22,4 +26,4 @@ export function LinearIndeterminate() {
       <LinearProgress color="secondary" />
     </div>
   );
-}
+};

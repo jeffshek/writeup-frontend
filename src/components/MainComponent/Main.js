@@ -57,6 +57,7 @@ export class _MainComponent extends React.Component {
 
       // ux settings
       arrowKeysSelect: true,
+      aiAssistEnabled: true,
 
       // create a false lastSent to ensure first send is easy
       lastSent: moment().subtract(5, "seconds"),
@@ -382,6 +383,23 @@ export class _MainComponent extends React.Component {
     );
   };
 
+  toggleaiAssistEnabled = () => {
+    // so many utilities to help UX, it amazes me notion is able to do so much.
+    // building a SIMPLE text app has already so many custom things
+    if (this.state.aiAssistEnabled) {
+      // that means we're turning it off, turn off some other stuff too
+      this.setState({
+        aiAssistEnabled: false,
+        arrowKeysSelect: false
+      });
+    } else {
+      this.setState({
+        aiAssistEnabled: true,
+        arrowKeysSelect: true
+      });
+    }
+  };
+
   renderSettingsModal = () => {
     if (!this.state.settingsModalOpen) {
       return null;
@@ -440,14 +458,14 @@ export class _MainComponent extends React.Component {
   };
 
   renderPublishButton = () => {
-    const classes = this.props;
+    const { classes } = this.props;
 
     return (
       <Grid container direction="row" justify="flex-end" alignItems="center">
         <Button
           variant="contained"
           color="secondary"
-          className={classes.button}
+          className={classes.publishButton}
           onClick={this.setModal("publishModalOpen")}
         >
           Publish
@@ -458,6 +476,10 @@ export class _MainComponent extends React.Component {
 
   renderHeaderAndTutorial = () => {
     const { classes } = this.props;
+
+    const aiLabel = this.state.aiAssistEnabled ? "ON" : "OFF";
+    const aiButtonStyle = this.state.aiAssistEnabled ? "contained" : "outlined";
+
     return (
       <Grid
         container
@@ -467,6 +489,14 @@ export class _MainComponent extends React.Component {
       >
         <Grid item>{WritingHeader}</Grid>
         <Grid item>
+          <Button
+            variant={aiButtonStyle}
+            color="primary"
+            className={classes.button}
+            onClick={this.toggleaiAssistEnabled}
+          >
+            AI Assist: {aiLabel}
+          </Button>
           <Button
             //variant="contained"
             variant="outlined"
@@ -512,8 +542,10 @@ export class _MainComponent extends React.Component {
                   </Typography>
                 </div>
                 {this.renderPublishButton()}
-                {DividerSection}
-                {this.state.textPrompts.length > 0 ? (
+                {/*{DividerSection}*/}
+
+                {this.state.aiAssistEnabled &&
+                this.state.textPrompts.length > 0 ? (
                   <Fragment>
                     <Grid
                       container
@@ -545,7 +577,7 @@ export class _MainComponent extends React.Component {
                     {HowToSelectPromptBottomSection}
                   </Fragment>
                 ) : (
-                  <LinearIndeterminate />
+                  <LinearIndeterminate show={this.state.aiAssistEnabled} />
                 )}
               </div>
             </Paper>

@@ -33,6 +33,13 @@ export const MainStyles = theme => ({
     alignItems: "center",
     marginTop: 32
   },
+  button: {
+    marginRight: "0.25rem"
+  },
+  publishButton: {
+    marginTop: "0.5rem",
+    marginBottom: "0.5rem"
+  },
   actionButton: {
     textTransform: "uppercase",
     margin: theme.spacing(1),
