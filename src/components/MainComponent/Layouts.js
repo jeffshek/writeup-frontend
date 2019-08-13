@@ -54,6 +54,7 @@ export const WritingHeader = (
     <span role="img" aria-label="party">
       🎉
     </span>
+    {" Hit spacebar."}
   </Typography>
 );
 
