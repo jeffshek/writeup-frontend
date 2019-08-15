@@ -18,12 +18,11 @@ export const LinearIndeterminate = ({ show }) => {
   return (
     <div className={classes.root}>
       Still Loading? Apologies, our servers are evaluating 1.5 billion
-      parameters from your prompt and might be overloaded ... ...
+      parameters from your prompt and might be overloaded ...
       <br />
       <br />
       <LinearProgress />
       <br />
-      {/*<LinearProgress color="secondary" />*/}
     </div>
   );
 };

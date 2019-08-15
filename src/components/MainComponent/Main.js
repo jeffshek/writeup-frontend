@@ -33,6 +33,8 @@ import { TutorialModal } from "components/Modals/TutorialModal";
 import { Helmet } from "react-helmet";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
+import FileCopyIcon from "@material-ui/icons/FileCopy";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 // this file is a beast and should be refactored into 2-3 separate files, sorry
 // an area of difficulty is writing apps have a lot of "state" management
@@ -494,6 +496,8 @@ export class _MainComponent extends React.Component {
     const aiLabel = this.state.aiAssistEnabled ? "ON" : "OFF";
     const aiButtonStyle = this.state.aiAssistEnabled ? "contained" : "outlined";
 
+    const text = this.state.editorValue.document.text;
+
     return (
       <Grid
         container
@@ -503,6 +507,18 @@ export class _MainComponent extends React.Component {
       >
         <Grid item>{WritingHeader}</Grid>
         <Grid item>
+          <span className={classes.copiedContainer}>
+            <CopyToClipboard text={text}>
+              {/*<CopyToClipboard text={"Cool"} onCopy={() => setState({ copied: true })}>*/}
+              <Button
+                variant="outlined"
+                color="primary"
+                style={{ marginRight: "0.25rem" }}
+              >
+                <FileCopyIcon />
+              </Button>
+            </CopyToClipboard>
+          </span>
           <Button
             variant={aiButtonStyle}
             color="primary"
