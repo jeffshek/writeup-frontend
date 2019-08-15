@@ -6,7 +6,6 @@ import { makeStyles } from "@material-ui/core";
 import backgroundShape from "../images/shape.svg";
 import Typography from "@material-ui/core/Typography";
 import { withRouter } from "react-router-dom";
-import { getPrompt } from "../services/resources";
 import { Helmet } from "react-helmet";
 
 import TwitterIcon from "../images/icons/twitter.png";
@@ -14,7 +13,6 @@ import InstagramIcon from "../images/icons/instagram.png";
 import WebsiteIcon from "../images/icons/website.png";
 import Grid from "@material-ui/core/Grid";
 import { getPublishedPrompts } from "services/resources";
-import { PromptCard } from "components/PromptCard";
 import { PrettyPromptCard } from "components/TopbarComponent/PrettyPromptCard";
 
 const titleStyles = makeStyles(theme => ({

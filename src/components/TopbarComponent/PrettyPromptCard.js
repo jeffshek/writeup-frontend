@@ -16,6 +16,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import moment from "moment";
 import { DATE_FORMAT } from "utilities/date_and_time";
+import { withRouter } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -45,9 +46,7 @@ const ShowFullPromptText = ({ text }) => {
   return <Typography>{text}</Typography>;
 };
 
-const writeUpURL = process.env.REACT_APP_URL;
-
-export const PrettyPromptCard = ({ prompt }) => {
+const _PrettyPromptCard = ({ prompt, history }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -56,11 +55,15 @@ export const PrettyPromptCard = ({ prompt }) => {
   const created = moment(prompt.created);
   const createdSerialized = created.format(DATE_FORMAT);
 
-  const directURL = `${writeUpURL}/prompts/${prompt.uuid}`;
+  const promptURL = `/prompts/${prompt.uuid}`;
 
   function handleExpandClick() {
     setExpanded(!expanded);
   }
+
+  const shareURLClick = () => {
+    history.push(promptURL);
+  };
 
   return (
     <Card className={classes.card}>
@@ -87,11 +90,9 @@ export const PrettyPromptCard = ({ prompt }) => {
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
-        <a href={directURL}>
-          <IconButton aria-label="share">
-            <ShareIcon />
-          </IconButton>
-        </a>
+        <IconButton aria-label="share" onClick={shareURLClick}>
+          <ShareIcon />
+        </IconButton>
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded
@@ -111,3 +112,5 @@ export const PrettyPromptCard = ({ prompt }) => {
     </Card>
   );
 };
+
+export const PrettyPromptCard = withRouter(_PrettyPromptCard);
