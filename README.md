@@ -2,6 +2,7 @@
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=jeffshek/writeup-frontend)](https://dependabot.com)
 ![Code style](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)
 [![CircleCI](https://circleci.com/gh/jeffshek/writeup-frontend.svg?style=svg)](https://circleci.com/gh/jeffshek/writeup-frontend)
+[![HitCount](http://hits.dwyl.io/jeffshek/writeup-frontend.svg)](http://hits.dwyl.io/jeffshek/writeup-frontend)
 
 ### Tech Stack
 

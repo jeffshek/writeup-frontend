@@ -159,6 +159,10 @@ class _TopbarComponent extends Component {
   //  );
   //};
 
+  routeToBestPrompts = () => {
+    this.props.history.push("/best");
+  };
+
   renderRightContainer = () => {
     const { classes } = this.props;
 
@@ -177,7 +181,7 @@ class _TopbarComponent extends Component {
           <Tab
             key={"bestPrompts"}
             component={MaterialLink}
-            onClick={this.props.setModal}
+            onClick={this.routeToBestPrompts}
             classes={{ root: classes.tabItem }}
             label={"Best Prompts"}
           />
