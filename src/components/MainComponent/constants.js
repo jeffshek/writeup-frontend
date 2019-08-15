@@ -5,7 +5,7 @@ import uuid from "uuid/v4";
 export const WebSocketURL =
   "wss://open.senrigan.io/ws/async/writeup/gpt2_medium/session/" + uuid() + "/";
 
-// PRODUCTION DUMMY SOCKET
+//PRODUCTION DUMMY SOCKET
 //export const WebSocketURL =
 //  "wss://open.senrigan.io/ws/test/writeup/gpt2_medium/session/writeup/";
 
