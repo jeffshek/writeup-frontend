@@ -271,7 +271,7 @@ export const PublishModal = ({
                 className={classes.textField}
                 value={settings.title}
                 onChange={handleTextChange("title")}
-                helperText="Shown at the beginning of your article."
+                helperText="Shown at the beginning of your article. Required"
                 fullWidth
                 margin="normal"
                 variant="outlined"
@@ -365,13 +365,25 @@ export const PublishModal = ({
             </Grid>
             <Grid item xs={4} />
           </Grid>
+          <br />
         </form>
         <Grid
           container
           direction="row"
-          justify="flex-end"
+          justify="space-between"
           alignItems="flex-end"
         >
+          <Grid item xs={6}>
+            {/*<Button*/}
+            {/*variant="outlined"*/}
+            {/*color="secondary"*/}
+            {/*className={classes.rightGridButton}*/}
+            {/*onClick={publishAction}*/}
+            {/*disabled={publishDisabled}*/}
+            {/*>*/}
+            {/*Login (Optional, Gives Delete Ability)*/}
+            {/*</Button>*/}
+          </Grid>
           <Grid item xs={1}>
             {publishDisabled ? (
               <CircularProgress className={classes.circularProgress} />

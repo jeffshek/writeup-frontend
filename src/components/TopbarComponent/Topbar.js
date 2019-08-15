@@ -42,7 +42,7 @@ const TextTagline = ({ classes }) => {
 class _TopbarComponent extends Component {
   // should refactor this, don't need 3/4 of this copy/pasted filler
   state = {
-    value: 0,
+    value: 1,
     menuDrawer: false
   };
 
@@ -159,6 +159,10 @@ class _TopbarComponent extends Component {
   //  );
   //};
 
+  routeToBestPrompts = () => {
+    this.props.history.push("/best");
+  };
+
   renderRightContainer = () => {
     const { classes } = this.props;
 
@@ -174,15 +178,15 @@ class _TopbarComponent extends Component {
           textColor="primary"
           onChange={this.handleChange}
         >
-          {/*<Tab*/}
-          {/*key={0}*/}
-          {/*component={MaterialLink}*/}
-          {/*onClick={this.props.setModal}*/}
-          {/*classes={{ root: classes.tabItem }}*/}
-          {/*label={"Best Prompts"}*/}
-          {/*/>*/}
           <Tab
-            key={0}
+            key={"bestPrompts"}
+            component={MaterialLink}
+            onClick={this.routeToBestPrompts}
+            classes={{ root: classes.tabItem }}
+            label={"Best Prompts"}
+          />
+          <Tab
+            key={"customize"}
             component={MaterialLink}
             onClick={this.props.setModal}
             classes={{ root: classes.tabItem }}

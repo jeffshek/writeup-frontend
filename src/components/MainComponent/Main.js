@@ -10,7 +10,6 @@ import { PromptSelectComponent } from "components/PromptSelectComponent";
 import { ReactWebSocket } from "components/ReactWebSocket";
 import { serializeAPIMessageToPrompts } from "utilities/apiSerializers";
 import {
-  DividerSection,
   GridLayout,
   HowToSelectPromptBottomSection,
   HowToSelectPromptSection,
@@ -35,6 +34,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { getSavedDocuments } from "utilities/getSavedDocuments";
 
 // this file is a beast and should be refactored into 2-3 separate files, sorry
 // an area of difficulty is writing apps have a lot of "state" management
@@ -52,6 +52,8 @@ export class _MainComponent extends React.Component {
     // this is getting into spaghetti, but needed this for async
     this.undoAdd = this.undoAdd.bind(this);
 
+    getSavedDocuments();
+
     this.state = {
       editorValue: initialValue,
       currentDetailIndex: null,
@@ -63,6 +65,7 @@ export class _MainComponent extends React.Component {
       // ux settings
       arrowKeysSelect: true,
       aiAssistEnabled: true,
+      userLoggedIn: false,
 
       // create a false lastSent to ensure first send is easy
       lastSent: moment().subtract(5, "seconds"),
