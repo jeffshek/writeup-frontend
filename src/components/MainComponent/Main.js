@@ -463,16 +463,27 @@ export class _MainComponent extends React.Component {
   renderPublishButton = () => {
     const { classes } = this.props;
 
+    const wordCount = this.state.editorValue.document.text.trim().split(" ")
+      .length;
+
     return (
-      <Grid container direction="row" justify="flex-end" alignItems="center">
-        <Button
-          variant="contained"
-          color="secondary"
-          className={classes.publishButton}
-          onClick={this.setModal("publishModalOpen")}
-        >
-          Publish
-        </Button>
+      <Grid
+        container
+        direction="row"
+        justify="space-between"
+        alignItems="flex-start"
+      >
+        <Grid item>Word Count: {wordCount}</Grid>
+        <Grid item>
+          <Button
+            variant="contained"
+            color="secondary"
+            className={classes.publishButton}
+            onClick={this.setModal("publishModalOpen")}
+          >
+            Publish
+          </Button>
+        </Grid>
       </Grid>
     );
   };
