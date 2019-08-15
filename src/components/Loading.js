@@ -23,7 +23,7 @@ export const LinearIndeterminate = ({ show }) => {
       <br />
       <LinearProgress />
       <br />
-      <LinearProgress color="secondary" />
+      {/*<LinearProgress color="secondary" />*/}
     </div>
   );
 };
