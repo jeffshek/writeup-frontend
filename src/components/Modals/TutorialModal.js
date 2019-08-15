@@ -35,7 +35,11 @@ export const TutorialModal = ({
         </Typography>
         <Carousel>
           <div>
-            <img src={tutorial_demo} alt={"tutorial of features"} />
+            <img
+              src={tutorial_demo}
+              alt={"tutorial of features"}
+              className={classes.tutorialImage}
+            />
             {/*<p className="legend">Basic Explanation</p>*/}
           </div>
         </Carousel>

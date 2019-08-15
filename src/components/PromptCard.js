@@ -26,8 +26,6 @@ const useStyles = makeStyles({
 export const PromptCard = ({ prompt }) => {
   const classes = useStyles();
 
-  const bull = <span className={classes.bullet}>•</span>;
-
   const truncatedText = prompt.text.slice(0, 500);
 
   return (

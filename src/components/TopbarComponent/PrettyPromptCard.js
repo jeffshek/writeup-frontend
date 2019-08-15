@@ -78,11 +78,6 @@ export const PrettyPromptCard = ({ prompt }) => {
         title={prompt.title}
         subheader={createdSerialized}
       />
-      {/*<CardMedia*/}
-      {/*className={classes.media}*/}
-      {/*image="/static/images/cards/paella.jpg"*/}
-      {/*title="Paella dish"*/}
-      {/*/>*/}
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
           {truncatedText}

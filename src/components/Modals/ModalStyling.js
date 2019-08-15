@@ -38,7 +38,8 @@ export const useModalStyles = makeStyles(theme => ({
 export const useWideModalStyles = makeStyles(theme => ({
   paper: {
     position: "absolute",
-    width: 800,
+    width: "60%",
+    minWidth: 600,
     backgroundColor: theme.palette.background.paper,
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
@@ -61,5 +62,9 @@ export const useWideModalStyles = makeStyles(theme => ({
   },
   copiedContainer: {
     textAlign: "center"
+  },
+  tutorialImage: {
+    width: "100%",
+    height: "auto"
   }
 }));

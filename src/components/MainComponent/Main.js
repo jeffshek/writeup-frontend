@@ -10,7 +10,6 @@ import { PromptSelectComponent } from "components/PromptSelectComponent";
 import { ReactWebSocket } from "components/ReactWebSocket";
 import { serializeAPIMessageToPrompts } from "utilities/apiSerializers";
 import {
-  DividerSection,
   GridLayout,
   HowToSelectPromptBottomSection,
   HowToSelectPromptSection,

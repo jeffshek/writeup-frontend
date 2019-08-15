@@ -200,8 +200,9 @@ const _BestPromptsComponent = props => {
   useEffect(() => {
     function fetchAllPublishedPrompts() {
       getPublishedPrompts().then(data => {
-        setState({ data: data });
-        console.log(data);
+        if (data) {
+          setState({ data: data });
+        }
       });
     }
 
@@ -219,7 +220,8 @@ const _BestPromptsComponent = props => {
         <GridLayout classes={classes}>
           <Paper className={classes.paper}>
             <Typography color={"textPrimary"} variant={"h5"}>
-              The Best Content (by voting)
+              Most Upvoted Content
+              {/*Best Content (By Votes)*/}
             </Typography>
             <div className={classes.box}>
               <Grid
@@ -230,7 +232,7 @@ const _BestPromptsComponent = props => {
               >
                 {state.data.map(prompt => {
                   return (
-                    <Grid item xs={3} key={prompt.uuid}>
+                    <Grid item xs={6} md={4} lg={3} key={prompt.uuid}>
                       <PrettyPromptCard prompt={prompt} />
                     </Grid>
                   );
