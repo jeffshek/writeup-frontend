@@ -47,6 +47,9 @@ export class _MainComponent extends React.Component {
 
     const textPrompts = [];
 
+    // this is getting into spaghetti, but needed this for async
+    this.undoAdd = this.undoAdd.bind(this);
+
     this.state = {
       editorValue: initialValue,
       currentDetailIndex: null,
@@ -511,6 +514,19 @@ export class _MainComponent extends React.Component {
     );
   };
 
+  undoEditorInsert = () => {
+    let self = this;
+    return new Promise(function(resolve, reject) {
+      self.textEditorRef.current.undo();
+      resolve("Success");
+    });
+  };
+
+  async undoAdd() {
+    await this.undoEditorInsert();
+    this.sendTextToWebSocket();
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -555,6 +571,15 @@ export class _MainComponent extends React.Component {
                     >
                       <Grid item>{HowToSelectPromptSection}</Grid>
                       <Grid item>
+                        <Button
+                          variant="outlined"
+                          color="secondary"
+                          className={classes.undoButton}
+                          onClick={this.undoAdd}
+                          //onClick={this.setModal("publishModalOpen")}
+                        >
+                          Undo
+                        </Button>
                         <FormControlLabel
                           control={
                             <Switch
