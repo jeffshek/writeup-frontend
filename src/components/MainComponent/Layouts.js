@@ -50,10 +50,11 @@ export const HowToSelectPromptSection = (
 
 export const WritingHeader = (
   <Typography color="secondary" gutterBottom variant={"h5"}>
-    Step 1. Type a word (or a few)
+    Step 1. Type a word (or a few){" "}
     <span role="img" aria-label="party">
       🎉
     </span>
+    {" Hit spacebar."}
   </Typography>
 );
 

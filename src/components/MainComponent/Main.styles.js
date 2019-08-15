@@ -33,6 +33,18 @@ export const MainStyles = theme => ({
     alignItems: "center",
     marginTop: 32
   },
+  button: {
+    marginRight: "0.25rem"
+  },
+  publishButton: {
+    marginTop: "0.5rem",
+    marginBottom: "0.5rem"
+  },
+  undoButton: {
+    //marginTop: "0.5rem",
+    //paddingRight: "1rem",
+    marginRight: "1rem"
+  },
   actionButton: {
     textTransform: "uppercase",
     margin: theme.spacing(1),

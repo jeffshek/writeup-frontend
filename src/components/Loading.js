@@ -8,18 +8,21 @@ const useStyles = makeStyles({
   }
 });
 
-export function LinearIndeterminate() {
+export const LinearIndeterminate = ({ show }) => {
   const classes = useStyles();
+
+  if (!show) {
+    return null;
+  }
 
   return (
     <div className={classes.root}>
       Still Loading? Apologies, our servers are evaluating 1.5 billion
-      parameters from your prompt and might be overloaded ... ...
+      parameters from your prompt and might be overloaded ...
       <br />
       <br />
       <LinearProgress />
       <br />
-      <LinearProgress color="secondary" />
     </div>
   );
-}
+};

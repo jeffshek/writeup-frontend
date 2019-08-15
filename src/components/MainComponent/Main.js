@@ -33,6 +33,8 @@ import { TutorialModal } from "components/Modals/TutorialModal";
 import { Helmet } from "react-helmet";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
+import FileCopyIcon from "@material-ui/icons/FileCopy";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 // this file is a beast and should be refactored into 2-3 separate files, sorry
 // an area of difficulty is writing apps have a lot of "state" management
@@ -47,6 +49,9 @@ export class _MainComponent extends React.Component {
 
     const textPrompts = [];
 
+    // this is getting into spaghetti, but needed this for async
+    this.undoAdd = this.undoAdd.bind(this);
+
     this.state = {
       editorValue: initialValue,
       currentDetailIndex: null,
@@ -57,6 +62,7 @@ export class _MainComponent extends React.Component {
 
       // ux settings
       arrowKeysSelect: true,
+      aiAssistEnabled: true,
 
       // create a false lastSent to ensure first send is easy
       lastSent: moment().subtract(5, "seconds"),
@@ -382,6 +388,23 @@ export class _MainComponent extends React.Component {
     );
   };
 
+  toggleaiAssistEnabled = () => {
+    // so many utilities to help UX, it amazes me notion is able to do so much.
+    // building a SIMPLE text app has already so many custom things
+    if (this.state.aiAssistEnabled) {
+      // that means we're turning it off, turn off some other stuff too
+      this.setState({
+        aiAssistEnabled: false,
+        arrowKeysSelect: false
+      });
+    } else {
+      this.setState({
+        aiAssistEnabled: true,
+        arrowKeysSelect: true
+      });
+    }
+  };
+
   renderSettingsModal = () => {
     if (!this.state.settingsModalOpen) {
       return null;
@@ -440,24 +463,41 @@ export class _MainComponent extends React.Component {
   };
 
   renderPublishButton = () => {
-    const classes = this.props;
+    const { classes } = this.props;
+
+    const wordCount = this.state.editorValue.document.text.trim().split(" ")
+      .length;
 
     return (
-      <Grid container direction="row" justify="flex-end" alignItems="center">
-        <Button
-          variant="contained"
-          color="secondary"
-          className={classes.button}
-          onClick={this.setModal("publishModalOpen")}
-        >
-          Publish
-        </Button>
+      <Grid
+        container
+        direction="row"
+        justify="space-between"
+        alignItems="flex-start"
+      >
+        <Grid item>Word Count: {wordCount}</Grid>
+        <Grid item>
+          <Button
+            variant="contained"
+            color="secondary"
+            className={classes.publishButton}
+            onClick={this.setModal("publishModalOpen")}
+          >
+            Publish
+          </Button>
+        </Grid>
       </Grid>
     );
   };
 
   renderHeaderAndTutorial = () => {
     const { classes } = this.props;
+
+    const aiLabel = this.state.aiAssistEnabled ? "ON" : "OFF";
+    const aiButtonStyle = this.state.aiAssistEnabled ? "contained" : "outlined";
+
+    const text = this.state.editorValue.document.text;
+
     return (
       <Grid
         container
@@ -467,6 +507,26 @@ export class _MainComponent extends React.Component {
       >
         <Grid item>{WritingHeader}</Grid>
         <Grid item>
+          <span className={classes.copiedContainer}>
+            <CopyToClipboard text={text}>
+              {/*<CopyToClipboard text={"Cool"} onCopy={() => setState({ copied: true })}>*/}
+              <Button
+                variant="outlined"
+                color="primary"
+                style={{ marginRight: "0.25rem" }}
+              >
+                <FileCopyIcon />
+              </Button>
+            </CopyToClipboard>
+          </span>
+          <Button
+            variant={aiButtonStyle}
+            color="primary"
+            className={classes.button}
+            onClick={this.toggleaiAssistEnabled}
+          >
+            AI Assist: {aiLabel}
+          </Button>
           <Button
             //variant="contained"
             variant="outlined"
@@ -480,6 +540,19 @@ export class _MainComponent extends React.Component {
       </Grid>
     );
   };
+
+  undoEditorInsert = () => {
+    let self = this;
+    return new Promise(function(resolve, reject) {
+      self.textEditorRef.current.undo();
+      resolve("Success");
+    });
+  };
+
+  async undoAdd() {
+    await this.undoEditorInsert();
+    this.sendTextToWebSocket();
+  }
 
   render() {
     const { classes } = this.props;
@@ -512,8 +585,10 @@ export class _MainComponent extends React.Component {
                   </Typography>
                 </div>
                 {this.renderPublishButton()}
-                {DividerSection}
-                {this.state.textPrompts.length > 0 ? (
+                {/*{DividerSection}*/}
+
+                {this.state.aiAssistEnabled &&
+                this.state.textPrompts.length > 0 ? (
                   <Fragment>
                     <Grid
                       container
@@ -523,6 +598,15 @@ export class _MainComponent extends React.Component {
                     >
                       <Grid item>{HowToSelectPromptSection}</Grid>
                       <Grid item>
+                        <Button
+                          variant="outlined"
+                          color="secondary"
+                          className={classes.undoButton}
+                          onClick={this.undoAdd}
+                          //onClick={this.setModal("publishModalOpen")}
+                        >
+                          Undo
+                        </Button>
                         <FormControlLabel
                           control={
                             <Switch
@@ -545,7 +629,7 @@ export class _MainComponent extends React.Component {
                     {HowToSelectPromptBottomSection}
                   </Fragment>
                 ) : (
-                  <LinearIndeterminate />
+                  <LinearIndeterminate show={this.state.aiAssistEnabled} />
                 )}
               </div>
             </Paper>
