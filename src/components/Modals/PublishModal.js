@@ -384,9 +384,9 @@ export const PublishModal = ({
           alignItems="flex-end"
         >
           <Grid item xs={6}>
-            <Button variant="outlined" color="secondary" onClick={loginAction}>
-              Login
-            </Button>
+            {/*<Button variant="outlined" color="secondary" onClick={loginAction}>*/}
+            {/*Login*/}
+            {/*</Button>*/}
           </Grid>
           <Grid item xs={1}>
             {publishDisabled ? (
@@ -405,11 +405,11 @@ export const PublishModal = ({
             </Button>
           </Grid>
         </Grid>
-        <div className={classes.helperLoginText}>
-          <Typography className={classes.helperLoginText}>
-            * Login For Delete Ability. Optional
-          </Typography>
-        </div>
+        {/*<div className={classes.helperLoginText}>*/}
+        {/*<Typography className={classes.helperLoginText}>*/}
+        {/** Login For Delete Ability. Optional*/}
+        {/*</Typography>*/}
+        {/*</div>*/}
       </div>
     </Modal>
   );

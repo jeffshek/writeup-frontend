@@ -106,8 +106,8 @@ export const SettingsModal = ({
           onChange={handleSettingsChange("top_k")}
         />
         <Typography variant={"body2"}>
-          Also known as Top K, a higher value results in different similar
-          suggestions amongst prompts. Max 40.
+          Also known as Top K, low values limit results to the most ranked
+          output. Use higher values for more diverse suggestions.
         </Typography>
         <Button
           variant="contained"

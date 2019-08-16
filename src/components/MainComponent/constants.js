@@ -25,7 +25,11 @@ export const PROMPTS_TO_USE = [
   "Cancer research has revolutionized ",
   "Recent developments in ",
   "BANG! The earthquake shattered ",
-  "We know now that "
+  "We know now that ",
+  "Nikola Tesla's inventions have ",
+  "We must take action! ",
+  "SpaceX's recent landing ",
+  "I had my first "
 ];
 
 export const SPECIAL_CHARACTERS = [",", "!", ".", '"', "-", "'"];

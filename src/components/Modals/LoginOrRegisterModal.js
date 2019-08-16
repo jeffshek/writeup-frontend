@@ -24,8 +24,6 @@ export const LoginOrRegisterModal = ({
     setSettings(setting)(value);
   };
 
-  console.log(classes.facebookAuthButton);
-
   return (
     <Modal
       aria-labelledby="simple-modal-title"

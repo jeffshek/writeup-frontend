@@ -1,5 +1,5 @@
 export function getSavedDocuments() {
   const items = { ...localStorage };
-  console.log("Getting Saved Documents");
+  console.log("Using Saved Text WriteUps");
   console.log(items);
 }

@@ -31,11 +31,8 @@ import Grid from "@material-ui/core/Grid/Grid";
 import { PublishModal } from "components/Modals/PublishModal";
 import { TutorialModal } from "components/Modals/TutorialModal";
 import { Helmet } from "react-helmet";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { getSavedDocuments } from "utilities/getSavedDocuments";
 import { getRandomItemFromArray } from "utilities/utilities";
 import { LoginOrRegisterModal } from "components/Modals/LoginOrRegisterModal";
 
@@ -54,8 +51,6 @@ export class _MainComponent extends React.Component {
 
     // this is getting into spaghetti, but needed this for async
     this.undoAdd = this.undoAdd.bind(this);
-
-    getSavedDocuments();
 
     this.state = {
       editorValue: initialValue,
@@ -82,10 +77,10 @@ export class _MainComponent extends React.Component {
       batch_size: 7, // having higher batch sizes doesn't slow it down much
 
       // modals
-      loginOrRegisterModal: true,
+      loginOrRegisterModal: false,
       settingsModalOpen: false,
       publishModalOpen: false,
-      tutorialModalOpen: false,
+      tutorialModalOpen: true,
 
       // during saving, only let one request happen
       publishDisabled: false,
@@ -630,7 +625,7 @@ export class _MainComponent extends React.Component {
                   </Typography>
                 </div>
                 {this.renderPublishButton()}
-                {/*{DividerSection}*/}
+                <br />
 
                 {this.state.aiAssistEnabled &&
                 this.state.textPrompts.length > 0 ? (
@@ -642,6 +637,7 @@ export class _MainComponent extends React.Component {
                       alignItems="center"
                     >
                       <Grid item>{HowToSelectPromptSection}</Grid>
+                      <Grid item xs={1} />
                       <Grid item>
                         <Button
                           variant="outlined"
@@ -651,18 +647,18 @@ export class _MainComponent extends React.Component {
                         >
                           Undo
                         </Button>
-                        <FormControlLabel
-                          control={
-                            <Switch
-                              checked={this.state.arrowKeysSelect}
-                              onChange={this.handleSwitchCheck(
-                                "arrowKeysSelect"
-                              )}
-                              value="arrowKeysSelect"
-                            />
+                        <Button
+                          variant={
+                            this.state.arrowKeysSelect
+                              ? "contained"
+                              : "outlined"
                           }
-                          label="Enable Arrow Keys Selection"
-                        />
+                          color="primary"
+                          onClick={this.setModal("arrowKeysSelect")}
+                        >
+                          Arrow Keys Selection:{" "}
+                          {this.state.arrowKeysSelect ? "On" : "Off"}
+                        </Button>
                       </Grid>
                     </Grid>
                     <PromptSelectComponent
