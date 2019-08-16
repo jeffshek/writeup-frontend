@@ -187,6 +187,9 @@ export const PublishModal = ({
   const { title, instagram, email, twitter, website, share_state } = settings;
   const text = settings.editorValue.document.text;
 
+  const titleIsBlank = !title;
+  const failPublishCheck = publishDisabled || titleIsBlank;
+
   const handleTextChange = name => event => {
     const value = event.target.value;
     setSettings(name)(value);
@@ -381,12 +384,7 @@ export const PublishModal = ({
           alignItems="flex-end"
         >
           <Grid item xs={6}>
-            <Button
-              variant="outlined"
-              color="secondary"
-              //className={classes.rightGridButton}
-              onClick={loginAction}
-            >
+            <Button variant="outlined" color="secondary" onClick={loginAction}>
               Login
             </Button>
           </Grid>
@@ -401,7 +399,7 @@ export const PublishModal = ({
               color="secondary"
               className={classes.rightGridButton}
               onClick={publishAction}
-              disabled={publishDisabled}
+              disabled={failPublishCheck}
             >
               Publish!
             </Button>
