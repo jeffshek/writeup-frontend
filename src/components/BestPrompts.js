@@ -60,6 +60,7 @@ const Footer = () => {
           <a
             href="https://github.com/jeffshek/writeup-frontend"
             target={"_blank"}
+            rel="noopener noreferrer"
           >
             Open Sourced
           </a>
