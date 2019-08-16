@@ -82,9 +82,9 @@ export class _MainComponent extends React.Component {
       batch_size: 7, // having higher batch sizes doesn't slow it down much
 
       // modals
-      loginOrRegisterModal: false,
+      loginOrRegisterModal: true,
       settingsModalOpen: false,
-      publishModalOpen: true,
+      publishModalOpen: false,
       tutorialModalOpen: false,
 
       // during saving, only let one request happen
