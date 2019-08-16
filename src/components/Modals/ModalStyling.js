@@ -66,5 +66,10 @@ export const useWideModalStyles = makeStyles(theme => ({
   tutorialImage: {
     width: "100%",
     height: "auto"
+  },
+  helperLoginText: {
+    marginLeft: "2",
+    paddingLeft: "2",
+    fontSize: ".75rem"
   }
 }));

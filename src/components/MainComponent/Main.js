@@ -37,6 +37,7 @@ import FileCopyIcon from "@material-ui/icons/FileCopy";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { getSavedDocuments } from "utilities/getSavedDocuments";
 import { getRandomItemFromArray } from "utilities/utilities";
+import { LoginOrRegisterModal } from "components/Modals/LoginOrRegisterModal";
 
 // this file is a beast and should be refactored into 2-3 separate files, sorry
 // an area of difficulty is writing apps have a lot of "state" management
@@ -71,17 +72,22 @@ export class _MainComponent extends React.Component {
 
       // create a false lastSent to ensure first send is easy
       lastSent: moment().subtract(5, "seconds"),
+
+      // algo settings
       temperature: 0.5,
       // lower top_k made all the prompts look the same
       top_k: 30,
-      // 45 felt like a good number
-      // 17 just loads way faster
+      // 45 felt like a good number, 17 just loads way faster
       length: 19,
-      batch_size: 7,
+      batch_size: 7, // having higher batch sizes doesn't slow it down much
+
+      // modals
+      loginOrRegisterModal: false,
       settingsModalOpen: false,
-      publishModalOpen: false,
-      tutorialModalOpen: true,
-      // during saving, let only one request happen
+      publishModalOpen: true,
+      tutorialModalOpen: false,
+
+      // during saving, only let one request happen
       publishDisabled: false,
 
       // when doing test, uncomment this
@@ -92,7 +98,6 @@ export class _MainComponent extends React.Component {
       //instagram: "shekgram",
       //twitter: "shekkery",
       //share_state: "published"
-
       title: "",
       email: "",
       website: "",
@@ -469,12 +474,28 @@ export class _MainComponent extends React.Component {
     );
   };
 
+  renderLoginOrRegisterModal = () => {
+    if (!this.state.loginOrRegisterModal) {
+      return null;
+    }
+
+    return (
+      <LoginOrRegisterModal
+        modalOpen={this.state.loginOrRegisterModal}
+        setModal={this.setModal("loginOrRegisterModal")}
+        settings={this.state}
+        setSettings={this.setSettings}
+      />
+    );
+  };
+
   renderModals = () => {
     return (
       <Fragment>
         {this.renderSettingsModal()}
         {this.renderPublishModal()}
         {this.renderTutorialModal()}
+        {this.renderLoginOrRegisterModal()}
       </Fragment>
     );
   };
