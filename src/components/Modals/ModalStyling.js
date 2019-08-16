@@ -32,6 +32,36 @@ export const useModalStyles = makeStyles(theme => ({
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1)
+  },
+  facebookAuthButton: {
+    borderRadius: 100,
+    backgroundColor: "#3b5998"
+  },
+  googleAuthButton: {
+    borderRadius: 100
+  },
+  loginText: {
+    textColor: "white",
+    color: "white"
+  },
+  googleTextLogoG: {
+    color: "#4285F4",
+    marginLeft: "0.25rem"
+  },
+  googleTextLogoO1: {
+    color: "#DB4437"
+  },
+  googleTextLogoO2: {
+    color: "#F4B400"
+  },
+  googleTextLogoGO2: {
+    color: "#4285F4"
+  },
+  googleTextLogoL: {
+    color: "#0F9D58"
+  },
+  googleTextLogoE: {
+    color: "#DB4437"
   }
 }));
 
@@ -66,5 +96,10 @@ export const useWideModalStyles = makeStyles(theme => ({
   tutorialImage: {
     width: "100%",
     height: "auto"
+  },
+  helperLoginText: {
+    marginLeft: "2",
+    paddingLeft: "2",
+    fontSize: ".75rem"
   }
 }));

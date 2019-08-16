@@ -187,9 +187,17 @@ export const PublishModal = ({
   const { title, instagram, email, twitter, website, share_state } = settings;
   const text = settings.editorValue.document.text;
 
+  const titleIsBlank = !title;
+  const failPublishCheck = publishDisabled || titleIsBlank;
+
   const handleTextChange = name => event => {
     const value = event.target.value;
     setSettings(name)(value);
+  };
+
+  const loginAction = () => {
+    setSettings("loginOrRegisterModal")(true);
+    setSettings("publishModalOpen")(false);
   };
 
   const publishAction = () => {
@@ -374,14 +382,8 @@ export const PublishModal = ({
           alignItems="flex-end"
         >
           <Grid item xs={6}>
-            {/*<Button*/}
-            {/*variant="outlined"*/}
-            {/*color="secondary"*/}
-            {/*className={classes.rightGridButton}*/}
-            {/*onClick={publishAction}*/}
-            {/*disabled={publishDisabled}*/}
-            {/*>*/}
-            {/*Login (Optional, Gives Delete Ability)*/}
+            {/*<Button variant="outlined" color="secondary" onClick={loginAction}>*/}
+            {/*Login*/}
             {/*</Button>*/}
           </Grid>
           <Grid item xs={1}>
@@ -395,12 +397,17 @@ export const PublishModal = ({
               color="secondary"
               className={classes.rightGridButton}
               onClick={publishAction}
-              disabled={publishDisabled}
+              disabled={failPublishCheck}
             >
               Publish!
             </Button>
           </Grid>
         </Grid>
+        {/*<div className={classes.helperLoginText}>*/}
+        {/*<Typography className={classes.helperLoginText}>*/}
+        {/** Login For Delete Ability. Optional*/}
+        {/*</Typography>*/}
+        {/*</div>*/}
       </div>
     </Modal>
   );

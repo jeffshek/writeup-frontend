@@ -31,12 +31,10 @@ import Grid from "@material-ui/core/Grid/Grid";
 import { PublishModal } from "components/Modals/PublishModal";
 import { TutorialModal } from "components/Modals/TutorialModal";
 import { Helmet } from "react-helmet";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { getSavedDocuments } from "utilities/getSavedDocuments";
 import { getRandomItemFromArray } from "utilities/utilities";
+import { LoginOrRegisterModal } from "components/Modals/LoginOrRegisterModal";
 
 // this file is a beast and should be refactored into 2-3 separate files, sorry
 // an area of difficulty is writing apps have a lot of "state" management
@@ -54,8 +52,6 @@ export class _MainComponent extends React.Component {
     // this is getting into spaghetti, but needed this for async
     this.undoAdd = this.undoAdd.bind(this);
 
-    getSavedDocuments();
-
     this.state = {
       editorValue: initialValue,
       currentDetailIndex: null,
@@ -71,17 +67,22 @@ export class _MainComponent extends React.Component {
 
       // create a false lastSent to ensure first send is easy
       lastSent: moment().subtract(5, "seconds"),
+
+      // algo settings
       temperature: 0.5,
       // lower top_k made all the prompts look the same
       top_k: 30,
-      // 45 felt like a good number
-      // 17 just loads way faster
+      // 45 felt like a good number, 17 just loads way faster
       length: 19,
-      batch_size: 7,
+      batch_size: 7, // having higher batch sizes doesn't slow it down much
+
+      // modals
+      loginOrRegisterModal: false,
       settingsModalOpen: false,
       publishModalOpen: false,
       tutorialModalOpen: true,
-      // during saving, let only one request happen
+
+      // during saving, only let one request happen
       publishDisabled: false,
 
       // when doing test, uncomment this
@@ -92,7 +93,6 @@ export class _MainComponent extends React.Component {
       //instagram: "shekgram",
       //twitter: "shekkery",
       //share_state: "published"
-
       title: "",
       email: "",
       website: "",
@@ -469,12 +469,28 @@ export class _MainComponent extends React.Component {
     );
   };
 
+  renderLoginOrRegisterModal = () => {
+    if (!this.state.loginOrRegisterModal) {
+      return null;
+    }
+
+    return (
+      <LoginOrRegisterModal
+        modalOpen={this.state.loginOrRegisterModal}
+        setModal={this.setModal("loginOrRegisterModal")}
+        settings={this.state}
+        setSettings={this.setSettings}
+      />
+    );
+  };
+
   renderModals = () => {
     return (
       <Fragment>
         {this.renderSettingsModal()}
         {this.renderPublishModal()}
         {this.renderTutorialModal()}
+        {this.renderLoginOrRegisterModal()}
       </Fragment>
     );
   };
@@ -609,7 +625,7 @@ export class _MainComponent extends React.Component {
                   </Typography>
                 </div>
                 {this.renderPublishButton()}
-                {/*{DividerSection}*/}
+                <br />
 
                 {this.state.aiAssistEnabled &&
                 this.state.textPrompts.length > 0 ? (
@@ -621,6 +637,7 @@ export class _MainComponent extends React.Component {
                       alignItems="center"
                     >
                       <Grid item>{HowToSelectPromptSection}</Grid>
+                      <Grid item xs={1} />
                       <Grid item>
                         <Button
                           variant="outlined"
@@ -630,18 +647,18 @@ export class _MainComponent extends React.Component {
                         >
                           Undo
                         </Button>
-                        <FormControlLabel
-                          control={
-                            <Switch
-                              checked={this.state.arrowKeysSelect}
-                              onChange={this.handleSwitchCheck(
-                                "arrowKeysSelect"
-                              )}
-                              value="arrowKeysSelect"
-                            />
+                        <Button
+                          variant={
+                            this.state.arrowKeysSelect
+                              ? "contained"
+                              : "outlined"
                           }
-                          label="Enable Arrow Keys Selection"
-                        />
+                          color="primary"
+                          onClick={this.setModal("arrowKeysSelect")}
+                        >
+                          Arrow Keys Selection:{" "}
+                          {this.state.arrowKeysSelect ? "On" : "Off"}
+                        </Button>
                       </Grid>
                     </Grid>
                     <PromptSelectComponent
