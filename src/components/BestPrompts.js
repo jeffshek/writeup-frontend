@@ -7,109 +7,9 @@ import backgroundShape from "../images/shape.svg";
 import Typography from "@material-ui/core/Typography";
 import { withRouter } from "react-router-dom";
 import { Helmet } from "react-helmet";
-
-import TwitterIcon from "../images/icons/twitter.png";
-import InstagramIcon from "../images/icons/instagram.png";
-import WebsiteIcon from "../images/icons/website.png";
 import Grid from "@material-ui/core/Grid";
 import { getPublishedPrompts } from "services/resources";
 import { PrettyPromptCard } from "components/TopbarComponent/PrettyPromptCard";
-
-const titleStyles = makeStyles(theme => ({
-  composed: {
-    marginLeft: "2rem",
-    marginBottom: "0rem"
-  }
-}));
-
-const TitleHeader = ({ title, author, twitter, website, instagram }) => {
-  const classes = titleStyles();
-
-  const twitterURL = `https://www.twitter.com/${twitter}`;
-  const instagramURL = `https://www.instagram.com/${instagram}`;
-  const websiteURL = `//${website}`;
-
-  return (
-    <Fragment>
-      <Grid
-        container
-        direction="row"
-        justify="space-between"
-        alignItems="center"
-      >
-        <Grid item>
-          {title ? (
-            <Typography color="secondary" variant={"h3"}>
-              {title}
-            </Typography>
-          ) : null}
-
-          {author ? (
-            <Typography
-              color="secondary"
-              variant={"subtitle1"}
-              className={classes.composed}
-            >
-              Composed and Written By {author}
-            </Typography>
-          ) : null}
-        </Grid>
-        <Grid item>
-          <div className={classes.composed}>
-            {twitter ? (
-              <Typography
-                color="secondary"
-                variant={"subtitle1"}
-                display={"inline"}
-                style={{ marginRight: ".25rem" }}
-              >
-                <a
-                  href={twitterURL}
-                  target={"_blank"}
-                  rel="noopener noreferrer"
-                >
-                  <img src={TwitterIcon} alt={"Twitter Icon"} />
-                </a>
-              </Typography>
-            ) : null}
-            {instagram ? (
-              <Typography
-                color="secondary"
-                variant={"subtitle1"}
-                display={"inline"}
-                style={{ marginRight: ".25rem" }}
-              >
-                <a
-                  href={instagramURL}
-                  target={"_blank"}
-                  rel="noopener noreferrer"
-                >
-                  <img src={InstagramIcon} alt={"Instagram Icon"} />
-                </a>
-              </Typography>
-            ) : null}
-            {website ? (
-              <Typography
-                color="secondary"
-                variant={"subtitle1"}
-                display={"inline"}
-                style={{ marginRight: ".25rem" }}
-              >
-                <a
-                  href={websiteURL}
-                  target={"_blank"}
-                  rel="noopener noreferrer"
-                >
-                  <img src={WebsiteIcon} alt={"Website Icon"} />
-                </a>
-              </Typography>
-            ) : null}
-          </div>
-        </Grid>
-      </Grid>
-    </Fragment>
-  );
-};
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -138,16 +38,6 @@ const useStyles = makeStyles(theme => ({
     minHeight: 150
   }
 }));
-
-const PromptText = ({ text }) => {
-  return (
-    <Fragment>
-      <Typography style={{ whiteSpace: "pre-line" }} color={"textPrimary"}>
-        {text}
-      </Typography>
-    </Fragment>
-  );
-};
 
 const footerStyles = makeStyles(theme => ({
   paper: {
