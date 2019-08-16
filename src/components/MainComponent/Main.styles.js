@@ -57,6 +57,9 @@ export const MainStyles = theme => ({
   block: {
     padding: theme.spacing(2)
   },
+  createRandomPromptButton: {
+    marginRight: "0.25rem"
+  },
   box: {
     marginBottom: 20,
     minHeight: 150

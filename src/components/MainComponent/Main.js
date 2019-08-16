@@ -22,6 +22,7 @@ import moment from "moment";
 import { LinearIndeterminate } from "components/Loading";
 import { SettingsModal } from "components/Modals/SettingsModal";
 import {
+  PROMPTS_TO_USE,
   SPECIAL_CHARACTERS,
   WebSocketURL
 } from "components/MainComponent/constants";
@@ -35,6 +36,7 @@ import Switch from "@material-ui/core/Switch";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { getSavedDocuments } from "utilities/getSavedDocuments";
+import { getRandomItemFromArray } from "utilities/utilities";
 
 // this file is a beast and should be refactored into 2-3 separate files, sorry
 // an area of difficulty is writing apps have a lot of "state" management
@@ -114,6 +116,8 @@ export class _MainComponent extends React.Component {
     // puts cursor at end for easier resuming
     this.textEditorRef.current.moveToEndOfDocument();
     this.intervalID = setInterval(this.checkToSend, 2000);
+    // saved the typed documents every 10 seconds
+    this.saveTypedDataID = setInterval(this.saveTypedData, 10000);
   }
 
   handleSwitchCheck = name => event => {
@@ -123,7 +127,13 @@ export class _MainComponent extends React.Component {
   componentWillUnmount() {
     this.websocket.dissembleWebSocket();
     clearInterval(this.intervalID);
+    clearInterval(this.saveTypedDataID);
   }
+
+  saveTypedData = () => {
+    const text = this.state.editorValue.document.text;
+    localStorage.setItem("lastText", text);
+  };
 
   ////////////////////
   // timing utilities
@@ -308,12 +318,6 @@ export class _MainComponent extends React.Component {
     this.focusTextInput();
   };
 
-  clearSelectedPrompt = () => {
-    // haven't figured out how to deal with async correctly to set the state to
-    // null
-    this.setState({ currentDetailIndex: null });
-  };
-
   insertEditorText = ({ text }) => {
     // This is an ugly hack to hide my JS incompetence
     let self = this;
@@ -357,15 +361,25 @@ export class _MainComponent extends React.Component {
     });
 
     this.focusTextInput();
-
-    // after something has been selected, no items should be selected
-    //this.clearSelectedPrompt()
   };
 
   focusTextInput = () => {
     // Explicitly focus the text input using the raw DOM API
     // Note: we're accessing "current" to get the DOM node
     this.textEditorRef.current.focus();
+  };
+
+  startNewText = () => {
+    const textLength = this.state.editorValue.document.text.length;
+    this.textEditorRef.current.deleteBackward(textLength);
+
+    const randomPrompt = getRandomItemFromArray(PROMPTS_TO_USE);
+    this.textEditorRef.current.insertText(randomPrompt);
+
+    this.focusTextInput();
+
+    // hack, didn't want to use promises
+    setTimeout(this.sendTextToWebSocket, 100);
   };
 
   //////
@@ -511,8 +525,15 @@ export class _MainComponent extends React.Component {
         <Grid item>{WritingHeader}</Grid>
         <Grid item>
           <span className={classes.copiedContainer}>
+            <Button
+              variant="outlined"
+              color="secondary"
+              className={classes.createRandomPromptButton}
+              onClick={this.startNewText}
+            >
+              Start New Text
+            </Button>
             <CopyToClipboard text={text}>
-              {/*<CopyToClipboard text={"Cool"} onCopy={() => setState({ copied: true })}>*/}
               <Button
                 variant="outlined"
                 color="primary"
@@ -606,7 +627,6 @@ export class _MainComponent extends React.Component {
                           color="secondary"
                           className={classes.undoButton}
                           onClick={this.undoAdd}
-                          //onClick={this.setModal("publishModalOpen")}
                         >
                           Undo
                         </Button>

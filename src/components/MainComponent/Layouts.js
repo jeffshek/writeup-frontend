@@ -3,7 +3,10 @@ import React, { Fragment } from "react";
 import Divider from "@material-ui/core/Divider/Divider";
 import Button from "@material-ui/core/Button/Button";
 import { Value } from "slate";
-import { getRandomItemFromArray } from "utilities/utilities";
+import {
+  getItemToLoadTextEditor,
+  getRandomItemFromArray
+} from "utilities/utilities";
 import Grid from "@material-ui/core/Grid/Grid";
 import ArrowUpIcon from "@material-ui/icons/ArrowUpward";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
@@ -19,13 +22,31 @@ export const initialValue = Value.fromJSON({
         nodes: [
           {
             object: "text",
-            text: getRandomItemFromArray(PROMPTS_TO_USE)
+            text: getItemToLoadTextEditor()
           }
         ]
       }
     ]
   }
 });
+
+export const loadTextIntoEditorValue = ({ text }) =>
+  Value.fromJSON({
+    document: {
+      nodes: [
+        {
+          object: "block",
+          type: "paragraph",
+          nodes: [
+            {
+              object: "text",
+              text: text
+            }
+          ]
+        }
+      ]
+    }
+  });
 
 export const HowToSelectPromptBottomSection = (
   <Typography variant="subtitle2" gutterBottom color={"textPrimary"}>
@@ -42,7 +63,7 @@ export const HowToSelectPromptBottomSection = (
 
 export const HowToSelectPromptSection = (
   <Fragment>
-    <Typography variant="h5" color={"secondary"}>
+    <Typography variant="h5" color={"secondary"} display={"inline"}>
       Step 2. Choose a prompt to add
     </Typography>
   </Fragment>
