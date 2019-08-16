@@ -17,12 +17,7 @@ const InlineTagline = ({ classes }) => {
     <div className={classes.inline}>
       <Typography variant="h6" color="inherit" noWrap align={"center"}>
         <Link to="/" className={classes.link}>
-          <img
-            width={40}
-            src={logo}
-            alt="writeup.ai logo"
-            style={{ paddingTop: "0.25rem" }}
-          />
+          <img width={40} src={logo} alt="writeup.ai logo" />
           <span className={classes.tagline}>writeup.ai</span>
         </Link>
       </Typography>

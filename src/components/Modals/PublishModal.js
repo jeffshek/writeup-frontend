@@ -252,8 +252,6 @@ export const PublishModal = ({
     );
   }
 
-  console.log(classes.helperLoginText);
-
   return (
     <Modal
       aria-labelledby="simple-modal-title"

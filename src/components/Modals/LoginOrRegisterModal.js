@@ -17,9 +17,7 @@ export const LoginOrRegisterModal = ({
   const classes = useModalStyles();
 
   const [modalStyle] = React.useState(getModalStyle);
-
   const [state, setState] = React.useState({ login: true });
-
   const handleSettingsChange = setting => (event, value) => {
     setSettings(setting)(value);
   };
@@ -32,17 +30,13 @@ export const LoginOrRegisterModal = ({
       onClose={setModal}
     >
       <div style={modalStyle} className={classes.paper}>
-        <br />
-        {/*<Typography variant={"h4"} align={"center"} gutterBottom={true}>*/}
-        {/*Login Using*/}
-        {/*</Typography>*/}
-        <br />
         <Grid
           container
           direction="row"
           justify="center"
           alignItems="center"
           spacing={1}
+          style={{ marginTop: "2rem" }}
         >
           <Grid item>
             <Button
@@ -119,7 +113,6 @@ export const LoginOrRegisterModal = ({
           label="Username or Email"
           style={{ margin: 8 }}
           placeholder=""
-          //helperText="Full width!"
           fullWidth
           margin="normal"
           InputLabelProps={{
@@ -131,7 +124,6 @@ export const LoginOrRegisterModal = ({
           label="Password"
           style={{ margin: 8 }}
           placeholder=""
-          //helperText="Full width!"
           fullWidth
           margin="normal"
           InputLabelProps={{

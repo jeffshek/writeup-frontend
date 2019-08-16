@@ -31,12 +31,11 @@ export const TopbarStyles = theme => ({
   },
   tagline: {
     display: "inline-block",
-    verticalAlign: "middle",
     fontWeight: "normal",
-    marginLeft: 10
-    //[theme.breakpoints.up("md")]: {
-    //  paddingTop: "0.8em"
-    //}
+    marginLeft: 10,
+    [theme.breakpoints.up("md")]: {
+      paddingTop: "0.8em"
+    }
   },
   iconContainer: {
     display: "none",

@@ -39,7 +39,6 @@ export const useModalStyles = makeStyles(theme => ({
   },
   googleAuthButton: {
     borderRadius: 100
-    //backgroundColor: "#3b5998",
   },
   loginText: {
     textColor: "white",
