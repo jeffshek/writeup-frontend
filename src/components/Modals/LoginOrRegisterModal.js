@@ -48,7 +48,6 @@ export const LoginOrRegisterModal = ({
       if (response.status === 200) {
         setSettings("loginOrRegisterModal")(false);
       }
-      console.log(response);
     });
   };
 
