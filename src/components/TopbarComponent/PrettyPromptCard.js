@@ -109,7 +109,7 @@ const _PrettyPromptCard = ({ prompt, history, setLoginOrRegisterModal }) => {
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          {truncatedText}
+          {truncatedText} ...
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
