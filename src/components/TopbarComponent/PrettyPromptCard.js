@@ -17,6 +17,8 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import moment from "moment";
 import { DATE_FORMAT } from "utilities/date_and_time";
 import { withRouter } from "react-router-dom";
+import { checkTokenKeyInLocalStorage } from "services/storage";
+import { upvotePrompt } from "services/resources";
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -46,9 +48,11 @@ const ShowFullPromptText = ({ text }) => {
   return <Typography>{text}</Typography>;
 };
 
-const _PrettyPromptCard = ({ prompt, history }) => {
+const _PrettyPromptCard = ({ prompt, history, setLoginOrRegisterModal }) => {
   const classes = useStyles();
+
   const [expanded, setExpanded] = React.useState(false);
+  const [articleValue, setArticleValue] = React.useState(0);
 
   const truncatedText = prompt.text.slice(0, 500);
 
@@ -63,6 +67,28 @@ const _PrettyPromptCard = ({ prompt, history }) => {
 
   const shareURLClick = () => {
     history.push(promptURL);
+  };
+
+  const favoriteAction = () => {
+    const loggedIn = checkTokenKeyInLocalStorage();
+    if (!loggedIn) {
+      setLoginOrRegisterModal(true);
+      return;
+    }
+
+    let newScore = articleValue + 1;
+    if (newScore > 3) {
+      // don't allow more than 3, even if user gets past this
+      // backend will validate much more harshly
+      return;
+    }
+
+    setArticleValue(newScore);
+    const prompt_uuid = prompt.uuid;
+
+    upvotePrompt({ prompt_uuid, value: newScore }).then(response => {
+      console.log(`Updated to ${newScore}!`);
+    });
   };
 
   return (
@@ -87,8 +113,9 @@ const _PrettyPromptCard = ({ prompt, history }) => {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
+        <IconButton aria-label="add to favorites" onClick={favoriteAction}>
           <FavoriteIcon />
+          {articleValue}
         </IconButton>
         <IconButton aria-label="share" onClick={shareURLClick}>
           <ShareIcon />

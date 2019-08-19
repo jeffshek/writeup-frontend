@@ -10,6 +10,7 @@ import { Helmet } from "react-helmet";
 import Grid from "@material-ui/core/Grid";
 import { getPublishedPrompts } from "services/resources";
 import { PrettyPromptCard } from "components/TopbarComponent/PrettyPromptCard";
+import { LoginOrRegisterModal } from "components/Modals/LoginOrRegisterModal";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -80,9 +81,11 @@ const Footer = () => {
 
 const _BestPromptsComponent = props => {
   const classes = useStyles();
-  const [state, setState] = React.useState({
+  const [data, setData] = React.useState({
     data: []
   });
+
+  const [loginOrRegisterModal, setLoginOrRegisterModal] = React.useState(false);
 
   // react data hooks recommend functions nested inside useEffect to prevent
   // issues w/stale data or some odd-other edge cases
@@ -90,7 +93,7 @@ const _BestPromptsComponent = props => {
     function fetchAllPublishedPrompts() {
       getPublishedPrompts().then(data => {
         if (data) {
-          setState({ data: data });
+          setData({ data: data });
         }
       });
     }
@@ -98,12 +101,23 @@ const _BestPromptsComponent = props => {
     fetchAllPublishedPrompts();
   }, []);
 
+  const closeModal = () => {
+    // this is an embarassment of spaghetti
+    setLoginOrRegisterModal(false);
+  };
+
   return (
     <Fragment>
       <Helmet>
         <meta charSet="utf-8" />
         <title>writeup.ai | Best Human Composed Prompts</title>
       </Helmet>
+      <LoginOrRegisterModal
+        modalOpen={loginOrRegisterModal}
+        setModal={closeModal}
+        settings={{}}
+        setSettings={{}}
+      />
       <TopbarComponent showSettings={false} />
       <div className={classes.root}>
         <GridLayout classes={classes}>
@@ -119,10 +133,13 @@ const _BestPromptsComponent = props => {
                 justify="center"
                 alignItems="center"
               >
-                {state.data.map(prompt => {
+                {data.data.map(prompt => {
                   return (
                     <Grid item xs={6} md={4} lg={3} key={prompt.uuid}>
-                      <PrettyPromptCard prompt={prompt} />
+                      <PrettyPromptCard
+                        prompt={prompt}
+                        setLoginOrRegisterModal={setLoginOrRegisterModal}
+                      />
                     </Grid>
                   );
                 })}

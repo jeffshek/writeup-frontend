@@ -1,4 +1,6 @@
 import { backendAPI } from "services/api";
+import { upvotePromptURL } from "services/backendURLs";
+import { checkTokenKeyInLocalStorage } from "services/storage";
 
 export const publishPrompt = ({
   text,
@@ -65,4 +67,15 @@ export const getPrompt = ({ prompt_uuid }) => {
     .catch(error => {
       console.log(error.response);
     });
+};
+
+export const upvotePrompt = ({ prompt_uuid, value }) => {
+  const url = upvotePromptURL.replace(":prompt_uuid", prompt_uuid);
+  const api = backendAPI();
+
+  const postDetails = {
+    value: value
+  };
+
+  return api.post(url, postDetails);
 };

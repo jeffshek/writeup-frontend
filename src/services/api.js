@@ -1,5 +1,5 @@
 import axios from "axios";
-import React from "react";
+
 import {
   checkTokenKeyInLocalStorage,
   TOKEN_KEY_CONSTANT
@@ -17,11 +17,7 @@ export const openBackendAPI = axios.create({
 export const loggedInBackendAPI = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
   headers: {
-    Authorization: {
-      toString() {
-        return `Token ${localStorage.getItem(TOKEN_KEY_CONSTANT)}`;
-      }
-    },
+    Authorization: `Token ${localStorage.getItem(TOKEN_KEY_CONSTANT)}`,
     "Content-Type": JSON_APPLICATION_TYPE,
     Accept: JSON_APPLICATION_TYPE
   }

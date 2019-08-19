@@ -38,8 +38,12 @@ export const LoginOrRegisterModal = ({
         const tokenKey = response.data.key;
         getTokenLocalStorage({ tokenKey });
 
-        setSettings("loginOrRegisterModal")(false);
-        setSettings("userLoggedIn")(true);
+        // trying to jam this modal to fit two areas of login
+        // from the best and the main page
+        if (setSettings) {
+          setSettings("loginOrRegisterModal")(false);
+          setSettings("userLoggedIn")(true);
+        }
       }
     });
   };
@@ -54,12 +58,17 @@ export const LoginOrRegisterModal = ({
         const tokenKey = response.data.key;
         getTokenLocalStorage({ tokenKey });
 
-        setSettings("loginOrRegisterModal")(false);
-        setSettings("userLoggedIn")(true);
+        // trying to jam this modal to fit two uses
+        // from the best and the main page
+        if (setSettings) {
+          setSettings("loginOrRegisterModal")(false);
+          setSettings("userLoggedIn")(true);
+        }
       }
     });
   };
 
+  //eslint-disable-next-line
   const renderSocialAuth = () => {
     return (
       <Grid
