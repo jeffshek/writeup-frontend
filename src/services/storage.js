@@ -1,6 +1,6 @@
 // centralize all calls to LocalStorage in one file so that additional things can be checked later
 
-const TOKEN_KEY_CONSTANT = "tokenKey";
+export const TOKEN_KEY_CONSTANT = "tokenKey";
 
 export const getTokenLocalStorage = ({ tokenKey }) => {
   localStorage.setItem(TOKEN_KEY_CONSTANT, tokenKey);

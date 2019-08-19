@@ -1,4 +1,4 @@
-import { openBackendAPI } from "services/api";
+import { backendAPI } from "services/api";
 
 export const publishPrompt = ({
   text,
@@ -19,7 +19,9 @@ export const publishPrompt = ({
     website: website,
     share_state: share_state
   };
-  return openBackendAPI
+  const api = backendAPI();
+
+  return api
     .post(url, postParams)
     .then(response => {
       return response.data;
@@ -39,7 +41,9 @@ export const publishPrompt = ({
 export const getPublishedPrompts = () => {
   const url = "api/writeup/v1/prompts/";
 
-  return openBackendAPI
+  const api = backendAPI();
+
+  return api
     .get(url)
     .then(response => {
       return response.data;
@@ -51,7 +55,9 @@ export const getPublishedPrompts = () => {
 
 export const getPrompt = ({ prompt_uuid }) => {
   const url = `/api/writeup/v1/prompts/${prompt_uuid}/`;
-  return openBackendAPI
+  const api = backendAPI();
+
+  return api
     .get(url)
     .then(response => {
       return response.data;
