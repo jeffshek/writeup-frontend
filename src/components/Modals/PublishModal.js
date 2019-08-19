@@ -16,6 +16,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
 import { DividerSection } from "../Layouts";
+import { removeTokenKeyFromLocalStorage } from "services/storage";
 
 const writeUpURL = process.env.REACT_APP_URL;
 
@@ -200,6 +201,27 @@ export const PublishModal = ({
     setSettings("publishModalOpen")(false);
   };
 
+  const logoutAction = () => {
+    removeTokenKeyFromLocalStorage();
+    setSettings("userLoggedIn")(false);
+  };
+
+  const LoginButton = () => {
+    return (
+      <Button variant="outlined" color="secondary" onClick={loginAction}>
+        Login
+      </Button>
+    );
+  };
+
+  const LogoutButton = () => {
+    return (
+      <Button variant="outlined" color="secondary" onClick={logoutAction}>
+        Logout
+      </Button>
+    );
+  };
+
   const publishAction = () => {
     setSettings("publishDisabled")(true);
 
@@ -382,9 +404,7 @@ export const PublishModal = ({
           alignItems="flex-end"
         >
           <Grid item xs={6}>
-            <Button variant="outlined" color="secondary" onClick={loginAction}>
-              Login
-            </Button>
+            {!settings.userLoggedIn ? <LoginButton /> : <LogoutButton />}
           </Grid>
           <Grid item xs={1}>
             {publishDisabled ? (
@@ -403,11 +423,13 @@ export const PublishModal = ({
             </Button>
           </Grid>
         </Grid>
-        <div className={classes.helperLoginText}>
-          <Typography className={classes.helperLoginText}>
-            * Login For Delete Ability. Optional
-          </Typography>
-        </div>
+        {settings.userLoggedIn ? null : (
+          <div className={classes.helperLoginText}>
+            <Typography className={classes.helperLoginText}>
+              * Login For Delete Ability. Optional
+            </Typography>
+          </div>
+        )}
       </div>
     </Modal>
   );

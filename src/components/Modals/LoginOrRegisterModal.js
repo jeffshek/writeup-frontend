@@ -7,6 +7,7 @@ import { getModalStyle, useModalStyles } from "./ModalStyling";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import { loginAPI, registerAPI } from "services/auth";
+import { getTokenLocalStorage } from "services/storage";
 
 export const LoginOrRegisterModal = ({
   modalOpen,
@@ -34,7 +35,11 @@ export const LoginOrRegisterModal = ({
     };
     registerAPI(postDetails).then(response => {
       if (response.status === 201) {
+        const tokenKey = response.data.key;
+        getTokenLocalStorage({ tokenKey });
+
         setSettings("loginOrRegisterModal")(false);
+        setSettings("userLoggedIn")(true);
       }
     });
   };
@@ -46,7 +51,11 @@ export const LoginOrRegisterModal = ({
     };
     loginAPI(loginDetails).then(response => {
       if (response.status === 200) {
+        const tokenKey = response.data.key;
+        getTokenLocalStorage({ tokenKey });
+
         setSettings("loginOrRegisterModal")(false);
+        setSettings("userLoggedIn")(true);
       }
     });
   };
@@ -147,31 +156,33 @@ export const LoginOrRegisterModal = ({
       <div style={modalStyle} className={classes.paper}>
         {/*{renderSocialAuth()}*/}
         <br />
-        <TextField
-          id="standard-full-width"
-          label="Username or Email"
-          style={{ margin: 8 }}
-          placeholder={state.usernameOrEmail}
-          onChange={handleChange("usernameOrEmail")}
-          fullWidth
-          margin="normal"
-          InputLabelProps={{
-            shrink: true
-          }}
-        />
-        <TextField
-          id="standard-full-width"
-          label="Password"
-          style={{ margin: 8, marginBottom: "2rem" }}
-          placeholder={state.password}
-          fullWidth
-          type={"password"}
-          onChange={handleChange("password")}
-          margin="normal"
-          InputLabelProps={{
-            shrink: true
-          }}
-        />
+        <form noValidate>
+          <TextField
+            id="standard-full-width"
+            label="Username or Email"
+            style={{ margin: 8 }}
+            placeholder={state.usernameOrEmail}
+            onChange={handleChange("usernameOrEmail")}
+            fullWidth
+            margin="normal"
+            InputLabelProps={{
+              shrink: true
+            }}
+          />
+          <TextField
+            id="standard-full-width"
+            label="Password"
+            style={{ margin: 8, marginBottom: "2rem" }}
+            placeholder={state.password}
+            fullWidth
+            type={"password"}
+            onChange={handleChange("password")}
+            margin="normal"
+            InputLabelProps={{
+              shrink: true
+            }}
+          />
+        </form>
         <Grid
           container
           direction="row"
