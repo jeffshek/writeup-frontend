@@ -160,7 +160,7 @@ class _TopbarComponent extends Component {
   //};
 
   routeToBestPrompts = () => {
-    this.props.history.push("/best");
+    this.props.history.push("/best/");
   };
 
   renderRightContainer = () => {
