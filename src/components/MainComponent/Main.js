@@ -627,7 +627,6 @@ export class _MainComponent extends React.Component {
                   </Typography>
                 </div>
                 {this.renderPublishButton()}
-                <br />
 
                 {this.state.aiAssistEnabled &&
                 this.state.textPrompts.length > 0 ? (
