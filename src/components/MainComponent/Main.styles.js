@@ -41,9 +41,7 @@ export const MainStyles = theme => ({
     marginBottom: "0.5rem"
   },
   undoButton: {
-    //marginTop: "0.5rem",
-    //paddingRight: "1rem",
-    marginRight: "1rem"
+    marginRight: "0.25rem"
   },
   actionButton: {
     textTransform: "uppercase",

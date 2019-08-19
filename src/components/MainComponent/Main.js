@@ -35,6 +35,7 @@ import FileCopyIcon from "@material-ui/icons/FileCopy";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { getRandomItemFromArray } from "utilities/utilities";
 import { LoginOrRegisterModal } from "components/Modals/LoginOrRegisterModal";
+import { checkTokenKeyInLocalStorage } from "services/storage";
 
 // this file is a beast and should be refactored into 2-3 separate files, sorry
 // an area of difficulty is writing apps have a lot of "state" management
@@ -63,7 +64,8 @@ export class _MainComponent extends React.Component {
       // ux settings
       arrowKeysSelect: true,
       aiAssistEnabled: true,
-      userLoggedIn: false,
+
+      userLoggedIn: checkTokenKeyInLocalStorage(),
 
       // create a false lastSent to ensure first send is easy
       lastSent: moment().subtract(5, "seconds"),
