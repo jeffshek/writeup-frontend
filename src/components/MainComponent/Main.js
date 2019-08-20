@@ -42,6 +42,8 @@ import {
   isCodeHotkey,
   isItalicHotkey,
   isUnderlinedHotkey,
+  renderBlock,
+  renderMark,
   Toolbar
 } from "components/SlateJS";
 
@@ -118,8 +120,6 @@ export class _MainComponent extends React.Component {
 
     // Set interval helpers to run in the background to make UX feel smoother
     this.intervalID = setInterval(this.checkToSend, 2000);
-    // saved the typed documents every 5 seconds
-    this.saveTypedDataID = setInterval(this.saveTypedData, 5000);
   }
 
   // editor utilities - pulled from slatejs
@@ -191,48 +191,6 @@ export class _MainComponent extends React.Component {
         <Icon>{icon}</Icon>
       </Button>
     );
-  };
-
-  renderBlock = (props, editor, next) => {
-    const { attributes, children, node } = props;
-
-    switch (node.type) {
-      case "block-quote":
-        return <blockquote {...attributes}>{children}</blockquote>;
-      case "bulleted-list":
-        return <ul {...attributes}>{children}</ul>;
-      case "heading-one":
-        return <h1 {...attributes}>{children}</h1>;
-      case "heading-two":
-        return <h2 {...attributes}>{children}</h2>;
-      case "list-item":
-        return <li {...attributes}>{children}</li>;
-      case "numbered-list":
-        return <ol {...attributes}>{children}</ol>;
-      default:
-        return next();
-    }
-  };
-
-  renderMark = (props, editor, next) => {
-    const { children, mark, attributes } = props;
-
-    switch (mark.type) {
-      case "bold":
-        return <strong {...attributes}>{children}</strong>;
-      case "code":
-        return (
-          <code {...attributes} style={{ backgroundColor: "white" }}>
-            {children}
-          </code>
-        );
-      case "italic":
-        return <em {...attributes}>{children}</em>;
-      case "underlined":
-        return <u {...attributes}>{children}</u>;
-      default:
-        return next();
-    }
   };
 
   onKeyDown = (event, editor, next) => {
@@ -315,13 +273,7 @@ export class _MainComponent extends React.Component {
   componentWillUnmount() {
     this.websocket.dissembleWebSocket();
     clearInterval(this.intervalID);
-    clearInterval(this.saveTypedDataID);
   }
-
-  saveTypedData = () => {
-    const content = JSON.stringify(this.state.editorValue.toJSON());
-    localStorage.setItem("lastContent", content);
-  };
 
   ////////////////////
   // timing utilities
@@ -365,7 +317,7 @@ export class _MainComponent extends React.Component {
     // This will only show texts that were meant for the prompt ...
     // this happens if the user types very quickly and it fires off a lot
     // of API requests, then we keep on receiving additional messages
-    // from previous words
+    // from previous phrases that no longer apply
     if (message.prompt.trim().slice(-10) === text.trim().slice(-10)) {
       this.setState({
         textPrompts: textPrompts
@@ -416,7 +368,7 @@ export class _MainComponent extends React.Component {
   // text editor utilities
   ////////////////////
   onTextChange = ({ value }) => {
-    if (value.document != this.state.editorValue.document) {
+    if (value.document !== this.state.editorValue.document) {
       const content = JSON.stringify(value.toJSON());
       localStorage.setItem("content", content);
     }
@@ -687,7 +639,7 @@ export class _MainComponent extends React.Component {
     );
   };
 
-  renderPublishButton = () => {
+  renderWordCountAndPublishButton = () => {
     const { classes } = this.props;
 
     const wordCount = this.state.editorValue.document.text.trim().split(" ")
@@ -872,12 +824,12 @@ export class _MainComponent extends React.Component {
                       autoFocus={true}
                       ref={this.ref}
                       onKeyDown={this.onKeyDown}
-                      renderBlock={this.renderBlock}
-                      renderMark={this.renderMark}
+                      renderBlock={renderBlock}
+                      renderMark={renderMark}
                     />
                   </Typography>
                 </div>
-                {this.renderPublishButton()}
+                {this.renderWordCountAndPublishButton()}
                 {this.renderTextPromptSelectionSection()}
               </div>
             </Paper>

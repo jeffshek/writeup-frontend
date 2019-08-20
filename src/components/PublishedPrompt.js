@@ -13,6 +13,9 @@ import TwitterIcon from "../images/icons/twitter.png";
 import InstagramIcon from "../images/icons/instagram.png";
 import WebsiteIcon from "../images/icons/website.png";
 import Grid from "@material-ui/core/Grid";
+import { Editor } from "slate-react";
+import { Value } from "slate";
+import { renderBlock, renderMark } from "components/SlateJS";
 
 const titleStyles = makeStyles(theme => ({
   composed: {
@@ -138,16 +141,6 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const PromptText = ({ text }) => {
-  return (
-    <Fragment>
-      <Typography style={{ whiteSpace: "pre-line" }} color={"textPrimary"}>
-        {text}
-      </Typography>
-    </Fragment>
-  );
-};
-
 const footerStyles = makeStyles(theme => ({
   paper: {
     padding: theme.spacing(2),
@@ -186,6 +179,23 @@ const Footer = () => {
   );
 };
 
+const LoadingValue = Value.fromJSON({
+  document: {
+    nodes: [
+      {
+        object: "block",
+        type: "paragraph",
+        nodes: [
+          {
+            object: "text",
+            text: "Loading ... "
+          }
+        ]
+      }
+    ]
+  }
+});
+
 export const _PublishedPromptComponent = props => {
   const classes = useStyles();
   const prompt_uuid = props.match.params.uuid;
@@ -196,7 +206,8 @@ export const _PublishedPromptComponent = props => {
     email: "",
     website: "",
     instagram: "",
-    twitter: ""
+    twitter: "",
+    editorValue: LoadingValue
   });
 
   // react data hooks recommend functions nested inside useEffect to prevent
@@ -204,13 +215,38 @@ export const _PublishedPromptComponent = props => {
   useEffect(() => {
     function fetchPromptData() {
       getPrompt({ prompt_uuid }).then(response => {
+        console.log(response);
+
+        const content = JSON.parse(response.content);
+        console.log(content);
+        const editorValue = Value.fromJSON(
+          content || {
+            document: {
+              nodes: [
+                {
+                  object: "block",
+                  type: "paragraph",
+                  nodes: [
+                    {
+                      object: "text",
+                      text: response.text
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        );
+
         setState({
           text: response.text,
+          content: response.content,
           email: response.email,
           instagram: response.instagram,
           title: response.title,
           twitter: response.twitter,
-          website: response.website
+          website: response.website,
+          editorValue: editorValue
         });
       });
     }
@@ -238,7 +274,11 @@ export const _PublishedPromptComponent = props => {
                 website={state.website}
               />
               <br />
-              <PromptText text={state.text} />
+              <Editor
+                value={state.editorValue}
+                renderBlock={renderBlock}
+                renderMark={renderMark}
+              />
             </div>
           </Paper>
           <br />

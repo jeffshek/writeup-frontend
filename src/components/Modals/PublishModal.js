@@ -187,6 +187,7 @@ export const PublishModal = ({
   });
   const { title, instagram, email, twitter, website, share_state } = settings;
   const text = settings.editorValue.document.text;
+  const content = localStorage.getItem("content");
 
   const titleIsBlank = !title;
   const failPublishCheck = publishDisabled || titleIsBlank;
@@ -227,6 +228,7 @@ export const PublishModal = ({
 
     publishPrompt({
       title,
+      content,
       instagram,
       email,
       twitter,

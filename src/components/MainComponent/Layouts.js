@@ -3,10 +3,7 @@ import React, { Fragment } from "react";
 import Divider from "@material-ui/core/Divider/Divider";
 import Button from "@material-ui/core/Button/Button";
 import { Value } from "slate";
-import {
-  getItemToLoadTextEditor,
-  getRandomItemFromArray
-} from "utilities/utilities";
+import { getRandomItemFromArray } from "utilities/utilities";
 import Grid from "@material-ui/core/Grid/Grid";
 import ArrowUpIcon from "@material-ui/icons/ArrowUpward";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
