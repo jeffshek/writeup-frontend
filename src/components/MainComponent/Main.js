@@ -36,10 +36,20 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { getRandomItemFromArray } from "utilities/utilities";
 import { LoginOrRegisterModal } from "components/Modals/LoginOrRegisterModal";
 import { checkTokenKeyInLocalStorage } from "services/storage";
+import {
+  Icon,
+  isBoldHotkey,
+  isCodeHotkey,
+  isItalicHotkey,
+  isUnderlinedHotkey,
+  Toolbar
+} from "components/SlateJS";
+import { bool } from "prop-types";
+
+const DEFAULT_NODE = "paragraph";
 
 // this file is a beast and should be refactored into 2-3 separate files, sorry
-// an area of difficulty is writing apps have a lot of "state" management
-// which makes it harder to refactor and parse
+// state management is difficult to manage with writing apps
 
 export class _MainComponent extends React.Component {
   constructor(props) {
@@ -117,13 +127,192 @@ export class _MainComponent extends React.Component {
 
     // puts cursor at end for easier resuming
     this.textEditorRef.current.moveToEndOfDocument();
+
+    // Set interval helpers to run in the background to make UX feel smoother
     this.intervalID = setInterval(this.checkToSend, 2000);
     // saved the typed documents every 10 seconds
     this.saveTypedDataID = setInterval(this.saveTypedData, 10000);
   }
 
-  handleSwitchCheck = name => event => {
-    this.setState({ [name]: event.target.checked });
+  // editor utilities - pulled from slatejs
+  hasMark = type => {
+    const { editorValue } = this.state;
+    return editorValue.activeMarks.some(mark => mark.type === type);
+  };
+
+  hasBlock = type => {
+    const { editorValue } = this.state;
+    return editorValue.blocks.some(node => node.type === type);
+  };
+
+  renderEditorToolbar = () => {
+    return (
+      <Fragment>
+        <Toolbar>
+          {this.renderMarkButton("bold", "format_bold")}
+          {this.renderMarkButton("italic", "format_italic")}
+          {this.renderMarkButton("underlined", "format_underlined")}
+          {this.renderMarkButton("code", "code")}
+          {this.renderBlockButton("heading-one", "looks_one")}
+          {this.renderBlockButton("heading-two", "looks_two")}
+          {this.renderBlockButton("block-quote", "format_quote")}
+          {this.renderBlockButton("numbered-list", "format_list_numbered")}
+          {this.renderBlockButton("bulleted-list", "format_list_bulleted")}
+        </Toolbar>
+      </Fragment>
+    );
+  };
+
+  renderMarkButton = (type, icon) => {
+    const isActive = this.hasMark(type);
+    const isActiveBool = isActive === "true";
+
+    return (
+      <Button
+        active={isActive.toString()}
+        onMouseDown={event => this.onClickMark(event, type)}
+      >
+        <Icon>{icon}</Icon>
+      </Button>
+    );
+  };
+
+  renderBlockButton = (type, icon) => {
+    let isActive = this.hasBlock(type);
+
+    if (["numbered-list", "bulleted-list"].includes(type)) {
+      const {
+        editorValue: { document, blocks }
+      } = this.state;
+
+      if (blocks.size > 0) {
+        const parent = document.getParent(blocks.first().key);
+        isActive = this.hasBlock("list-item") && parent && parent.type === type;
+      }
+    }
+
+    const isActiveBool = isActive === "true";
+
+    return (
+      <Button
+        active={isActive.toString()}
+        onMouseDown={event => this.onClickBlock(event, type)}
+      >
+        <Icon>{icon}</Icon>
+      </Button>
+    );
+  };
+
+  renderBlock = (props, editor, next) => {
+    const { attributes, children, node } = props;
+
+    switch (node.type) {
+      case "block-quote":
+        return <blockquote {...attributes}>{children}</blockquote>;
+      case "bulleted-list":
+        return <ul {...attributes}>{children}</ul>;
+      case "heading-one":
+        return <h1 {...attributes}>{children}</h1>;
+      case "heading-two":
+        return <h2 {...attributes}>{children}</h2>;
+      case "list-item":
+        return <li {...attributes}>{children}</li>;
+      case "numbered-list":
+        return <ol {...attributes}>{children}</ol>;
+      default:
+        return next();
+    }
+  };
+
+  renderMark = (props, editor, next) => {
+    const { children, mark, attributes } = props;
+
+    switch (mark.type) {
+      case "bold":
+        return <strong {...attributes}>{children}</strong>;
+      case "code":
+        return <code {...attributes}>{children}</code>;
+      case "italic":
+        return <em {...attributes}>{children}</em>;
+      case "underlined":
+        return <u {...attributes}>{children}</u>;
+      default:
+        return next();
+    }
+  };
+
+  onKeyDown = (event, editor, next) => {
+    let mark;
+
+    if (isBoldHotkey(event)) {
+      mark = "bold";
+    } else if (isItalicHotkey(event)) {
+      mark = "italic";
+    } else if (isUnderlinedHotkey(event)) {
+      mark = "underlined";
+    } else if (isCodeHotkey(event)) {
+      mark = "code";
+    } else {
+      return next();
+    }
+
+    event.preventDefault();
+    editor.toggleMark(mark);
+  };
+
+  ref = editor => {
+    this.editor = editor;
+  };
+
+  onClickMark = (event, type) => {
+    event.preventDefault();
+    this.editor.toggleMark(type);
+    this.textEditorRef.current.toggleMark(type);
+  };
+
+  onClickBlock = (event, type) => {
+    event.preventDefault();
+
+    const { textEditorRef } = this;
+    const editor = textEditorRef;
+    const { value } = textEditorRef;
+    const { document } = value;
+
+    // Handle everything but list buttons.
+    if (type !== "bulleted-list" && type !== "numbered-list") {
+      const isActive = this.hasBlock(type);
+      const isList = this.hasBlock("list-item");
+
+      if (isList) {
+        editor
+          .setBlocks(isActive ? DEFAULT_NODE : type)
+          .unwrapBlock("bulleted-list")
+          .unwrapBlock("numbered-list");
+      } else {
+        editor.setBlocks(isActive ? DEFAULT_NODE : type);
+      }
+    } else {
+      // Handle the extra wrapping required for list buttons.
+      const isList = this.hasBlock("list-item");
+      const isType = value.blocks.some(block => {
+        return !!document.getClosest(block.key, parent => parent.type === type);
+      });
+
+      if (isList && isType) {
+        editor
+          .setBlocks(DEFAULT_NODE)
+          .unwrapBlock("bulleted-list")
+          .unwrapBlock("numbered-list");
+      } else if (isList) {
+        editor
+          .unwrapBlock(
+            type === "bulleted-list" ? "numbered-list" : "bulleted-list"
+          )
+          .wrapBlock(type);
+      } else {
+        editor.setBlocks("list-item").wrapBlock(type);
+      }
+    }
   };
 
   componentWillUnmount() {
@@ -612,12 +801,14 @@ export class _MainComponent extends React.Component {
             <Paper className={classes.paper}>
               <div className={classes.box}>
                 {this.renderHeaderAndTutorial()}
+
                 <div className={classes.textBox}>
                   <Typography
                     variant="subtitle1"
                     gutterBottom
                     color={"textPrimary"}
                   >
+                    {this.renderEditorToolbar()}
                     <Editor
                       value={this.state.editorValue}
                       onChange={this.onTextChange}
