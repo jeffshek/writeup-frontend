@@ -118,8 +118,8 @@ export class _MainComponent extends React.Component {
 
     // Set interval helpers to run in the background to make UX feel smoother
     this.intervalID = setInterval(this.checkToSend, 2000);
-    // saved the typed documents every 10 seconds
-    this.saveTypedDataID = setInterval(this.saveTypedData, 10000);
+    // saved the typed documents every 5 seconds
+    this.saveTypedDataID = setInterval(this.saveTypedData, 5000);
   }
 
   // editor utilities - pulled from slatejs
@@ -319,8 +319,8 @@ export class _MainComponent extends React.Component {
   }
 
   saveTypedData = () => {
-    const text = this.state.editorValue.document.text;
-    localStorage.setItem("lastText", text);
+    const content = JSON.stringify(this.state.editorValue.toJSON());
+    localStorage.setItem("lastContent", content);
   };
 
   ////////////////////
@@ -416,6 +416,11 @@ export class _MainComponent extends React.Component {
   // text editor utilities
   ////////////////////
   onTextChange = ({ value }) => {
+    if (value.document != this.state.editorValue.document) {
+      const content = JSON.stringify(value.toJSON());
+      localStorage.setItem("content", content);
+    }
+
     this.setState({ editorValue: value });
   };
 
@@ -715,6 +720,10 @@ export class _MainComponent extends React.Component {
 
     const aiLabel = this.state.aiAssistEnabled ? "ON" : "OFF";
     const aiButtonStyle = this.state.aiAssistEnabled ? "contained" : "outlined";
+
+    if (!this.state.editorValue.document) {
+      return;
+    }
 
     const text = this.state.editorValue.document.text;
 
