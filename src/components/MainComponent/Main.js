@@ -123,6 +123,8 @@ export class _MainComponent extends React.Component {
   }
 
   // editor utilities - pulled from slatejs
+  // all the smart code begins here
+  // https://github.com/ianstormtaylor/slate/blob/master/examples/rich-text/index.js
   hasMark = type => {
     const { editorValue } = this.state;
     return editorValue.activeMarks.some(mark => mark.type === type);
@@ -306,6 +308,10 @@ export class _MainComponent extends React.Component {
     }
   };
 
+  // end of code from https://github.com/ianstormtaylor/slate/blob/master/examples/rich-text/index.js
+  // smart code ends here
+
+  // dumb code begins here
   componentWillUnmount() {
     this.websocket.dissembleWebSocket();
     clearInterval(this.intervalID);
@@ -332,7 +338,7 @@ export class _MainComponent extends React.Component {
 
   checkToSend = () => {
     // i sort of worry I'm writing a huge ddos attack on myself to
-    // slightly improve UX slightly ...
+    // only slightly improve UX  ...
 
     const editorAtEndOfText = this.checkEditorPositionAtEnd();
     const userForgotToHitSpace =
