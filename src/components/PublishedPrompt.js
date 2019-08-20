@@ -215,12 +215,10 @@ export const _PublishedPromptComponent = props => {
   useEffect(() => {
     function fetchPromptData() {
       getPrompt({ prompt_uuid }).then(response => {
-        console.log(response);
-
-        const content = JSON.parse(response.content);
-        console.log(content);
-        const editorValue = Value.fromJSON(
-          content || {
+        let editorValue;
+        if (response.content === "{}") {
+          console.log("Unable To Find Content, Reverting to Text");
+          editorValue = Value.fromJSON({
             document: {
               nodes: [
                 {
@@ -235,8 +233,11 @@ export const _PublishedPromptComponent = props => {
                 }
               ]
             }
-          }
-        );
+          });
+        } else {
+          const content = JSON.parse(response.content);
+          editorValue = Value.fromJSON(content);
+        }
 
         setState({
           text: response.text,

@@ -102,7 +102,7 @@ const _BestPromptsComponent = props => {
   }, []);
 
   const closeModal = () => {
-    // this is an embarassment of spaghetti
+    // this is an embarrassment of spaghetti
     setLoginOrRegisterModal(false);
   };
 
