@@ -8,12 +8,8 @@ const useStyles = makeStyles({
   }
 });
 
-export const LinearIndeterminate = ({ show }) => {
+export const LinearIndeterminate = () => {
   const classes = useStyles();
-
-  if (!show) {
-    return null;
-  }
 
   return (
     <div className={classes.root}>

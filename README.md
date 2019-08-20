@@ -10,6 +10,7 @@
 - [Netlify](www.netlify.com) hosts writeup's static assets. Because it's amazing.
 - [MaterialUI](http://material-ui.com/) - Thank you for making it easy to build presentable pages.
 - [React](https://reactjs.org/) - Thank you for building an awesome library to construct a web app with.
+- [SlateJS](https://www.slatejs.org/#/rich-text) - The editor show casing everything.
 - Create React App was used to build this.
 
 ### Design
@@ -19,6 +20,7 @@
 ### Code Quality
 
 - This was written pretty quickly, so I'm not that proud of some antipatterns I used in repo. I wouldn't use it for inspiration. I'm much prouder of the backend repo than I am of the frontend.
+- I'm not a frontend engineer. I'm sorry about how fast main.js grew. ... Don't judge me too hard.
 
 ### Open Sourced Backend (Mostly)
 
@@ -27,4 +29,3 @@
 ### File Structure
 
 - I REALLY don't recommend any file layout / naming conventions from this frontend repo. It's still evolving and changing as I think through patterns. There are some parts I'm super embarrassed by.
-- I'm much more of a backend engineer, so I'm pretty embarrassed by the quality of some of my code here ... Don't judge me too hard.

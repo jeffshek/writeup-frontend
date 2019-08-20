@@ -1,6 +1,5 @@
 import { backendAPI } from "services/api";
 import { upvotePromptURL } from "services/backendURLs";
-import { checkTokenKeyInLocalStorage } from "services/storage";
 
 export const publishPrompt = ({
   text,

@@ -36,17 +36,23 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { getRandomItemFromArray } from "utilities/utilities";
 import { LoginOrRegisterModal } from "components/Modals/LoginOrRegisterModal";
 import { checkTokenKeyInLocalStorage } from "services/storage";
+import {
+  Icon,
+  isBoldHotkey,
+  isCodeHotkey,
+  isItalicHotkey,
+  isUnderlinedHotkey,
+  Toolbar
+} from "components/SlateJS";
+
+const DEFAULT_NODE = "paragraph";
 
 // this file is a beast and should be refactored into 2-3 separate files, sorry
-// an area of difficulty is writing apps have a lot of "state" management
-// which makes it harder to refactor and parse
+// state management is difficult to manage with writing apps
 
 export class _MainComponent extends React.Component {
   constructor(props) {
     super(props);
-
-    // editor reference to insert text outside of the editor direct control
-    this.textEditorRef = React.createRef();
 
     const textPrompts = [];
 
@@ -87,14 +93,6 @@ export class _MainComponent extends React.Component {
       // during saving, only let one request happen
       publishDisabled: false,
 
-      // when doing test, uncomment this
-      // publish sections
-      //title: "Of Lions and Monkeys",
-      //email: "email@gmail.com",
-      //website: "www.senrigan.io",
-      //instagram: "shekgram",
-      //twitter: "shekkery",
-      //share_state: "published"
       title: "",
       email: "",
       website: "",
@@ -116,16 +114,204 @@ export class _MainComponent extends React.Component {
     this.websocket.setupWebSocket();
 
     // puts cursor at end for easier resuming
-    this.textEditorRef.current.moveToEndOfDocument();
+    this.editor.moveToEndOfDocument();
+
+    // Set interval helpers to run in the background to make UX feel smoother
     this.intervalID = setInterval(this.checkToSend, 2000);
     // saved the typed documents every 10 seconds
     this.saveTypedDataID = setInterval(this.saveTypedData, 10000);
   }
 
-  handleSwitchCheck = name => event => {
-    this.setState({ [name]: event.target.checked });
+  // editor utilities - pulled from slatejs
+  // all the smart code begins here
+  // https://github.com/ianstormtaylor/slate/blob/master/examples/rich-text/index.js
+  hasMark = type => {
+    const { editorValue } = this.state;
+    return editorValue.activeMarks.some(mark => mark.type === type);
   };
 
+  hasBlock = type => {
+    const { editorValue } = this.state;
+    return editorValue.blocks.some(node => node.type === type);
+  };
+
+  renderEditorToolbar = () => {
+    return (
+      <Fragment>
+        <Toolbar>
+          {this.renderMarkButton("bold", "format_bold")}
+          {this.renderMarkButton("italic", "format_italic")}
+          {this.renderMarkButton("underlined", "format_underlined")}
+          {this.renderMarkButton("code", "code")}
+          {this.renderBlockButton("heading-one", "looks_one")}
+          {this.renderBlockButton("heading-two", "looks_two")}
+          {this.renderBlockButton("block-quote", "format_quote")}
+          {this.renderBlockButton("numbered-list", "format_list_numbered")}
+          {this.renderBlockButton("bulleted-list", "format_list_bulleted")}
+        </Toolbar>
+      </Fragment>
+    );
+  };
+
+  renderMarkButton = (type, icon) => {
+    const isActive = this.hasMark(type);
+
+    return (
+      <Button
+        active={isActive.toString()}
+        onMouseDown={event => this.onClickMark(event, type)}
+      >
+        <Fragment>
+          <Icon>{icon}</Icon>
+          {isActive ? "ON" : null}
+        </Fragment>
+      </Button>
+    );
+  };
+
+  renderBlockButton = (type, icon) => {
+    let isActive = this.hasBlock(type);
+
+    if (["numbered-list", "bulleted-list"].includes(type)) {
+      const {
+        editorValue: { document, blocks }
+      } = this.state;
+
+      if (blocks.size > 0) {
+        const parent = document.getParent(blocks.first().key);
+        isActive = this.hasBlock("list-item") && parent && parent.type === type;
+      }
+    }
+
+    return (
+      <Button
+        active={isActive.toString()}
+        onMouseDown={event => this.onClickBlock(event, type)}
+      >
+        <Icon>{icon}</Icon>
+      </Button>
+    );
+  };
+
+  renderBlock = (props, editor, next) => {
+    const { attributes, children, node } = props;
+
+    switch (node.type) {
+      case "block-quote":
+        return <blockquote {...attributes}>{children}</blockquote>;
+      case "bulleted-list":
+        return <ul {...attributes}>{children}</ul>;
+      case "heading-one":
+        return <h1 {...attributes}>{children}</h1>;
+      case "heading-two":
+        return <h2 {...attributes}>{children}</h2>;
+      case "list-item":
+        return <li {...attributes}>{children}</li>;
+      case "numbered-list":
+        return <ol {...attributes}>{children}</ol>;
+      default:
+        return next();
+    }
+  };
+
+  renderMark = (props, editor, next) => {
+    const { children, mark, attributes } = props;
+
+    switch (mark.type) {
+      case "bold":
+        return <strong {...attributes}>{children}</strong>;
+      case "code":
+        return (
+          <code {...attributes} style={{ backgroundColor: "white" }}>
+            {children}
+          </code>
+        );
+      case "italic":
+        return <em {...attributes}>{children}</em>;
+      case "underlined":
+        return <u {...attributes}>{children}</u>;
+      default:
+        return next();
+    }
+  };
+
+  onKeyDown = (event, editor, next) => {
+    let mark;
+
+    if (isBoldHotkey(event)) {
+      mark = "bold";
+    } else if (isItalicHotkey(event)) {
+      mark = "italic";
+    } else if (isUnderlinedHotkey(event)) {
+      mark = "underlined";
+    } else if (isCodeHotkey(event)) {
+      mark = "code";
+    } else {
+      return next();
+    }
+
+    event.preventDefault();
+    editor.toggleMark(mark);
+  };
+
+  ref = editor => {
+    // not smart enough to know why this works and react's createref didn't
+    this.editor = editor;
+  };
+
+  onClickMark = (event, type) => {
+    event.preventDefault();
+    this.editor.toggleMark(type);
+  };
+
+  onClickBlock = (event, type) => {
+    event.preventDefault();
+
+    const { editor } = this;
+    const { value } = editor;
+    const { document } = value;
+
+    // Handle everything but list buttons.
+    if (type !== "bulleted-list" && type !== "numbered-list") {
+      const isActive = this.hasBlock(type);
+      const isList = this.hasBlock("list-item");
+
+      if (isList) {
+        editor
+          .setBlocks(isActive ? DEFAULT_NODE : type)
+          .unwrapBlock("bulleted-list")
+          .unwrapBlock("numbered-list");
+      } else {
+        editor.setBlocks(isActive ? DEFAULT_NODE : type);
+      }
+    } else {
+      // Handle the extra wrapping required for list buttons.
+      const isList = this.hasBlock("list-item");
+      const isType = value.blocks.some(block => {
+        return !!document.getClosest(block.key, parent => parent.type === type);
+      });
+
+      if (isList && isType) {
+        editor
+          .setBlocks(DEFAULT_NODE)
+          .unwrapBlock("bulleted-list")
+          .unwrapBlock("numbered-list");
+      } else if (isList) {
+        editor
+          .unwrapBlock(
+            type === "bulleted-list" ? "numbered-list" : "bulleted-list"
+          )
+          .wrapBlock(type);
+      } else {
+        editor.setBlocks("list-item").wrapBlock(type);
+      }
+    }
+  };
+
+  // end of code from https://github.com/ianstormtaylor/slate/blob/master/examples/rich-text/index.js
+  // smart code ends here
+
+  // dumb code begins here
   componentWillUnmount() {
     this.websocket.dissembleWebSocket();
     clearInterval(this.intervalID);
@@ -152,7 +338,7 @@ export class _MainComponent extends React.Component {
 
   checkToSend = () => {
     // i sort of worry I'm writing a huge ddos attack on myself to
-    // slightly improve UX slightly ...
+    // only slightly improve UX  ...
 
     const editorAtEndOfText = this.checkEditorPositionAtEnd();
     const userForgotToHitSpace =
@@ -237,9 +423,8 @@ export class _MainComponent extends React.Component {
     // pretty sure it shouldn't this hard to check positions, but i haven't
     // groked all of slatejs documentation because i'm focusing on optimizing
     // on the backend
-    const currentOffset = this.textEditorRef.current.value.selection.focus
-      .offset;
-    const endTextLength = this.textEditorRef.current.value.endText.text.length;
+    const currentOffset = this.editor.value.selection.focus.offset;
+    const endTextLength = this.editor.value.endText.text.length;
 
     /*
     justification of this function ...
@@ -327,7 +512,7 @@ export class _MainComponent extends React.Component {
       // Do a bit of logic here to contain if text character ending
       // has a space or doesn't ... and if the chosen text contains
       // an end of text prompt
-      const editor = self.textEditorRef.current;
+      const editor = self.editor;
 
       const typedText = self.state.editorValue.document.text;
       const lastCharacterText = typedText.slice(-1);
@@ -368,15 +553,15 @@ export class _MainComponent extends React.Component {
   focusTextInput = () => {
     // Explicitly focus the text input using the raw DOM API
     // Note: we're accessing "current" to get the DOM node
-    this.textEditorRef.current.focus();
+    this.editor.focus();
   };
 
   startNewText = () => {
     const textLength = this.state.editorValue.document.text.length;
-    this.textEditorRef.current.deleteBackward(textLength);
+    this.editor.deleteBackward(textLength);
 
     const randomPrompt = getRandomItemFromArray(PROMPTS_TO_USE);
-    this.textEditorRef.current.insertText(randomPrompt);
+    this.editor.insertText(randomPrompt);
 
     this.focusTextInput();
 
@@ -596,6 +781,58 @@ export class _MainComponent extends React.Component {
     this.sendTextToWebSocket();
   }
 
+  renderTextPromptSelectionSection = () => {
+    const { classes } = this.props;
+
+    if (!this.state.aiAssistEnabled) {
+      return null;
+    }
+
+    const validPrompts = this.state.textPrompts.length > 0;
+
+    if (validPrompts) {
+      return (
+        <Fragment>
+          <Grid
+            container
+            direction="row"
+            justify="space-between"
+            alignItems="center"
+          >
+            <Grid item>{HowToSelectPromptSection}</Grid>
+            <Grid item xs={1} />
+            <Grid item>
+              <Button
+                variant="outlined"
+                color="secondary"
+                className={classes.undoButton}
+                onClick={this.undoAdd}
+              >
+                Undo
+              </Button>
+              <Button
+                variant={this.state.arrowKeysSelect ? "contained" : "outlined"}
+                color="primary"
+                onClick={this.setModal("arrowKeysSelect")}
+              >
+                Arrow Keys Selection:{" "}
+                {this.state.arrowKeysSelect ? "On" : "Off"}
+              </Button>
+            </Grid>
+          </Grid>
+          <PromptSelectComponent
+            selectedIndex={this.state.currentDetailIndex}
+            onTextClick={this.onTextClick}
+            textPrompts={this.state.textPrompts}
+          />
+          {HowToSelectPromptBottomSection}
+        </Fragment>
+      );
+    } else {
+      return <LinearIndeterminate />;
+    }
+  };
+
   render() {
     const { classes } = this.props;
 
@@ -618,61 +855,21 @@ export class _MainComponent extends React.Component {
                     gutterBottom
                     color={"textPrimary"}
                   >
+                    {this.renderEditorToolbar()}
                     <Editor
+                      spellCheck
                       value={this.state.editorValue}
                       onChange={this.onTextChange}
                       autoFocus={true}
-                      ref={this.textEditorRef}
+                      ref={this.ref}
+                      onKeyDown={this.onKeyDown}
+                      renderBlock={this.renderBlock}
+                      renderMark={this.renderMark}
                     />
                   </Typography>
                 </div>
                 {this.renderPublishButton()}
-                <br />
-
-                {this.state.aiAssistEnabled &&
-                this.state.textPrompts.length > 0 ? (
-                  <Fragment>
-                    <Grid
-                      container
-                      direction="row"
-                      justify="space-between"
-                      alignItems="center"
-                    >
-                      <Grid item>{HowToSelectPromptSection}</Grid>
-                      <Grid item xs={1} />
-                      <Grid item>
-                        <Button
-                          variant="outlined"
-                          color="secondary"
-                          className={classes.undoButton}
-                          onClick={this.undoAdd}
-                        >
-                          Undo
-                        </Button>
-                        <Button
-                          variant={
-                            this.state.arrowKeysSelect
-                              ? "contained"
-                              : "outlined"
-                          }
-                          color="primary"
-                          onClick={this.setModal("arrowKeysSelect")}
-                        >
-                          Arrow Keys Selection:{" "}
-                          {this.state.arrowKeysSelect ? "On" : "Off"}
-                        </Button>
-                      </Grid>
-                    </Grid>
-                    <PromptSelectComponent
-                      selectedIndex={this.state.currentDetailIndex}
-                      onTextClick={this.onTextClick}
-                      textPrompts={this.state.textPrompts}
-                    />
-                    {HowToSelectPromptBottomSection}
-                  </Fragment>
-                ) : (
-                  <LinearIndeterminate show={this.state.aiAssistEnabled} />
-                )}
+                {this.renderTextPromptSelectionSection()}
               </div>
             </Paper>
             <br />
