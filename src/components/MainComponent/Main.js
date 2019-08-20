@@ -44,7 +44,6 @@ import {
   isUnderlinedHotkey,
   Toolbar
 } from "components/SlateJS";
-import { bool } from "prop-types";
 
 const DEFAULT_NODE = "paragraph";
 
@@ -54,9 +53,6 @@ const DEFAULT_NODE = "paragraph";
 export class _MainComponent extends React.Component {
   constructor(props) {
     super(props);
-
-    // editor reference to insert text outside of the editor direct control
-    this.textEditorRef = React.createRef();
 
     const textPrompts = [];
 
@@ -97,14 +93,6 @@ export class _MainComponent extends React.Component {
       // during saving, only let one request happen
       publishDisabled: false,
 
-      // when doing test, uncomment this
-      // publish sections
-      //title: "Of Lions and Monkeys",
-      //email: "email@gmail.com",
-      //website: "www.senrigan.io",
-      //instagram: "shekgram",
-      //twitter: "shekkery",
-      //share_state: "published"
       title: "",
       email: "",
       website: "",
@@ -126,7 +114,7 @@ export class _MainComponent extends React.Component {
     this.websocket.setupWebSocket();
 
     // puts cursor at end for easier resuming
-    this.textEditorRef.current.moveToEndOfDocument();
+    this.editor.moveToEndOfDocument();
 
     // Set interval helpers to run in the background to make UX feel smoother
     this.intervalID = setInterval(this.checkToSend, 2000);
@@ -165,14 +153,16 @@ export class _MainComponent extends React.Component {
 
   renderMarkButton = (type, icon) => {
     const isActive = this.hasMark(type);
-    const isActiveBool = isActive === "true";
 
     return (
       <Button
         active={isActive.toString()}
         onMouseDown={event => this.onClickMark(event, type)}
       >
-        <Icon>{icon}</Icon>
+        <Fragment>
+          <Icon>{icon}</Icon>
+          {isActive ? "ON" : null}
+        </Fragment>
       </Button>
     );
   };
@@ -190,8 +180,6 @@ export class _MainComponent extends React.Component {
         isActive = this.hasBlock("list-item") && parent && parent.type === type;
       }
     }
-
-    const isActiveBool = isActive === "true";
 
     return (
       <Button
@@ -231,7 +219,11 @@ export class _MainComponent extends React.Component {
       case "bold":
         return <strong {...attributes}>{children}</strong>;
       case "code":
-        return <code {...attributes}>{children}</code>;
+        return (
+          <code {...attributes} style={{ backgroundColor: "white" }}>
+            {children}
+          </code>
+        );
       case "italic":
         return <em {...attributes}>{children}</em>;
       case "underlined":
@@ -261,21 +253,20 @@ export class _MainComponent extends React.Component {
   };
 
   ref = editor => {
+    // not smart enough to know why this works and react's createref didn't
     this.editor = editor;
   };
 
   onClickMark = (event, type) => {
     event.preventDefault();
     this.editor.toggleMark(type);
-    this.textEditorRef.current.toggleMark(type);
   };
 
   onClickBlock = (event, type) => {
     event.preventDefault();
 
-    const { textEditorRef } = this;
-    const editor = textEditorRef;
-    const { value } = textEditorRef;
+    const { editor } = this;
+    const { value } = editor;
     const { document } = value;
 
     // Handle everything but list buttons.
@@ -426,9 +417,8 @@ export class _MainComponent extends React.Component {
     // pretty sure it shouldn't this hard to check positions, but i haven't
     // groked all of slatejs documentation because i'm focusing on optimizing
     // on the backend
-    const currentOffset = this.textEditorRef.current.value.selection.focus
-      .offset;
-    const endTextLength = this.textEditorRef.current.value.endText.text.length;
+    const currentOffset = this.editor.value.selection.focus.offset;
+    const endTextLength = this.editor.value.endText.text.length;
 
     /*
     justification of this function ...
@@ -516,7 +506,7 @@ export class _MainComponent extends React.Component {
       // Do a bit of logic here to contain if text character ending
       // has a space or doesn't ... and if the chosen text contains
       // an end of text prompt
-      const editor = self.textEditorRef.current;
+      const editor = self.editor;
 
       const typedText = self.state.editorValue.document.text;
       const lastCharacterText = typedText.slice(-1);
@@ -557,15 +547,15 @@ export class _MainComponent extends React.Component {
   focusTextInput = () => {
     // Explicitly focus the text input using the raw DOM API
     // Note: we're accessing "current" to get the DOM node
-    this.textEditorRef.current.focus();
+    this.editor.focus();
   };
 
   startNewText = () => {
     const textLength = this.state.editorValue.document.text.length;
-    this.textEditorRef.current.deleteBackward(textLength);
+    this.editor.deleteBackward(textLength);
 
     const randomPrompt = getRandomItemFromArray(PROMPTS_TO_USE);
-    this.textEditorRef.current.insertText(randomPrompt);
+    this.editor.insertText(randomPrompt);
 
     this.focusTextInput();
 
@@ -785,6 +775,58 @@ export class _MainComponent extends React.Component {
     this.sendTextToWebSocket();
   }
 
+  renderTextPromptSelectionSection = () => {
+    const { classes } = this.props;
+
+    if (!this.state.aiAssistEnabled) {
+      return null;
+    }
+
+    const validPrompts = this.state.textPrompts.length > 0;
+
+    if (validPrompts) {
+      return (
+        <Fragment>
+          <Grid
+            container
+            direction="row"
+            justify="space-between"
+            alignItems="center"
+          >
+            <Grid item>{HowToSelectPromptSection}</Grid>
+            <Grid item xs={1} />
+            <Grid item>
+              <Button
+                variant="outlined"
+                color="secondary"
+                className={classes.undoButton}
+                onClick={this.undoAdd}
+              >
+                Undo
+              </Button>
+              <Button
+                variant={this.state.arrowKeysSelect ? "contained" : "outlined"}
+                color="primary"
+                onClick={this.setModal("arrowKeysSelect")}
+              >
+                Arrow Keys Selection:{" "}
+                {this.state.arrowKeysSelect ? "On" : "Off"}
+              </Button>
+            </Grid>
+          </Grid>
+          <PromptSelectComponent
+            selectedIndex={this.state.currentDetailIndex}
+            onTextClick={this.onTextClick}
+            textPrompts={this.state.textPrompts}
+          />
+          {HowToSelectPromptBottomSection}
+        </Fragment>
+      );
+    } else {
+      return <LinearIndeterminate />;
+    }
+  };
+
   render() {
     const { classes } = this.props;
 
@@ -801,7 +843,6 @@ export class _MainComponent extends React.Component {
             <Paper className={classes.paper}>
               <div className={classes.box}>
                 {this.renderHeaderAndTutorial()}
-
                 <div className={classes.textBox}>
                   <Typography
                     variant="subtitle1"
@@ -810,59 +851,19 @@ export class _MainComponent extends React.Component {
                   >
                     {this.renderEditorToolbar()}
                     <Editor
+                      spellCheck
                       value={this.state.editorValue}
                       onChange={this.onTextChange}
                       autoFocus={true}
-                      ref={this.textEditorRef}
+                      ref={this.ref}
+                      onKeyDown={this.onKeyDown}
+                      renderBlock={this.renderBlock}
+                      renderMark={this.renderMark}
                     />
                   </Typography>
                 </div>
                 {this.renderPublishButton()}
-
-                {this.state.aiAssistEnabled &&
-                this.state.textPrompts.length > 0 ? (
-                  <Fragment>
-                    <Grid
-                      container
-                      direction="row"
-                      justify="space-between"
-                      alignItems="center"
-                    >
-                      <Grid item>{HowToSelectPromptSection}</Grid>
-                      <Grid item xs={1} />
-                      <Grid item>
-                        <Button
-                          variant="outlined"
-                          color="secondary"
-                          className={classes.undoButton}
-                          onClick={this.undoAdd}
-                        >
-                          Undo
-                        </Button>
-                        <Button
-                          variant={
-                            this.state.arrowKeysSelect
-                              ? "contained"
-                              : "outlined"
-                          }
-                          color="primary"
-                          onClick={this.setModal("arrowKeysSelect")}
-                        >
-                          Arrow Keys Selection:{" "}
-                          {this.state.arrowKeysSelect ? "On" : "Off"}
-                        </Button>
-                      </Grid>
-                    </Grid>
-                    <PromptSelectComponent
-                      selectedIndex={this.state.currentDetailIndex}
-                      onTextClick={this.onTextClick}
-                      textPrompts={this.state.textPrompts}
-                    />
-                    {HowToSelectPromptBottomSection}
-                  </Fragment>
-                ) : (
-                  <LinearIndeterminate show={this.state.aiAssistEnabled} />
-                )}
+                {this.renderTextPromptSelectionSection()}
               </div>
             </Paper>
             <br />

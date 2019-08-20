@@ -9461,10 +9461,10 @@ slate-react@^0.22.4:
     tiny-invariant "^1.0.1"
     tiny-warning "^0.0.3"
 
-slate@^0.47.4:
-  version "0.47.4"
-  resolved "https://registry.yarnpkg.com/slate/-/slate-0.47.4.tgz#9c8e7a73dac78d14615c68c576f0cfd2338daa84"
-  integrity sha512-kyZDN0NgjCtfYm2CrWZ7FixoO+dA6M3EFDb5q+Ig6zEmnt9IUKT1AlRNwN2mWCqTpRSY3SxEdgoUuzbvbUScUg==
+slate@^0.47.6:
+  version "0.47.6"
+  resolved "https://registry.yarnpkg.com/slate/-/slate-0.47.6.tgz#8ef115211cf0dd5f14be9261db90426bc8ec5c0a"
+  integrity sha512-FwUcASrSLohFrCY5MN7UYAjq40DSr4nYsGoh2lZAPxo97OGs9JqDRxaOe0DQNezZoYY8FUSHXMtxIgFIw9nfHA==
   dependencies:
     debug "^3.1.0"
     direction "^0.1.5"
