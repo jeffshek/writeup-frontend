@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import Grid from "@material-ui/core/Grid/Grid";
 import Typography from "@material-ui/core/Typography/Typography";
 import { Link, withRouter } from "react-router-dom";
@@ -15,19 +15,18 @@ import logo from "images/logo.svg";
 const InlineTagline = ({ classes }) => {
   return (
     <div className={classes.inline}>
-      <Typography variant="h6" color="inherit" noWrap align={"center"}>
-        <Link to="/" className={classes.link}>
-          <img width={40} src={logo} alt="writeup.ai logo" />
-          <span className={classes.tagline}>writeup.ai</span>
-        </Link>
-      </Typography>
+      <Link to="/" className={classes.link}>
+        <img width={40} src={logo} alt="writeup.ai logo" />
+        <Typography>writeup.ai</Typography>
+      </Link>
     </div>
   );
 };
 
 const TextTagline = ({ classes }) => {
   return (
-    <div className={classes.productLogo}>
+    <Fragment>
+      {/*<div className={classes.productLogo}>*/}
       <Typography className={classes.inlineBlockTagLine}>
         use machine learning to
       </Typography>{" "}
@@ -35,12 +34,12 @@ const TextTagline = ({ classes }) => {
       <Typography className={classes.inlineBlockTagLine}>
         write, fast.
       </Typography>
-    </div>
+      {/*</div>*/}
+    </Fragment>
   );
 };
 
 class _TopbarComponent extends Component {
-  // should refactor this, don't need 3/4 of this copy/pasted filler
   state = {
     value: 1,
     menuDrawer: false
@@ -203,18 +202,17 @@ class _TopbarComponent extends Component {
     return (
       <AppBar position="absolute" color="default" className={classes.appBar}>
         <Toolbar>
-          <Grid container spacing={2} alignItems="baseline">
-            <Grid item xs={9} className={classes.flex}>
+          <Grid
+            container
+            spacing={1}
+            justify="space-between"
+            alignItems="center"
+          >
+            <Grid item xs={4} className={classes.flex}>
               <InlineTagline classes={classes} />
-              {!this.props.noTabs && (
-                <React.Fragment>
-                  <TextTagline classes={classes} />
-                  {/*{this.renderMobileIconContainer()}*/}
-                  {/*{this.renderLeftTabContainer()}*/}
-                </React.Fragment>
-              )}
+              <TextTagline classes={classes} />
             </Grid>
-            <Grid item xs={3} className={classes.flex}>
+            <Grid item xs={5} className={classes.flex}>
               {this.renderRightContainer()}
             </Grid>
           </Grid>

@@ -88,7 +88,7 @@ export class _MainComponent extends React.Component {
       loginOrRegisterModal: false,
       settingsModalOpen: false,
       publishModalOpen: false,
-      tutorialModalOpen: true,
+      tutorialModalOpen: false,
 
       // during saving, only let one request happen
       publishDisabled: false,
