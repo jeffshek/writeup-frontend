@@ -16,6 +16,17 @@ export const TopbarStyles = theme => ({
       alignItems: "center"
     }
   },
+  rightGridContainer: {
+    [theme.breakpoints.up("sm")]: {
+      marginRight: "2rem"
+    }
+  },
+  leftGridContainerItem: {
+    display: "flex",
+    [theme.breakpoints.up("sm")]: {
+      //marginLeft: "2rem"
+    }
+  },
   link: {
     textDecoration: "none",
     color: "inherit"
@@ -53,7 +64,7 @@ export const TopbarStyles = theme => ({
     }
   },
   tabContainerRight: {
-    marginLeft: 32,
+    //marginLeft: 32,
     [theme.breakpoints.down("sm")]: {
       display: "none"
     },
@@ -69,9 +80,13 @@ export const TopbarStyles = theme => ({
   settingsContainer: {
     paddingBottom: "0.5rem"
   },
+  textTagContainer: {
+    padding: "1rem"
+  },
   strikeInline: {
     display: "inline-block",
     paddingRight: "0.25rem",
+    paddingLeft: "0.25rem",
     "text-decoration": "line-through"
   },
   inlineBlockTagLine: {

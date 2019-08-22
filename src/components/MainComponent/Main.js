@@ -61,6 +61,9 @@ export class _MainComponent extends React.Component {
     // this is getting into spaghetti, but needed this for async
     this.undoAdd = this.undoAdd.bind(this);
 
+    const showTutorial =
+      process.env.REACT_APP_ENV === "development" ? false : true;
+
     this.state = {
       editorValue: initialValue,
       currentDetailIndex: null,
@@ -90,7 +93,7 @@ export class _MainComponent extends React.Component {
       loginOrRegisterModal: false,
       settingsModalOpen: false,
       publishModalOpen: false,
-      tutorialModalOpen: true,
+      tutorialModalOpen: showTutorial,
 
       // during saving, only let one request happen
       publishDisabled: false,
@@ -642,8 +645,7 @@ export class _MainComponent extends React.Component {
   renderWordCountAndPublishButton = () => {
     const { classes } = this.props;
 
-    const wordCount = this.state.editorValue.document.text.trim().split(" ")
-      .length;
+    const wordCount = this.getWordCount();
 
     return (
       <Grid
@@ -667,6 +669,11 @@ export class _MainComponent extends React.Component {
     );
   };
 
+  getWordCount = () => {
+    const text = this.state.editorValue.document.text;
+    return text.trim().split(" ").length;
+  };
+
   renderHeaderAndTutorial = () => {
     const { classes } = this.props;
 
@@ -679,6 +686,9 @@ export class _MainComponent extends React.Component {
 
     const text = this.state.editorValue.document.text;
 
+    const wordCount = this.getWordCount();
+    const showInstructions = wordCount < 50;
+
     return (
       <Grid
         container
@@ -686,7 +696,7 @@ export class _MainComponent extends React.Component {
         justify="space-between"
         alignItems="center"
       >
-        <Grid item>{WritingHeader}</Grid>
+        <Grid item>{showInstructions ? WritingHeader : null}</Grid>
         <Grid item>
           <span className={classes.copiedContainer}>
             <Button
@@ -750,6 +760,8 @@ export class _MainComponent extends React.Component {
     }
 
     const validPrompts = this.state.textPrompts.length > 0;
+    const wordCount = this.getWordCount();
+    const showInstructions = wordCount < 50;
 
     if (validPrompts) {
       return (
@@ -760,7 +772,9 @@ export class _MainComponent extends React.Component {
             justify="space-between"
             alignItems="center"
           >
-            <Grid item>{HowToSelectPromptSection}</Grid>
+            <Grid item>
+              {showInstructions ? HowToSelectPromptSection : null}
+            </Grid>
             <Grid item xs={1} />
             <Grid item>
               <Button

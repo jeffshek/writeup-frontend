@@ -12,25 +12,28 @@ import Tab from "@material-ui/core/Tab";
 import { Link as MaterialLink } from "@material-ui/core";
 import logo from "images/logo.svg";
 
-const InlineTagline = ({ classes }) => {
+const LogoAndLinkSection = ({ classes }) => {
   return (
     <div className={classes.inline}>
-      <Typography variant="h6" color="inherit" noWrap align={"center"}>
-        <Link to="/" className={classes.link}>
-          <img width={40} src={logo} alt="writeup.ai logo" />
-          <span className={classes.tagline}>writeup.ai</span>
-        </Link>
-      </Typography>
+      <Link to="/" className={classes.link}>
+        <img
+          width={40}
+          src={logo}
+          alt="writeup.ai logo"
+          style={{ marginLeft: "auto", marginRight: "auto", display: "block" }}
+        />
+        <Typography>writeup.ai</Typography>
+      </Link>
     </div>
   );
 };
 
 const TextTagline = ({ classes }) => {
   return (
-    <div className={classes.productLogo}>
+    <div className={classes.textTagContainer}>
       <Typography className={classes.inlineBlockTagLine}>
         use machine learning to
-      </Typography>{" "}
+      </Typography>
       <Typography className={classes.strikeInline}>right</Typography>
       <Typography className={classes.inlineBlockTagLine}>
         write, fast.
@@ -40,7 +43,6 @@ const TextTagline = ({ classes }) => {
 };
 
 class _TopbarComponent extends Component {
-  // should refactor this, don't need 3/4 of this copy/pasted filler
   state = {
     value: 1,
     menuDrawer: false
@@ -166,34 +168,28 @@ class _TopbarComponent extends Component {
   renderRightContainer = () => {
     const { classes } = this.props;
 
-    if (!this.props.showSettings) {
-      return null;
-    }
-
     return (
-      <div className={classes.tabContainerRight}>
-        <Tabs
-          value={this.state.value}
-          indicatorColor="primary"
-          textColor="primary"
-          onChange={this.handleChange}
-        >
-          <Tab
-            key={"bestPrompts"}
-            component={MaterialLink}
-            onClick={this.routeToBestPrompts}
-            classes={{ root: classes.tabItem }}
-            label={"Best Prompts"}
-          />
-          <Tab
-            key={"customize"}
-            component={MaterialLink}
-            onClick={this.props.setModal}
-            classes={{ root: classes.tabItem }}
-            label={"Customize"}
-          />
-        </Tabs>
-      </div>
+      <Tabs
+        value={this.state.value}
+        indicatorColor="primary"
+        textColor="primary"
+        onChange={this.handleChange}
+      >
+        <Tab
+          key={"bestPrompts"}
+          component={MaterialLink}
+          onClick={this.routeToBestPrompts}
+          classes={{ root: classes.tabItem }}
+          label={"Best Prompts"}
+        />
+        <Tab
+          key={"customize"}
+          component={MaterialLink}
+          onClick={this.props.setModal}
+          classes={{ root: classes.tabItem }}
+          label={"Customize"}
+        />
+      </Tabs>
     );
   };
 
@@ -203,19 +199,25 @@ class _TopbarComponent extends Component {
     return (
       <AppBar position="absolute" color="default" className={classes.appBar}>
         <Toolbar>
-          <Grid container spacing={2} alignItems="baseline">
-            <Grid item xs={9} className={classes.flex}>
-              <InlineTagline classes={classes} />
-              {!this.props.noTabs && (
-                <React.Fragment>
-                  <TextTagline classes={classes} />
-                  {/*{this.renderMobileIconContainer()}*/}
-                  {/*{this.renderLeftTabContainer()}*/}
-                </React.Fragment>
-              )}
+          <Grid
+            container
+            spacing={1}
+            justify="space-between"
+            alignItems="center"
+          >
+            <Grid item xs={4} className={classes.leftGridContainerItem}>
+              <LogoAndLinkSection classes={classes} />
+              <TextTagline classes={classes} />
             </Grid>
-            <Grid item xs={3} className={classes.flex}>
-              {this.renderRightContainer()}
+            <Grid item xs={5} className={classes.flex}>
+              <Grid
+                container
+                justify="flex-end"
+                alignItems="center"
+                className={classes.rightGridContainer}
+              >
+                {this.renderRightContainer()}
+              </Grid>
             </Grid>
           </Grid>
         </Toolbar>
@@ -224,9 +226,7 @@ class _TopbarComponent extends Component {
   }
 }
 
-_TopbarComponent.defaultProps = {
-  showSettings: true
-};
+_TopbarComponent.defaultProps = {};
 
 export const TopbarComponent = withRouter(
   withStyles(TopbarStyles)(_TopbarComponent)
