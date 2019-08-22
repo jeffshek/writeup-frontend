@@ -59,6 +59,9 @@ export class _MainComponent extends React.Component {
     // this is getting into spaghetti, but needed this for async
     this.undoAdd = this.undoAdd.bind(this);
 
+    const showTutorial =
+      process.env.REACT_APP_ENV === "development" ? false : true;
+
     this.state = {
       editorValue: initialValue,
       currentDetailIndex: null,
@@ -88,7 +91,7 @@ export class _MainComponent extends React.Component {
       loginOrRegisterModal: false,
       settingsModalOpen: false,
       publishModalOpen: false,
-      tutorialModalOpen: false,
+      tutorialModalOpen: showTutorial,
 
       // during saving, only let one request happen
       publishDisabled: false,
