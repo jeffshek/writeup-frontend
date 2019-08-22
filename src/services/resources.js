@@ -8,6 +8,7 @@ export const publishPrompt = ({
   email,
   twitter,
   website,
+  content,
   share_state
 }) => {
   const url = "api/writeup/v1/prompts/";
@@ -17,6 +18,7 @@ export const publishPrompt = ({
     title: title,
     email: email,
     twitter: twitter,
+    content: content,
     website: website,
     share_state: share_state
   };

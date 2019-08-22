@@ -3,28 +3,32 @@ import React, { Fragment } from "react";
 import Divider from "@material-ui/core/Divider/Divider";
 import Button from "@material-ui/core/Button/Button";
 import { Value } from "slate";
-import { getItemToLoadTextEditor } from "utilities/utilities";
+import { getRandomItemFromArray } from "utilities/utilities";
 import Grid from "@material-ui/core/Grid/Grid";
 import ArrowUpIcon from "@material-ui/icons/ArrowUpward";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import Paper from "@material-ui/core/Paper/Paper";
+import { PROMPTS_TO_USE } from "components/MainComponent/constants";
 
-export const initialValue = Value.fromJSON({
-  document: {
-    nodes: [
-      {
-        object: "block",
-        type: "paragraph",
-        nodes: [
-          {
-            object: "text",
-            text: getItemToLoadTextEditor()
-          }
-        ]
-      }
-    ]
+const existingValue = JSON.parse(localStorage.getItem("content"));
+export const initialValue = Value.fromJSON(
+  existingValue || {
+    document: {
+      nodes: [
+        {
+          object: "block",
+          type: "paragraph",
+          nodes: [
+            {
+              object: "text",
+              text: getRandomItemFromArray(PROMPTS_TO_USE)
+            }
+          ]
+        }
+      ]
+    }
   }
-});
+);
 
 export const loadTextIntoEditorValue = ({ text }) =>
   Value.fromJSON({
