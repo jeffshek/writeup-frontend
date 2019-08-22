@@ -22,7 +22,7 @@
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.1.1",
     "slate": "^0.47.6",
-    "slate-react": "^0.22.4",
+    "slate-react": "^0.22.6",
     "uuid": "^3.3.3"
   },
   "scripts": {
