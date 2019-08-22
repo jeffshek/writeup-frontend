@@ -24,7 +24,7 @@ export const TopbarStyles = theme => ({
   leftGridContainerItem: {
     display: "flex",
     [theme.breakpoints.up("sm")]: {
-      marginLeft: "2rem"
+      //marginLeft: "2rem"
     }
   },
   link: {
