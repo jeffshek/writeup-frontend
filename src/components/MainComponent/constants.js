@@ -16,8 +16,8 @@ export const WebSocketURL =
 // LOCAL DEVELOPER DUMMY ASYNC
 //export const WebSocketURL =
 //  "ws://127.0.0.1:8008/ws/test/writeup/gpt2_medium/session/" + uuid() + "/";
-// these are cached for a day to have a much faster loading time for the user
 
+// these are cached for two-three days to have a much faster loading time for the user
 export const PROMPTS_TO_USE = [
   "The software innovations in the 20th century ",
   "Climate change has ",
@@ -27,9 +27,13 @@ export const PROMPTS_TO_USE = [
   "BANG! The earthquake shattered ",
   "We know now that ",
   "Nikola Tesla's inventions have ",
-  "We must take action! ",
   "SpaceX's recent landing ",
   "I had my first "
+
+  // Prompts I Tried That Didn't Make The Cut ...
+  // "We must take action! " - just repeats itself
+  // "Boy Name + Girl Name " - hilariously bad, makes a lot of non PC remarks
 ];
 
+// use this as a way to back slatejs back to focus on where to add the comment
 export const SPECIAL_CHARACTERS = [",", "!", ".", '"', "-", "'"];
