@@ -28,9 +28,13 @@ export const PROMPTS_TO_USE = [
   "We know now that ",
   "Nikola Tesla's inventions have ",
   "SpaceX's recent landing ",
-  "I had my first "
-
+  "I had my first ",
+  "The pain radiated from my ",
+  "The recent ",
+  "South Korea ends ", // taken from a recent news article headline
+  "With recent funding from "
   // Prompts I Tried That Didn't Make The Cut ...
+  //
   // "We must take action! " - just repeats itself
   // "Boy Name + Girl Name " - hilariously bad, makes a lot of non PC remarks
 ];
