@@ -133,26 +133,27 @@ export const SettingsModal = ({
               off.
             </Typography>
           </Grid>
-          <Grid item xs={6} />
-          {/*<Grid item xs={6}>*/}
-          {/*<Typography id="discrete-slider" variant={"h6"}>*/}
-          {/*Top P Filtering | {settings.top_p}*/}
-          {/*</Typography>*/}
 
-          {/*<Slider*/}
-          {/*defaultValue={settings.top_p}*/}
-          {/*aria-labelledby="discrete-slider"*/}
-          {/*step={0.1}*/}
-          {/*marks*/}
-          {/*min={0}*/}
-          {/*max={1}*/}
-          {/*valueLabelDisplay="auto"*/}
-          {/*onChange={handleSettingsChange("top_p")}*/}
-          {/*/>*/}
-          {/*<Typography variant={"body2"} gutterBottom>*/}
-          {/*Filters via Nucleus Clustering. 0 turns off. Can be combined with Top K or turned one/other off.*/}
-          {/*</Typography>*/}
-          {/*</Grid>*/}
+          <Grid item xs={6}>
+            <Typography id="discrete-slider" variant={"h6"}>
+              Top P Filtering | {settings.top_p}
+            </Typography>
+
+            <Slider
+              defaultValue={settings.top_p}
+              aria-labelledby="discrete-slider"
+              step={0.1}
+              marks
+              min={0}
+              max={1}
+              valueLabelDisplay="auto"
+              onChange={handleSettingsChange("top_p")}
+            />
+            <Typography variant={"body2"} gutterBottom>
+              Filters via Nucleus Clustering. 0 turns off. Can be combined with
+              Top K or turned one/other off.
+            </Typography>
+          </Grid>
           <Grid item xs={12}>
             <Typography variant={"h6"}>
               <b>Machine Learning Algorithm</b>
