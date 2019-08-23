@@ -82,16 +82,17 @@ export class _MainComponent extends React.Component {
       lastSent: moment().subtract(5, "seconds"),
 
       // algo settings
+      model_name: "gpt2-medium",
       temperature: 0.5,
       // lower top_k made all the prompts look the same
       top_k: 30,
-      // 45 felt like a good number, 17 just loads way faster
+      // 45 words felt like a good number, 17 just loads way faster
       length: 19,
       batch_size: 7, // having higher batch sizes doesn't slow it down much
 
       // modals
       loginOrRegisterModal: false,
-      settingsModalOpen: false,
+      settingsModalOpen: true,
       publishModalOpen: false,
       tutorialModalOpen: showTutorial,
 
