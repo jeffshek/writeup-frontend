@@ -97,7 +97,7 @@ export class _MainComponent extends React.Component {
 
       // modals
       loginOrRegisterModal: false,
-      settingsModalOpen: true,
+      settingsModalOpen: false,
       publishModalOpen: false,
       tutorialModalOpen: showTutorial,
 
