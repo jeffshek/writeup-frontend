@@ -61,8 +61,7 @@ export class _MainComponent extends React.Component {
     // this is getting into spaghetti, but needed this for async
     this.undoAdd = this.undoAdd.bind(this);
 
-    const showTutorial =
-      process.env.REACT_APP_ENV === "development" ? false : true;
+    const showTutorial = process.env.REACT_APP_ENV !== "development";
 
     this.state = {
       editorValue: initialValue,
