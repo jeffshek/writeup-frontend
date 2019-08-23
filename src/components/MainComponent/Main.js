@@ -22,6 +22,7 @@ import moment from "moment";
 import { LinearIndeterminate } from "components/Loading";
 import { SettingsModal } from "components/Modals/SettingsModal";
 import {
+  GPT2_MEDIUM_MODEL_NAME,
   PROMPTS_TO_USE,
   SPECIAL_CHARACTERS,
   WebSocketURL
@@ -81,10 +82,11 @@ export class _MainComponent extends React.Component {
       lastSent: moment().subtract(5, "seconds"),
 
       // algo settings
+      model_name: GPT2_MEDIUM_MODEL_NAME,
       temperature: 0.5,
       // lower top_k made all the prompts look the same
       top_k: 30,
-      // 45 felt like a good number, 17 just loads way faster
+      // 45 words felt like a good number, 17 just loads way faster
       length: 19,
       batch_size: 7, // having higher batch sizes doesn't slow it down much
 
@@ -357,7 +359,8 @@ export class _MainComponent extends React.Component {
       temperature: this.state.temperature,
       top_k: this.state.top_k,
       length: this.state.length,
-      batch_size: this.state.batch_size
+      batch_size: this.state.batch_size,
+      model_name: this.state.model_name
     };
 
     console.log("Sending| " + text);

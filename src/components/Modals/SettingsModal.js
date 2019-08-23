@@ -6,6 +6,14 @@ import Slider from "@material-ui/core/Slider";
 import Button from "@material-ui/core/Button";
 import { DividerSection } from "../Layouts";
 import { getModalStyle, useModalStyles } from "./ModalStyling";
+//import MenuItem from "components/Modals/PublishModal";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import {
+  GPT2_MEDIUM_MODEL_NAME,
+  XLNET_BASE_CASED_MODEL_NAME
+} from "components/MainComponent/constants";
 
 export const SettingsModal = ({
   modalOpen,
@@ -20,6 +28,11 @@ export const SettingsModal = ({
 
   const handleSettingsChange = setting => (event, value) => {
     setSettings(setting)(value);
+  };
+
+  const onSelectChange = event => {
+    const value = event.target.value;
+    setSettings("model_name")(value);
   };
 
   return (
@@ -105,10 +118,29 @@ export const SettingsModal = ({
           valueLabelDisplay="auto"
           onChange={handleSettingsChange("top_k")}
         />
-        <Typography variant={"body2"}>
+        <Typography variant={"body2"} gutterBottom>
           Also known as Top K, low values limit results to the most ranked
           output. Use higher values for more diverse suggestions.
         </Typography>
+        <br />
+        <Typography variant={"h6"}>
+          <b>Machine Learning Algorithm</b>
+        </Typography>
+        <FormControl className={classes.algorithmSelectForm}>
+          <Select
+            value={settings.model_name}
+            inputProps={{
+              name: "publishOptions",
+              id: "publish-options"
+            }}
+            onChange={onSelectChange}
+          >
+            <MenuItem value={GPT2_MEDIUM_MODEL_NAME}>GPT2 (Medium)</MenuItem>
+            <MenuItem value={XLNET_BASE_CASED_MODEL_NAME}>
+              XLNet (Base)
+            </MenuItem>
+          </Select>
+        </FormControl>
         <Button
           variant="contained"
           color="secondary"
