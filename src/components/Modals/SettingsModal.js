@@ -10,6 +10,10 @@ import { getModalStyle, useModalStyles } from "./ModalStyling";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
+import {
+  GPT2_MEDIUM_MODEL_NAME,
+  XLNET_BASE_CASED_MODEL_NAME
+} from "components/MainComponent/constants";
 
 export const SettingsModal = ({
   modalOpen,
@@ -132,8 +136,10 @@ export const SettingsModal = ({
             }}
             onChange={onSelectChange}
           >
-            <MenuItem value={"gpt2-medium"}>GPT2 (Medium)</MenuItem>
-            <MenuItem value={"xlnet-base"}>XLNet (Base)</MenuItem>
+            <MenuItem value={GPT2_MEDIUM_MODEL_NAME}>GPT2 (Medium)</MenuItem>
+            <MenuItem value={XLNET_BASE_CASED_MODEL_NAME}>
+              XLNet (Base)
+            </MenuItem>
           </Select>
         </FormControl>
         <Button
