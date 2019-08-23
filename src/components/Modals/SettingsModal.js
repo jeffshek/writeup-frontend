@@ -123,7 +123,6 @@ export const SettingsModal = ({
           output. Use higher values for more diverse suggestions.
         </Typography>
         <br />
-
         <Typography variant={"h6"}>
           <b>Machine Learning Algorithm</b>
         </Typography>

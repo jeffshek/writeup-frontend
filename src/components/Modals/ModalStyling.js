@@ -34,9 +34,7 @@ export const useModalStyles = makeStyles(theme => ({
     marginRight: theme.spacing(1)
   },
   algorithmSelectForm: {
-    //margin: theme.spacing(1),
     marginTop: "0",
-    //minWidth: 120,
     width: "50%"
   },
   facebookAuthButton: {
