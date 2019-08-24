@@ -43,9 +43,22 @@ const TextTagline = ({ classes }) => {
 };
 
 class _TopbarComponent extends Component {
-  state = {
-    value: 1
-  };
+  constructor(props) {
+    super(props);
+
+    const isHomePage = this.props.match.path === "/";
+    let tabValue = 0;
+    if (isHomePage) {
+      this.renderRightContainer = this.renderRightContainerMain;
+      tabValue = 1;
+    } else {
+      this.renderRightContainer = this.renderRightContainerNotMain;
+    }
+
+    this.state = {
+      value: tabValue
+    };
+  }
 
   handleChange = (event, value) => {
     this.setState({ value });
@@ -55,7 +68,28 @@ class _TopbarComponent extends Component {
     this.props.history.push("/best/");
   };
 
-  renderRightContainer = () => {
+  renderRightContainerNotMain = () => {
+    const { classes } = this.props;
+
+    return (
+      <Tabs
+        value={this.state.value}
+        indicatorColor="primary"
+        textColor="primary"
+        onChange={this.handleChange}
+      >
+        <Tab
+          key={"bestPrompts"}
+          component={MaterialLink}
+          onClick={this.routeToBestPrompts}
+          classes={{ root: classes.tabItem }}
+          label={"Best Prompts"}
+        />
+      </Tabs>
+    );
+  };
+
+  renderRightContainerMain = () => {
     const { classes } = this.props;
 
     return (
