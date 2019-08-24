@@ -38,7 +38,8 @@ const useStyles = makeStyles(theme => ({
     transform: "rotate(180deg)"
   },
   avatar: {
-    backgroundColor: red[500]
+    backgroundColor: red[500],
+    cursor: "pointer"
   }
 }));
 
@@ -101,6 +102,7 @@ const _PrettyPromptCard = ({ prompt, history, setLoginOrRegisterModal }) => {
             {promptScore}
           </Avatar>
         }
+        // TODO - Make ability to flag when someone decides to write mean stuff
         //action={
         //  <IconButton aria-label="settings">
         //    <MoreVertIcon />
@@ -108,6 +110,7 @@ const _PrettyPromptCard = ({ prompt, history, setLoginOrRegisterModal }) => {
         //}
         title={prompt.title}
         subheader={createdSerialized}
+        onClick={shareURLClick}
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
@@ -119,7 +122,7 @@ const _PrettyPromptCard = ({ prompt, history, setLoginOrRegisterModal }) => {
           <FavoriteIcon />
           {personalPromptScore}
         </IconButton>
-        <IconButton aria-label="share" onClick={shareURLClick}>
+        <IconButton aria-label="share" alt="share" onClick={shareURLClick}>
           <ShareIcon />
         </IconButton>
         <IconButton

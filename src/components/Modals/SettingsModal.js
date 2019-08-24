@@ -108,7 +108,7 @@ export const SettingsModal = ({
               onChange={handleSettingsChange("batch_size")}
             />
             <Typography variant={"body2"}>
-              # of Simultaneously Different Suggestions. Max 10.
+              # of Different Suggestions. Max 10.
             </Typography>
           </Grid>
 
@@ -128,9 +128,9 @@ export const SettingsModal = ({
               onChange={handleSettingsChange("top_k")}
             />
             <Typography variant={"body2"} gutterBottom>
-              Also known as Top K, low values limit results to the most ranked
-              output. Use higher values for more diverse suggestions. 0 turns
-              off.
+              Also known as Top K, a low value will limit to the most
+              probabilistic ranked result. Use higher values for more diverse
+              suggestions. 0 turns off Top K filtering.
             </Typography>
           </Grid>
 
@@ -151,7 +151,8 @@ export const SettingsModal = ({
             />
             <Typography variant={"body2"} gutterBottom>
               Filters via Nucleus Clustering. 0 turns off. Can be combined with
-              Top K or turned one/other off.
+              Top K or turned one/other off. If both Top K and Top P, the
+              results are applied independently and NOT consequential.
             </Typography>
           </Grid>
           <Grid item xs={12}>
@@ -176,14 +177,22 @@ export const SettingsModal = ({
               </Select>
             </FormControl>
           </Grid>
-          <Button
-            variant="contained"
-            color="secondary"
-            className={classes.button}
-            onClick={applySettings}
+          <Grid
+            container
+            direction="row"
+            justify="flex-end"
+            alignItems="flex-end"
+            spacing={3}
           >
-            Apply Settings
-          </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={applySettings}
+            >
+              Apply Settings
+            </Button>
+          </Grid>
+          <br />
         </Grid>
       </div>
     </Modal>
