@@ -108,7 +108,8 @@ const TitleHeader = ({ title, author, twitter, website, instagram }) => {
                 <a
                   href={websiteURL}
                   target={"_blank"}
-                  rel="noopener noreferrer"
+                  // don't be targetted by bots spamming
+                  rel="noopener noreferrer nofollow"
                 >
                   <img
                     src={WebsiteIcon}
