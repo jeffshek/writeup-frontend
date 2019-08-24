@@ -12,17 +12,16 @@ export const loginAPI = ({ username, password }) => {
   });
 };
 
-export const registerAPI = ({ usernameOrEmail, password }) => {
-  const isEmail = usernameOrEmail.includes("@");
-
+export const registerAPI = ({ username, email, password }) => {
   const serializedPostDetails = {
-    username: usernameOrEmail,
+    username: username,
+
     password1: password,
     password2: password
   };
 
-  if (isEmail) {
-    serializedPostDetails["email"] = usernameOrEmail;
+  if (email) {
+    serializedPostDetails["email"] = email;
   }
 
   return openBackendAPI
