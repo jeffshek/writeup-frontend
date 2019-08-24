@@ -16,11 +16,19 @@ import Grid from "@material-ui/core/Grid";
 import { Editor } from "slate-react";
 import { Value } from "slate";
 import { renderBlock, renderMark } from "components/SlateJS";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 
 const titleStyles = makeStyles(theme => ({
   composed: {
     marginLeft: "2rem",
-    marginBottom: "0rem"
+    marginBottom: "0rem",
+    height: "4rem"
+  },
+  upvoteContainer: {
+    height: "4rem",
+    marginTop: "auto",
+    marginBottom: "auto",
+    verticalAlign: "middle"
   }
 }));
 
@@ -41,11 +49,10 @@ const TitleHeader = ({ title, author, twitter, website, instagram }) => {
       >
         <Grid item>
           {title ? (
-            <Typography color="secondary" variant={"h3"}>
+            <Typography color="secondary" variant={"h3"} display={"inline"}>
               {title}
             </Typography>
           ) : null}
-
           {author ? (
             <Typography
               color="secondary"
@@ -58,6 +65,9 @@ const TitleHeader = ({ title, author, twitter, website, instagram }) => {
         </Grid>
         <Grid item>
           <div className={classes.composed}>
+            <Typography color="primary" variant={"h5"} display={"inline"}>
+              <FavoriteIcon /> 20
+            </Typography>
             {twitter ? (
               <Typography
                 color="secondary"
