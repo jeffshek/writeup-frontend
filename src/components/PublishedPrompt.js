@@ -6,7 +6,7 @@ import { makeStyles } from "@material-ui/core";
 import backgroundShape from "../images/shape.svg";
 import Typography from "@material-ui/core/Typography";
 import { withRouter } from "react-router-dom";
-import { getPrompt } from "../services/resources";
+import { getPrompt, upvotePrompt } from "../services/resources";
 import { Helmet } from "react-helmet";
 
 import TwitterIcon from "../images/icons/twitter.png";
@@ -17,6 +17,7 @@ import { Editor } from "slate-react";
 import { Value } from "slate";
 import { renderBlock, renderMark } from "components/SlateJS";
 import FavoriteIcon from "@material-ui/icons/Favorite";
+import { checkTokenKeyInLocalStorage } from "services/storage";
 
 const titleStyles = makeStyles(theme => ({
   composed: {
@@ -25,14 +26,20 @@ const titleStyles = makeStyles(theme => ({
     height: "4rem"
   },
   upvoteContainer: {
-    height: "4rem",
-    marginTop: "auto",
-    marginBottom: "auto",
-    verticalAlign: "middle"
+    color: "#e31b23",
+    cursor: "pointer"
   }
 }));
 
-const TitleHeader = ({ title, author, twitter, website, instagram }) => {
+const TitleHeader = ({
+  title,
+  author,
+  twitter,
+  website,
+  instagram,
+  score,
+  onUpvote
+}) => {
   const classes = titleStyles();
 
   const twitterURL = `https://www.twitter.com/${twitter}`;
@@ -65,70 +72,82 @@ const TitleHeader = ({ title, author, twitter, website, instagram }) => {
         </Grid>
         <Grid item>
           <div className={classes.composed}>
-            <Typography color="primary" variant={"h5"} display={"inline"}>
-              <FavoriteIcon /> 20
-            </Typography>
-            {twitter ? (
+            <Grid
+              container
+              direction="row"
+              justify="space-between"
+              alignItems="center"
+            >
               <Typography
-                color="secondary"
-                variant={"subtitle1"}
                 display={"inline"}
-                style={{ marginRight: ".25rem" }}
+                variant={"h5"}
+                className={classes.upvoteContainer}
+                onClick={onUpvote}
               >
-                <a
-                  href={twitterURL}
-                  target={"_blank"}
-                  rel="noopener noreferrer"
-                >
-                  <img
-                    src={TwitterIcon}
-                    alt={"Twitter Icon"}
-                    style={{ height: "4rem" }}
-                  />
-                </a>
+                <FavoriteIcon /> {score}
               </Typography>
-            ) : null}
-            {instagram ? (
-              <Typography
-                color="secondary"
-                variant={"subtitle1"}
-                display={"inline"}
-                style={{ marginRight: ".25rem" }}
-              >
-                <a
-                  href={instagramURL}
-                  target={"_blank"}
-                  rel="noopener noreferrer"
+              {twitter ? (
+                <Typography
+                  color="secondary"
+                  variant={"subtitle1"}
+                  display={"inline"}
+                  style={{ marginRight: ".25rem" }}
                 >
-                  <img
-                    src={InstagramIcon}
-                    alt={"Instagram Icon"}
-                    style={{ height: "4rem" }}
-                  />
-                </a>
-              </Typography>
-            ) : null}
-            {website ? (
-              <Typography
-                color="secondary"
-                variant={"subtitle1"}
-                display={"inline"}
-                style={{ marginRight: ".25rem" }}
-              >
-                <a
-                  href={websiteURL}
-                  target={"_blank"}
-                  // don't be targetted by bots spamming
-                  rel="noopener noreferrer nofollow"
+                  <a
+                    href={twitterURL}
+                    target={"_blank"}
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      src={TwitterIcon}
+                      alt={"Twitter Icon"}
+                      style={{ height: "4rem" }}
+                    />
+                  </a>
+                </Typography>
+              ) : null}
+              {instagram ? (
+                <Typography
+                  color="secondary"
+                  variant={"subtitle1"}
+                  display={"inline"}
+                  style={{ marginRight: ".25rem" }}
                 >
-                  <img
-                    src={WebsiteIcon}
-                    alt={"Website Icon"}
-                    style={{ height: "4rem" }}
-                  />
-                </a>
-              </Typography>
-            ) : null}
+                  <a
+                    href={instagramURL}
+                    target={"_blank"}
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      src={InstagramIcon}
+                      alt={"Instagram Icon"}
+                      style={{ height: "4rem" }}
+                    />
+                  </a>
+                </Typography>
+              ) : null}
+              {website ? (
+                <Typography
+                  color="secondary"
+                  variant={"subtitle1"}
+                  display={"inline"}
+                  style={{ marginRight: ".25rem" }}
+                >
+                  <a
+                    href={websiteURL}
+                    target={"_blank"}
+                    // don't be targetted by bots spamming
+                    rel="noopener noreferrer nofollow"
+                  >
+                    <img
+                      src={WebsiteIcon}
+                      alt={"Website Icon"}
+                      style={{ height: "4rem" }}
+                    />
+                  </a>
+                </Typography>
+              ) : null}
+            </Grid>
           </div>
         </Grid>
       </Grid>
@@ -222,6 +241,9 @@ const LoadingValue = Value.fromJSON({
 export const _PublishedPromptComponent = props => {
   const classes = useStyles();
   const prompt_uuid = props.match.params.uuid;
+  const [personalPromptScore, setPersonalPromptScore] = React.useState(0);
+  const [promptScore, setPromptScore] = React.useState(0);
+
   const [state, setState] = React.useState({
     text: "",
     prompt_uuid: prompt_uuid,
@@ -270,13 +292,44 @@ export const _PublishedPromptComponent = props => {
           title: response.title,
           twitter: response.twitter,
           website: response.website,
-          editorValue: editorValue
+          score: response.score,
+          editorValue: editorValue,
+          uuid: response.uuid
         });
+
+        setPromptScore(response.score);
       });
     }
 
     fetchPromptData();
   }, [prompt_uuid]);
+
+  const onUpvote = () => {
+    // a garbage copy and paste job from PromptCard.js
+    // a bit too short on time to make this right
+    const loggedIn = checkTokenKeyInLocalStorage();
+    if (!loggedIn) {
+      //setLoginOrRegisterModal(true);
+      return;
+    }
+
+    let personalScore = personalPromptScore + 1;
+    if (personalScore > 3) {
+      // don't allow more than 3, even if user gets past this
+      // backend will validate much more harshly
+      return;
+    }
+
+    const updatedPromptScore = promptScore + 1;
+    setPromptScore(updatedPromptScore);
+
+    setPersonalPromptScore(personalScore);
+    const prompt_uuid = state.uuid;
+
+    upvotePrompt({ prompt_uuid, value: personalScore }).then(response => {
+      console.log(`Updated to ${personalScore}!`);
+    });
+  };
 
   return (
     <Fragment>
@@ -296,6 +349,8 @@ export const _PublishedPromptComponent = props => {
                 instagram={state.instagram}
                 twitter={state.twitter}
                 website={state.website}
+                score={promptScore}
+                onUpvote={onUpvote}
               />
               <br />
               <Editor

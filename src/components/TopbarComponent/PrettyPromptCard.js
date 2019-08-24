@@ -50,7 +50,7 @@ const _PrettyPromptCard = ({ prompt, history, setLoginOrRegisterModal }) => {
   const classes = useStyles();
 
   const [expanded, setExpanded] = React.useState(false);
-  const [articleValue, setArticleValue] = React.useState(0);
+  const [personalPromptScore, setPersonalPromptScore] = React.useState(0);
   const [promptScore, setPromptScore] = React.useState(prompt.score);
 
   const truncatedText = prompt.text.slice(0, 500);
@@ -75,7 +75,7 @@ const _PrettyPromptCard = ({ prompt, history, setLoginOrRegisterModal }) => {
       return;
     }
 
-    let personalScore = articleValue + 1;
+    let personalScore = personalPromptScore + 1;
     if (personalScore > 3) {
       // don't allow more than 3, even if user gets past this
       // backend will validate much more harshly
@@ -85,7 +85,7 @@ const _PrettyPromptCard = ({ prompt, history, setLoginOrRegisterModal }) => {
     const updatedPromptScore = promptScore + 1;
     setPromptScore(updatedPromptScore);
 
-    setArticleValue(personalScore);
+    setPersonalPromptScore(personalScore);
     const prompt_uuid = prompt.uuid;
 
     upvotePrompt({ prompt_uuid, value: personalScore }).then(response => {
@@ -117,7 +117,7 @@ const _PrettyPromptCard = ({ prompt, history, setLoginOrRegisterModal }) => {
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites" onClick={favoriteAction}>
           <FavoriteIcon />
-          {articleValue}
+          {personalPromptScore}
         </IconButton>
         <IconButton aria-label="share" onClick={shareURLClick}>
           <ShareIcon />
