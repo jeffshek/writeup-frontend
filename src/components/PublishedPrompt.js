@@ -18,6 +18,7 @@ import { Value } from "slate";
 import { renderBlock, renderMark } from "components/SlateJS";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import { checkTokenKeyInLocalStorage } from "services/storage";
+import { LoginOrRegisterModal } from "components/Modals/LoginOrRegisterModal";
 
 const titleStyles = makeStyles(theme => ({
   composed: {
@@ -243,7 +244,6 @@ export const _PublishedPromptComponent = props => {
   const prompt_uuid = props.match.params.uuid;
   const [personalPromptScore, setPersonalPromptScore] = React.useState(0);
   const [promptScore, setPromptScore] = React.useState(0);
-
   const [state, setState] = React.useState({
     text: "",
     prompt_uuid: prompt_uuid,
@@ -254,6 +254,7 @@ export const _PublishedPromptComponent = props => {
     twitter: "",
     editorValue: LoadingValue
   });
+  const [loginOrRegisterModal, setLoginOrRegisterModal] = React.useState(false);
 
   // react data hooks recommend functions nested inside useEffect to prevent
   // issues w/stale data or some odd-other edge cases
@@ -304,12 +305,17 @@ export const _PublishedPromptComponent = props => {
     fetchPromptData();
   }, [prompt_uuid]);
 
+  const closeModal = () => {
+    // this is an embarrassment of spaghetti
+    setLoginOrRegisterModal(false);
+  };
+
   const onUpvote = () => {
     // a garbage copy and paste job from PromptCard.js
     // a bit too short on time to make this right
     const loggedIn = checkTokenKeyInLocalStorage();
     if (!loggedIn) {
-      //setLoginOrRegisterModal(true);
+      setLoginOrRegisterModal(true);
       return;
     }
 
@@ -363,6 +369,12 @@ export const _PublishedPromptComponent = props => {
           <br />
           <Footer />
         </GridLayout>
+        <LoginOrRegisterModal
+          modalOpen={loginOrRegisterModal}
+          setModal={closeModal}
+          settings={{}}
+          setSettings={{}}
+        />
       </div>
     </Fragment>
   );
