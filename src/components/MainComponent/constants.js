@@ -7,19 +7,21 @@ export const XLNET_LARGE_CASED_MODEL_NAME = "xlnet-large-cased";
 
 // PRODUCTION ASYNC
 export const WebSocketURL =
-  "wss://open.senrigan.io/ws/async/writeup/gpt2_medium/session/" + uuid() + "/";
+  "wss://open.senrigan.io/ws/async/writeup/text_generation/session/" +
+  uuid() +
+  "/";
 
 //PRODUCTION DUMMY SOCKET
 //export const WebSocketURL =
-//  "wss://open.senrigan.io/ws/test/writeup/gpt2_medium/session/writeup/";
+//  "wss://open.senrigan.io/ws/test/writeup/text_generation/session/writeup/";
 
 // LOCAL DEVELOPER ASYNC
 //export const WebSocketURL =
-//  "ws://127.0.0.1:8008/ws/async/writeup/gpt2_medium/session/" + uuid() + "/";
+//  "ws://127.0.0.1:8008/ws/async/writeup/text_generation/session/" + uuid() + "/";
 
 // LOCAL DEVELOPER DUMMY ASYNC
 //export const WebSocketURL =
-//  "ws://127.0.0.1:8008/ws/test/writeup/gpt2_medium/session/" + uuid() + "/";
+//  "ws://127.0.0.1:8008/ws/test/writeup/text_generation/session/" + uuid() + "/";
 
 // these are cached for two-three days to have a much faster loading time for the user
 export const PROMPTS_TO_USE = [
