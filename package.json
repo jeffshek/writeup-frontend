@@ -21,7 +21,7 @@
     "react-responsive-carousel": "^3.1.50",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.1.1",
-    "slate": "^0.47.6",
+    "slate": "^0.47.7",
     "slate-react": "^0.22.6",
     "uuid": "^3.3.3"
   },
