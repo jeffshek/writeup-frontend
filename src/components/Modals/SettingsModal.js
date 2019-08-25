@@ -151,8 +151,9 @@ export const SettingsModal = ({
             />
             <Typography variant={"body2"} gutterBottom>
               Filters via Nucleus Clustering. 0 turns off. Can be combined with
-              Top K or turned one/other off. If both Top K and Top P, the
-              results are applied independently and NOT consequential.
+              Top K or turned one/other off. If both Top K and Top P are greater
+              than 0, the results are an independent intersection and NOT
+              consequential.
             </Typography>
           </Grid>
           <Grid item xs={12}>

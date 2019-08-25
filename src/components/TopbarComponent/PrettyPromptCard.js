@@ -122,7 +122,7 @@ const _PrettyPromptCard = ({ prompt, history, setLoginOrRegisterModal }) => {
           <FavoriteIcon />
           {personalPromptScore}
         </IconButton>
-        <IconButton aria-label="share" alt="share" onClick={shareURLClick}>
+        <IconButton aria-label="share" onClick={shareURLClick}>
           <ShareIcon />
         </IconButton>
         <IconButton
