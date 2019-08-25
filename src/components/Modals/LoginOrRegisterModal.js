@@ -21,18 +21,26 @@ export const LoginOrRegisterModal = ({
   const [modalStyle] = React.useState(getModalStyle);
   const [state, setState] = React.useState({
     usernameOrEmail: "",
-    password: ""
+    password: "",
+    registerUsername: "",
+    registerEmail: ""
   });
+  const [isLogin, setIsLogin] = React.useState(true);
 
-  //const handleSettingsChange = setting => (event, value) => {
-  //  setSettings(setting)(value);
-  //};
+  const onRegisterClick = () => {
+    setIsLogin(false);
+  };
 
-  const register = () => {
+  const registerAction = () => {
     const postDetails = {
-      usernameOrEmail: state.usernameOrEmail,
+      username: state.registerUsername,
       password: state.password
     };
+
+    if (state.registerEmail) {
+      postDetails["email"] = state.registerEmail;
+    }
+
     registerAPI(postDetails).then(response => {
       if (response.status === 201) {
         const tokenKey = response.data.key;
@@ -48,7 +56,7 @@ export const LoginOrRegisterModal = ({
     });
   };
 
-  const login = () => {
+  const loginAction = () => {
     const loginDetails = {
       username: state.usernameOrEmail,
       password: state.password
@@ -66,6 +74,14 @@ export const LoginOrRegisterModal = ({
         }
       }
     });
+  };
+
+  const primaryAction = () => {
+    if (isLogin) {
+      loginAction();
+    } else {
+      registerAction();
+    }
   };
 
   //eslint-disable-next-line
@@ -155,6 +171,82 @@ export const LoginOrRegisterModal = ({
     setState({ ...state, [name]: event.target.value });
   };
 
+  const renderLoginForm = () => {
+    return (
+      <form noValidate>
+        <TextField
+          id="standard-full-width"
+          label="Username or Email"
+          style={{ margin: 8 }}
+          placeholder={state.usernameOrEmail}
+          onChange={handleChange("usernameOrEmail")}
+          fullWidth
+          margin="normal"
+          InputLabelProps={{
+            shrink: true
+          }}
+        />
+        <TextField
+          id="standard-full-width"
+          label="Password"
+          style={{ margin: 8, marginBottom: "2rem" }}
+          placeholder={state.password}
+          fullWidth
+          type={"password"}
+          onChange={handleChange("password")}
+          margin="normal"
+          InputLabelProps={{
+            shrink: true
+          }}
+        />
+      </form>
+    );
+  };
+
+  const renderRegisterForm = () => {
+    return (
+      <form noValidate>
+        <TextField
+          id="standard-full-width"
+          label="Username"
+          style={{ margin: 8 }}
+          placeholder={state.registerUsername}
+          onChange={handleChange("registerUsername")}
+          fullWidth
+          margin="normal"
+          InputLabelProps={{
+            shrink: true
+          }}
+        />
+        <TextField
+          id="standard-full-width"
+          label="Email (Optional)"
+          style={{ margin: 8 }}
+          placeholder={state.registerEmail}
+          onChange={handleChange("registerEmail")}
+          fullWidth
+          margin="normal"
+          InputLabelProps={{
+            shrink: true
+          }}
+        />
+        <TextField
+          id="standard-full-width"
+          label="Password"
+          style={{ margin: 8, marginBottom: "2rem" }}
+          placeholder={state.password}
+          fullWidth
+          type={"password"}
+          onChange={handleChange("password")}
+          margin="normal"
+          InputLabelProps={{
+            shrink: true
+          }}
+        />
+      </form>
+    );
+  };
+
   return (
     <Modal
       aria-labelledby="simple-modal-title"
@@ -164,34 +256,15 @@ export const LoginOrRegisterModal = ({
     >
       <div style={modalStyle} className={classes.paper}>
         {/*{renderSocialAuth()}*/}
-        <br />
-        <form noValidate>
-          <TextField
-            id="standard-full-width"
-            label="Username or Email"
-            style={{ margin: 8 }}
-            placeholder={state.usernameOrEmail}
-            onChange={handleChange("usernameOrEmail")}
-            fullWidth
-            margin="normal"
-            InputLabelProps={{
-              shrink: true
-            }}
-          />
-          <TextField
-            id="standard-full-width"
-            label="Password"
-            style={{ margin: 8, marginBottom: "2rem" }}
-            placeholder={state.password}
-            fullWidth
-            type={"password"}
-            onChange={handleChange("password")}
-            margin="normal"
-            InputLabelProps={{
-              shrink: true
-            }}
-          />
-        </form>
+        <Typography
+          variant="h4"
+          gutterBottom
+          color={"primary"}
+          align={"center"}
+        >
+          {isLogin ? "Login" : "Register"}
+        </Typography>
+        {isLogin ? renderLoginForm() : renderRegisterForm()}
         <Grid
           container
           direction="row"
@@ -199,13 +272,23 @@ export const LoginOrRegisterModal = ({
           alignItems="center"
         >
           <Grid item>
-            <Button variant="outlined" color="primary" onClick={register}>
-              Register
-            </Button>
+            {isLogin ? (
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={onRegisterClick}
+              >
+                Register
+              </Button>
+            ) : null}
           </Grid>
           <Grid item>
-            <Button variant="contained" color="secondary" onClick={login}>
-              Login
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={primaryAction}
+            >
+              {isLogin ? "Login" : "Register"}
             </Button>
           </Grid>
         </Grid>
