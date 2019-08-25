@@ -20,7 +20,8 @@
 ### Code Quality
 
 - This was written pretty quickly, so I'm not that proud of some antipatterns I used in repo. I wouldn't use it for inspiration. I'm much prouder of the backend repo than I am of the frontend.
-- I'm not a frontend engineer. I'm sorry about how fast main.js grew. ... Don't judge me too hard.
+- EDIT EVEN MORE: The DevOps in building this has been much harder than I anticipated. Between the tradeoffs of technical debt on the frontend versus backend, this got the short end of the stick. I'm a bit embarrassed by the code quality here, sorry ...
+- I'm not a frontend engineer. Apologies about the size of main.js ... Don't judge me (too hard).
 
 ### Open Sourced Backend (Mostly)
 

@@ -164,14 +164,17 @@ export const MainFooter = ({ classes }) => {
           >
             OpenAI
           </a>{" "}
-          for releasing GPT-2 Medium;{" "}
+          for GPT,{" "}
           <a
             href="https://github.com/huggingface/pytorch-transformers"
             target={"_blank"}
           >
             HuggingFace
           </a>{" "}
-          for their PyTorch implementation.
+          for PyTorch implementations, CMU and Google Brain for{" "}
+          <a href="https://github.com/zihangdai/xlnet" target={"_blank"}>
+            XLNet.
+          </a>
         </Typography>
         <Typography variant="subtitle1" color={"textPrimary"}>
           The{" "}

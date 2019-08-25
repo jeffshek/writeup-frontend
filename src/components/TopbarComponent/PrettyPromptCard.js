@@ -13,7 +13,6 @@ import { red } from "@material-ui/core/colors";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 import moment from "moment";
 import { DATE_FORMAT } from "utilities/date_and_time";
 import { withRouter } from "react-router-dom";
@@ -22,7 +21,6 @@ import { upvotePrompt } from "services/resources";
 
 const useStyles = makeStyles(theme => ({
   card: {
-    //maxWidth: 345,
     margin: "0.5rem"
   },
   media: {
@@ -40,7 +38,8 @@ const useStyles = makeStyles(theme => ({
     transform: "rotate(180deg)"
   },
   avatar: {
-    backgroundColor: red[500]
+    backgroundColor: red[500],
+    cursor: "pointer"
   }
 }));
 
@@ -52,7 +51,8 @@ const _PrettyPromptCard = ({ prompt, history, setLoginOrRegisterModal }) => {
   const classes = useStyles();
 
   const [expanded, setExpanded] = React.useState(false);
-  const [articleValue, setArticleValue] = React.useState(0);
+  const [personalPromptScore, setPersonalPromptScore] = React.useState(0);
+  const [promptScore, setPromptScore] = React.useState(prompt.score);
 
   const truncatedText = prompt.text.slice(0, 500);
 
@@ -76,18 +76,21 @@ const _PrettyPromptCard = ({ prompt, history, setLoginOrRegisterModal }) => {
       return;
     }
 
-    let newScore = articleValue + 1;
-    if (newScore > 3) {
+    let personalScore = personalPromptScore + 1;
+    if (personalScore > 3) {
       // don't allow more than 3, even if user gets past this
       // backend will validate much more harshly
       return;
     }
 
-    setArticleValue(newScore);
+    const updatedPromptScore = promptScore + 1;
+    setPromptScore(updatedPromptScore);
+
+    setPersonalPromptScore(personalScore);
     const prompt_uuid = prompt.uuid;
 
-    upvotePrompt({ prompt_uuid, value: newScore }).then(response => {
-      console.log(`Updated to ${newScore}!`);
+    upvotePrompt({ prompt_uuid, value: personalScore }).then(response => {
+      console.log(`Updated to ${personalScore}!`);
     });
   };
 
@@ -96,16 +99,18 @@ const _PrettyPromptCard = ({ prompt, history, setLoginOrRegisterModal }) => {
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            {prompt.score}
+            {promptScore}
           </Avatar>
         }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
+        // TODO - Make ability to flag when someone decides to write mean stuff
+        //action={
+        //  <IconButton aria-label="settings">
+        //    <MoreVertIcon />
+        //  </IconButton>
+        //}
         title={prompt.title}
         subheader={createdSerialized}
+        onClick={shareURLClick}
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
@@ -115,7 +120,7 @@ const _PrettyPromptCard = ({ prompt, history, setLoginOrRegisterModal }) => {
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites" onClick={favoriteAction}>
           <FavoriteIcon />
-          {articleValue}
+          {personalPromptScore}
         </IconButton>
         <IconButton aria-label="share" onClick={shareURLClick}>
           <ShareIcon />

@@ -12,10 +12,7 @@ export function getModalStyle() {
 }
 
 const buttonStyling = {
-  marginTop: "1rem",
-  // don't judge me TOO HARD for using float
-  // but you should still judge me a little.
-  float: "right"
+  marginTop: "1rem"
 };
 
 export const useModalStyles = makeStyles(theme => ({

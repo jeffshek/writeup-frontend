@@ -6,7 +6,7 @@ import { makeStyles } from "@material-ui/core";
 import backgroundShape from "../images/shape.svg";
 import Typography from "@material-ui/core/Typography";
 import { withRouter } from "react-router-dom";
-import { getPrompt } from "../services/resources";
+import { getPrompt, upvotePrompt } from "../services/resources";
 import { Helmet } from "react-helmet";
 
 import TwitterIcon from "../images/icons/twitter.png";
@@ -16,15 +16,31 @@ import Grid from "@material-ui/core/Grid";
 import { Editor } from "slate-react";
 import { Value } from "slate";
 import { renderBlock, renderMark } from "components/SlateJS";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import { checkTokenKeyInLocalStorage } from "services/storage";
+import { LoginOrRegisterModal } from "components/Modals/LoginOrRegisterModal";
 
 const titleStyles = makeStyles(theme => ({
   composed: {
     marginLeft: "2rem",
-    marginBottom: "0rem"
+    marginBottom: "0rem",
+    height: "4rem"
+  },
+  upvoteContainer: {
+    color: "#e31b23",
+    cursor: "pointer"
   }
 }));
 
-const TitleHeader = ({ title, author, twitter, website, instagram }) => {
+const TitleHeader = ({
+  title,
+  author,
+  twitter,
+  website,
+  instagram,
+  score,
+  onUpvote
+}) => {
   const classes = titleStyles();
 
   const twitterURL = `https://www.twitter.com/${twitter}`;
@@ -41,11 +57,10 @@ const TitleHeader = ({ title, author, twitter, website, instagram }) => {
       >
         <Grid item>
           {title ? (
-            <Typography color="secondary" variant={"h3"}>
+            <Typography color="secondary" variant={"h3"} display={"inline"}>
               {title}
             </Typography>
           ) : null}
-
           {author ? (
             <Typography
               color="secondary"
@@ -58,54 +73,82 @@ const TitleHeader = ({ title, author, twitter, website, instagram }) => {
         </Grid>
         <Grid item>
           <div className={classes.composed}>
-            {twitter ? (
+            <Grid
+              container
+              direction="row"
+              justify="space-between"
+              alignItems="center"
+            >
               <Typography
-                color="secondary"
-                variant={"subtitle1"}
                 display={"inline"}
-                style={{ marginRight: ".25rem" }}
+                variant={"h5"}
+                className={classes.upvoteContainer}
+                onClick={onUpvote}
               >
-                <a
-                  href={twitterURL}
-                  target={"_blank"}
-                  rel="noopener noreferrer"
-                >
-                  <img src={TwitterIcon} alt={"Twitter Icon"} />
-                </a>
+                <FavoriteIcon /> {score}
               </Typography>
-            ) : null}
-            {instagram ? (
-              <Typography
-                color="secondary"
-                variant={"subtitle1"}
-                display={"inline"}
-                style={{ marginRight: ".25rem" }}
-              >
-                <a
-                  href={instagramURL}
-                  target={"_blank"}
-                  rel="noopener noreferrer"
+              {twitter ? (
+                <Typography
+                  color="secondary"
+                  variant={"subtitle1"}
+                  display={"inline"}
+                  style={{ marginRight: ".25rem" }}
                 >
-                  <img src={InstagramIcon} alt={"Instagram Icon"} />
-                </a>
-              </Typography>
-            ) : null}
-            {website ? (
-              <Typography
-                color="secondary"
-                variant={"subtitle1"}
-                display={"inline"}
-                style={{ marginRight: ".25rem" }}
-              >
-                <a
-                  href={websiteURL}
-                  target={"_blank"}
-                  rel="noopener noreferrer"
+                  <a
+                    href={twitterURL}
+                    target={"_blank"}
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      src={TwitterIcon}
+                      alt={"Twitter Icon"}
+                      style={{ height: "4rem" }}
+                    />
+                  </a>
+                </Typography>
+              ) : null}
+              {instagram ? (
+                <Typography
+                  color="secondary"
+                  variant={"subtitle1"}
+                  display={"inline"}
+                  style={{ marginRight: ".25rem" }}
                 >
-                  <img src={WebsiteIcon} alt={"Website Icon"} />
-                </a>
-              </Typography>
-            ) : null}
+                  <a
+                    href={instagramURL}
+                    target={"_blank"}
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      src={InstagramIcon}
+                      alt={"Instagram Icon"}
+                      style={{ height: "4rem" }}
+                    />
+                  </a>
+                </Typography>
+              ) : null}
+              {website ? (
+                <Typography
+                  color="secondary"
+                  variant={"subtitle1"}
+                  display={"inline"}
+                  style={{ marginRight: ".25rem" }}
+                >
+                  <a
+                    href={websiteURL}
+                    target={"_blank"}
+                    // don't be targetted by bots spamming
+                    rel="noopener noreferrer nofollow"
+                  >
+                    <img
+                      src={WebsiteIcon}
+                      alt={"Website Icon"}
+                      style={{ height: "4rem" }}
+                    />
+                  </a>
+                </Typography>
+              ) : null}
+            </Grid>
           </div>
         </Grid>
       </Grid>
@@ -199,6 +242,8 @@ const LoadingValue = Value.fromJSON({
 export const _PublishedPromptComponent = props => {
   const classes = useStyles();
   const prompt_uuid = props.match.params.uuid;
+  const [personalPromptScore, setPersonalPromptScore] = React.useState(0);
+  const [promptScore, setPromptScore] = React.useState(0);
   const [state, setState] = React.useState({
     text: "",
     prompt_uuid: prompt_uuid,
@@ -209,6 +254,7 @@ export const _PublishedPromptComponent = props => {
     twitter: "",
     editorValue: LoadingValue
   });
+  const [loginOrRegisterModal, setLoginOrRegisterModal] = React.useState(false);
 
   // react data hooks recommend functions nested inside useEffect to prevent
   // issues w/stale data or some odd-other edge cases
@@ -247,13 +293,49 @@ export const _PublishedPromptComponent = props => {
           title: response.title,
           twitter: response.twitter,
           website: response.website,
-          editorValue: editorValue
+          score: response.score,
+          editorValue: editorValue,
+          uuid: response.uuid
         });
+
+        setPromptScore(response.score);
       });
     }
 
     fetchPromptData();
   }, [prompt_uuid]);
+
+  const closeModal = () => {
+    // this is an embarrassment of spaghetti
+    setLoginOrRegisterModal(false);
+  };
+
+  const onUpvote = () => {
+    // a garbage copy and paste job from PromptCard.js
+    // a bit too short on time to make this right
+    const loggedIn = checkTokenKeyInLocalStorage();
+    if (!loggedIn) {
+      setLoginOrRegisterModal(true);
+      return;
+    }
+
+    let personalScore = personalPromptScore + 1;
+    if (personalScore > 3) {
+      // don't allow more than 3, even if user gets past this
+      // backend will validate much more harshly
+      return;
+    }
+
+    const updatedPromptScore = promptScore + 1;
+    setPromptScore(updatedPromptScore);
+
+    setPersonalPromptScore(personalScore);
+    const prompt_uuid = state.uuid;
+
+    upvotePrompt({ prompt_uuid, value: personalScore }).then(response => {
+      console.log(`Updated to ${personalScore}!`);
+    });
+  };
 
   return (
     <Fragment>
@@ -273,6 +355,8 @@ export const _PublishedPromptComponent = props => {
                 instagram={state.instagram}
                 twitter={state.twitter}
                 website={state.website}
+                score={promptScore}
+                onUpvote={onUpvote}
               />
               <br />
               <Editor
@@ -285,6 +369,12 @@ export const _PublishedPromptComponent = props => {
           <br />
           <Footer />
         </GridLayout>
+        <LoginOrRegisterModal
+          modalOpen={loginOrRegisterModal}
+          setModal={closeModal}
+          settings={{}}
+          setSettings={{}}
+        />
       </div>
     </Fragment>
   );
