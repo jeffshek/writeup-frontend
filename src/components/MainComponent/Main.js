@@ -128,7 +128,7 @@ export class _MainComponent extends React.Component {
     this.editor.moveToEndOfDocument();
 
     // Set interval helpers to run in the background to make UX feel smoother
-    this.intervalID = setInterval(this.checkToSend, 2000);
+    //this.intervalID = setInterval(this.checkToSend, 2000);
   }
 
   // editor utilities - pulled from slatejs
@@ -323,6 +323,8 @@ export class _MainComponent extends React.Component {
     const textPrompts = serializeAPIMessageToPrompts({ message });
     const text = this.state.editorValue.document.text;
 
+    console.log(message.text_0);
+
     // This will only show texts that were meant for the prompt ...
     // this happens if the user types very quickly and it fires off a lot
     // of API requests, then we keep on receiving additional messages
@@ -359,27 +361,35 @@ export class _MainComponent extends React.Component {
       return;
     }
 
+    // start with a partial length and then fill in the rest to make load times
+    // bearable -- do this for the interim
+    const partialLength = Math.floor(this.state.length / 3);
+
     const message = {
       prompt: text,
       temperature: this.state.temperature,
       top_k: this.state.top_k,
       top_p: this.state.top_p,
-      length: this.state.length,
+      length: partialLength,
       batch_size: this.state.batch_size,
       model_name: this.state.model_name
     };
 
-    console.log("Sending| " + text);
+    console.log("Sending Partial | ");
     const messageSerialized = JSON.stringify(message);
     this.websocket.sendMessage(messageSerialized);
 
-    console.log("Running Duplicate Length");
-    message["length"] = this.state.length * 2;
+    // need to run this because reverse load balancers will buffer requests
+    // that are sent too quickly (this is to prevent DDOS) attacks.
+    // since there's no easy way to turn this off, delay by a second and then
+    // send the longer message
+    setTimeout(() => {
+      console.log("Sending Full | ");
+      message["length"] = this.state.length;
 
-    // do this as an optimization, this will allow users to receive an earlier
-    // update from longer lengths
-    const messageSerializedDoubleLength = JSON.stringify(message);
-    this.websocket.sendMessage(messageSerializedDoubleLength);
+      const messageSerializedDoubleLength = JSON.stringify(message);
+      this.websocket.sendMessage(messageSerializedDoubleLength);
+    }, 1500);
   };
 
   ////////////////////
