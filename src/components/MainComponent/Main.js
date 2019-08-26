@@ -371,8 +371,15 @@ export class _MainComponent extends React.Component {
 
     console.log("Sending| " + text);
     const messageSerialized = JSON.stringify(message);
-
     this.websocket.sendMessage(messageSerialized);
+
+    console.log("Running Duplicate Length");
+    message["length"] = this.state.length * 2;
+
+    // do this as an optimization, this will allow users to receive an earlier
+    // update from longer lengths
+    const messageSerializedDoubleLength = JSON.stringify(message);
+    this.websocket.sendMessage(messageSerializedDoubleLength);
   };
 
   ////////////////////
