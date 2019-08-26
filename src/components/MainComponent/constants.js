@@ -17,7 +17,11 @@ export const WebSocketURL =
 
 // LOCAL DEVELOPER ASYNC
 //export const WebSocketURL =
-//  "ws://127.0.0.1:8008/ws/async/writeup/text_generation/session/" + uuid() + "/";
+//  "ws://127.0.0.1:5000/ws/async/writeup/text_generation/session/" + uuid() + "/";
+
+// LOCAL DEVELOPER ASYNC CADDY
+//export const WebSocketURL =
+//  "ws://127.0.0.1/ws/async/writeup/text_generation/session/" + uuid() + "/";
 
 // LOCAL DEVELOPER DUMMY ASYNC
 //export const WebSocketURL =
