@@ -442,7 +442,15 @@ export class _MainComponent extends React.Component {
     // otherwise, his/her own api calls will trip
     this.setState({ unsent: true, textPrompts: [] });
 
-    const canSend = this.enoughTimeSinceLastSend();
+    let canSend;
+
+    // since we're running cpus on gpt2 medium, cpus are cheap and we can afford
+    // wasteful requests for better UI. for xlnet, GPUs are expensive so we are cheap
+    if (this.state.model_name === GPT2_MEDIUM_MODEL_NAME) {
+      canSend = true;
+    } else {
+      canSend = this.enoughTimeSinceLastSend();
+    }
 
     if (canSend) {
       this.sendTextToWebSocket();
