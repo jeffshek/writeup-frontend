@@ -370,12 +370,13 @@ export class _MainComponent extends React.Component {
       temperature: this.state.temperature,
       top_k: this.state.top_k,
       top_p: this.state.top_p,
-      length: partialLength,
+      length: this.state.length,
       batch_size: this.state.batch_size,
-      model_name: this.state.model_name
+      model_name: this.state.model_name,
+      message_type: "new_request" // frontend should end new_requests
     };
 
-    console.log("Sending Partial | ");
+    console.log("Sending  | ");
     const messageSerialized = JSON.stringify(message);
     this.websocket.sendMessage(messageSerialized);
 
@@ -383,13 +384,13 @@ export class _MainComponent extends React.Component {
     // that are sent too quickly (this is to prevent DDOS) attacks.
     // since there's no easy way to turn this off, delay by a second and then
     // send the longer message
-    setTimeout(() => {
-      console.log("Sending Full | ");
-      message["length"] = this.state.length;
-
-      const messageSerializedDoubleLength = JSON.stringify(message);
-      this.websocket.sendMessage(messageSerializedDoubleLength);
-    }, 1500);
+    //setTimeout(() => {
+    //  console.log("Sending Full | ");
+    //  message["length"] = this.state.length;
+    //
+    //  const messageSerializedDoubleLength = JSON.stringify(message);
+    //  this.websocket.sendMessage(messageSerializedDoubleLength);
+    //}, 1500);
   };
 
   ////////////////////

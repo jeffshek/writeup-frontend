@@ -15,6 +15,8 @@ export const WebSocketURL =
 //export const WebSocketURL =
 //  "wss://open.senrigan.io/ws/test/writeup/text_generation/session/writeup/";
 
+//const uuid_test = "uuid-test"
+
 // LOCAL DEVELOPER ASYNC
 //export const WebSocketURL =
 //  "ws://127.0.0.1:5000/ws/async/writeup/text_generation/session/" + uuid() + "/";
@@ -41,7 +43,7 @@ export const PROMPTS_TO_USE = [
   "I had my first ",
   "The pain radiated from my ",
   "The recent ",
-  "South Korea ends ", // taken from a recent news article headline
+  "South Korea ends ", // taken from a recent news article headline, not intended to build a dystopia headline
   "With recent funding from "
   // Prompts I Tried That Didn't Make The Cut ...
   //
