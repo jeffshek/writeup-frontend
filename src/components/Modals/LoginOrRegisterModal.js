@@ -173,12 +173,12 @@ export const LoginOrRegisterModal = ({
 
   const renderLoginForm = () => {
     return (
-      <form noValidate>
+      <form noValidate autoComplete="off">
         <TextField
           id="standard-full-width"
           label="Username or Email"
           style={{ margin: 8 }}
-          placeholder={state.usernameOrEmail}
+          value={state.usernameOrEmail}
           onChange={handleChange("usernameOrEmail")}
           fullWidth
           margin="normal"
@@ -187,10 +187,10 @@ export const LoginOrRegisterModal = ({
           }}
         />
         <TextField
-          id="standard-full-width"
+          id="standard-full-width-password"
           label="Password"
           style={{ margin: 8, marginBottom: "2rem" }}
-          placeholder={state.password}
+          value={state.password}
           fullWidth
           type={"password"}
           onChange={handleChange("password")}
@@ -205,12 +205,12 @@ export const LoginOrRegisterModal = ({
 
   const renderRegisterForm = () => {
     return (
-      <form noValidate>
+      <form noValidate autoComplete="off">
         <TextField
-          id="standard-full-width"
-          label="Username"
+          id="register-username"
+          label="Registration Username!"
           style={{ margin: 8 }}
-          placeholder={state.registerUsername}
+          value={state.registerUsername}
           onChange={handleChange("registerUsername")}
           fullWidth
           margin="normal"
@@ -219,10 +219,10 @@ export const LoginOrRegisterModal = ({
           }}
         />
         <TextField
-          id="standard-full-width"
+          id="standard-full-width-email"
           label="Email (Optional)"
           style={{ margin: 8 }}
-          placeholder={state.registerEmail}
+          value={state.registerEmail}
           onChange={handleChange("registerEmail")}
           fullWidth
           margin="normal"
@@ -231,10 +231,10 @@ export const LoginOrRegisterModal = ({
           }}
         />
         <TextField
-          id="standard-full-width"
+          id="standard-full-width-register-password"
           label="Password"
           style={{ margin: 8, marginBottom: "2rem" }}
-          placeholder={state.password}
+          value={state.password}
           fullWidth
           type={"password"}
           onChange={handleChange("password")}
