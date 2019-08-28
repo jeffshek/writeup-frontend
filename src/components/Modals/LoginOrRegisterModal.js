@@ -41,19 +41,27 @@ export const LoginOrRegisterModal = ({
       postDetails["email"] = state.registerEmail;
     }
 
-    registerAPI(postDetails).then(response => {
-      if (response.status === 201) {
-        const tokenKey = response.data.key;
-        getTokenLocalStorage({ tokenKey });
+    registerAPI(postDetails)
+      .then(response => {
+        if (response.status === 201) {
+          const tokenKey = response.data.key;
+          getTokenLocalStorage({ tokenKey });
 
-        // trying to jam this modal to fit two areas of login
-        // from the best and the main page
-        if (setSettings) {
-          setSettings("loginOrRegisterModal")(false);
-          setSettings("userLoggedIn")(true);
+          // trying to jam this modal to fit two areas of login
+          // from the best and the main page
+          if (setSettings) {
+            setSettings("loginOrRegisterModal")(false);
+            setSettings("userLoggedIn")(true);
+          }
         }
-      }
-    });
+      })
+      .catch(error => {
+        console.log(error.response);
+        if (error.response.data) {
+          const errorMsg = JSON.stringify(error.response.data);
+          alert(errorMsg);
+        }
+      });
   };
 
   const loginAction = () => {
@@ -61,19 +69,27 @@ export const LoginOrRegisterModal = ({
       username: state.usernameOrEmail,
       password: state.password
     };
-    loginAPI(loginDetails).then(response => {
-      if (response.status === 200) {
-        const tokenKey = response.data.key;
-        getTokenLocalStorage({ tokenKey });
+    loginAPI(loginDetails)
+      .then(response => {
+        if (response.status === 200) {
+          const tokenKey = response.data.key;
+          getTokenLocalStorage({ tokenKey });
 
-        // trying to jam this modal to fit two uses
-        // from the best and the main page
-        if (setSettings) {
-          setSettings("loginOrRegisterModal")(false);
-          setSettings("userLoggedIn")(true);
+          // trying to jam this modal to fit two uses
+          // from the best and the main page
+          if (setSettings) {
+            setSettings("loginOrRegisterModal")(false);
+            setSettings("userLoggedIn")(true);
+          }
         }
-      }
-    });
+      })
+      .catch(error => {
+        console.log(error.response);
+        if (error.response.data) {
+          const errorMsg = JSON.stringify(error.response.data);
+          alert(errorMsg);
+        }
+      });
   };
 
   const primaryAction = () => {
@@ -247,6 +263,13 @@ export const LoginOrRegisterModal = ({
     );
   };
 
+  let canLogin;
+  if (isLogin) {
+    canLogin = !!(state.password && state.usernameOrEmail);
+  } else {
+    canLogin = state.registerUsername && state.password;
+  }
+
   return (
     <Modal
       aria-labelledby="simple-modal-title"
@@ -287,6 +310,7 @@ export const LoginOrRegisterModal = ({
               variant="contained"
               color="secondary"
               onClick={primaryAction}
+              disabled={!canLogin}
             >
               {isLogin ? "Login" : "Register"}
             </Button>
