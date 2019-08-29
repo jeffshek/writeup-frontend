@@ -20,7 +20,11 @@ const LogoAndLinkSection = ({ classes }) => {
           width={40}
           src={logo}
           alt="writeup.ai logo"
-          style={{ marginLeft: "auto", marginRight: "auto", display: "block" }}
+          style={{
+            marginLeft: "auto",
+            marginRight: "auto",
+            display: "block"
+          }}
         />
         <Typography>writeup.ai</Typography>
       </Link>
@@ -142,7 +146,7 @@ class _TopbarComponent extends Component {
             justify="space-between"
             alignItems="center"
           >
-            <Grid item xs={4} className={classes.leftGridContainerItem}>
+            <Grid item xs={5} className={classes.leftGridContainerItem}>
               <LogoAndLinkSection classes={classes} />
               <TextTagline classes={classes} />
             </Grid>
