@@ -504,7 +504,7 @@ export class _MainComponent extends React.Component {
       } else if (firstCharacterOfTextIsSpace && lastCharacterIsSpace) {
         editor.moveAnchorBackward(1).insertText(text);
       } else {
-        editor.insertText(text);
+        editor.moveToEndOfDocument().insertText(text);
       }
 
       resolve("Success!");
