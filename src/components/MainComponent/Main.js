@@ -291,7 +291,8 @@ export class _MainComponent extends React.Component {
   enoughTimeSinceLastSend = () => {
     //fast typists shouldn't send multiple API calls to the server,
     //especially if they know what they're about to write
-    const delayLimit = moment().subtract(2, "seconds");
+    // okay - i can't optimize it any further, sorry.
+    const delayLimit = moment().subtract(5, "seconds");
 
     // return true only if we've waited enough time to not hammer
     // the servers
@@ -308,7 +309,7 @@ export class _MainComponent extends React.Component {
 
     if (this.state.unsent || userForgotToHitSpace) {
       const canSend = this.enoughTimeSinceLastSend();
-      if (canSend) {
+      if (canSend && this.state.aiAssistEnabled) {
         this.sendTextToWebSocket();
       }
     }
@@ -353,9 +354,12 @@ export class _MainComponent extends React.Component {
     });
 
     // gets a concatenated list of all the text so far
-    // but only get the last 1500 characters, otherwise, we run out of
+    // but only get the last 500 characters, otherwise, we run out of
     // memory on gpu instances
-    const text = this.state.editorValue.document.text.slice(-1500);
+
+    // feels a little unfair, make sure to include this asterik so people
+    // don't get confused
+    const text = this.state.editorValue.document.text.slice(-500);
 
     const textIsBlank = text.trim().length === 0;
     if (textIsBlank) {
@@ -449,7 +453,7 @@ export class _MainComponent extends React.Component {
     // type, so add a linter check to prevent humans that type super fast
     const canSend = this.enoughTimeSinceLastSend();
 
-    if (canSend) {
+    if (canSend && this.state.aiAssistEnabled) {
       this.sendTextToWebSocket();
     }
   };
