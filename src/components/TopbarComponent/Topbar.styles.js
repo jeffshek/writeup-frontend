@@ -6,7 +6,10 @@ export const TopbarStyles = theme => ({
     backgroundColor: "white"
   },
   inline: {
-    display: "inline"
+    display: "inline-flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center"
   },
   flex: {
     display: "flex",
