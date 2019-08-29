@@ -19,6 +19,7 @@ import { renderBlock, renderMark } from "components/SlateJS";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import { checkTokenKeyInLocalStorage } from "services/storage";
 import { LoginOrRegisterModal } from "components/Modals/LoginOrRegisterModal";
+import { getSerializedWebsite } from "components/Modals/PublishModal";
 
 const titleStyles = makeStyles(theme => ({
   composed: {
@@ -45,7 +46,7 @@ const TitleHeader = ({
 
   const twitterURL = `https://www.twitter.com/${twitter}`;
   const instagramURL = `https://www.instagram.com/${instagram}`;
-  const websiteURL = `//${website}`;
+  const websiteURL = getSerializedWebsite({ website });
 
   return (
     <Fragment>
@@ -359,11 +360,17 @@ export const _PublishedPromptComponent = props => {
                 onUpvote={onUpvote}
               />
               <br />
-              <Editor
-                value={state.editorValue}
-                renderBlock={renderBlock}
-                renderMark={renderMark}
-              />
+              <Typography
+                variant="subtitle1"
+                gutterBottom
+                color={"textPrimary"}
+              >
+                <Editor
+                  value={state.editorValue}
+                  renderBlock={renderBlock}
+                  renderMark={renderMark}
+                />
+              </Typography>
             </div>
           </Paper>
           <br />
