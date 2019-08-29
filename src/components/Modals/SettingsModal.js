@@ -9,7 +9,9 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import {
+  GPT2_LARGE_MODEL_NAME,
   GPT2_MEDIUM_MODEL_NAME,
+  GPT2_SMALL_MODEL_NAME,
   XLNET_BASE_CASED_MODEL_NAME
 } from "components/MainComponent/constants";
 import Grid from "@material-ui/core/Grid";
@@ -169,9 +171,13 @@ export const SettingsModal = ({
                 }}
                 onChange={onSelectChange}
               >
+                <MenuItem value={GPT2_SMALL_MODEL_NAME}>
+                  GPT2 (Small, Fastest)
+                </MenuItem>
                 <MenuItem value={GPT2_MEDIUM_MODEL_NAME}>
                   GPT2 (Medium)
                 </MenuItem>
+                <MenuItem value={GPT2_LARGE_MODEL_NAME}>GPT2 (Large)</MenuItem>
                 <MenuItem value={XLNET_BASE_CASED_MODEL_NAME}>
                   XLNet (Base)
                 </MenuItem>
