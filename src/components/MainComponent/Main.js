@@ -755,7 +755,7 @@ export class _MainComponent extends React.Component {
   undoEditorInsert = () => {
     let self = this;
     return new Promise(function(resolve, reject) {
-      self.ref.current.undo();
+      self.editor.undo();
       resolve("Success");
     });
   };
