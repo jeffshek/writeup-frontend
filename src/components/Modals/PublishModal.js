@@ -71,11 +71,7 @@ const EmailComponent = ({ email }) => {
   );
 };
 
-const WebsiteComponent = ({ website }) => {
-  if (!website) {
-    return null;
-  }
-
+export const getSerializedWebsite = ({ website }) => {
   const urlPrefix = website.slice(0, 3);
 
   let urlSerialized = "";
@@ -84,6 +80,16 @@ const WebsiteComponent = ({ website }) => {
   } else {
     urlSerialized = `http://${website}`;
   }
+
+  return urlSerialized;
+};
+
+const WebsiteComponent = ({ website }) => {
+  if (!website) {
+    return null;
+  }
+
+  const urlSerialized = getSerializedWebsite({ website });
 
   return (
     <Typography variant={"subtitle1"}>

@@ -72,6 +72,12 @@ class _TopbarComponent extends Component {
     this.props.history.push("/best/");
   };
 
+  routeToHowItWorks = () => {
+    const url =
+      "https://writeup.ai/prompts/f125d6a5-43a5-4565-9f2d-beed3d71c377/";
+    window.location.assign(url);
+  };
+
   renderRightContainerNotMain = () => {
     const { classes } = this.props;
 
@@ -103,6 +109,13 @@ class _TopbarComponent extends Component {
         textColor="primary"
         onChange={this.handleChange}
       >
+        <Tab
+          key={"howItWorks"}
+          component={MaterialLink}
+          onClick={this.routeToHowItWorks}
+          classes={{ root: classes.tabItem }}
+          label={"How It Works"}
+        />
         <Tab
           key={"bestPrompts"}
           component={MaterialLink}
