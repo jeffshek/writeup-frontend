@@ -13,6 +13,15 @@
 - [SlateJS](https://www.slatejs.org/#/rich-text) - The editor show casing everything.
 - Create React App was used to build this.
 
+### To Start
+
+```
+git clone git@github.com:jeffshek/writeup-frontend.git
+cd writeup-frontend
+yarn install
+yarn start
+```
+
 ### Design
 
 - Design inspirations and code taken from [Material-Sense](https://alexanmtz.github.io/material-sense/)
