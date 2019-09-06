@@ -52,12 +52,15 @@ export const LoginOrRegisterModal = ({
           if (setSettings) {
             setSettings("loginOrRegisterModal")(false);
             setSettings("userLoggedIn")(true);
+          } else {
+            // close the modal if it's regged
+            setModal();
           }
         }
       })
       .catch(error => {
         console.log(error.response);
-        if (error.response.data) {
+        if (error.response && error.response.data) {
           const errorMsg = JSON.stringify(error.response.data);
           alert(errorMsg);
         }
@@ -80,12 +83,13 @@ export const LoginOrRegisterModal = ({
           if (setSettings) {
             setSettings("loginOrRegisterModal")(false);
             setSettings("userLoggedIn")(true);
+          } else {
+            setModal();
           }
         }
       })
       .catch(error => {
-        console.log(error.response);
-        if (error.response.data) {
+        if (error.response && error.response.data) {
           const errorMsg = JSON.stringify(error.response.data);
           alert(errorMsg);
         }

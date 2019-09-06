@@ -379,8 +379,6 @@ export const _PublishedPromptComponent = props => {
         <LoginOrRegisterModal
           modalOpen={loginOrRegisterModal}
           setModal={closeModal}
-          settings={{}}
-          setSettings={{}}
         />
       </div>
     </Fragment>
