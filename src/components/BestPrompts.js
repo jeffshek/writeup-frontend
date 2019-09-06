@@ -115,8 +115,6 @@ const _BestPromptsComponent = props => {
       <LoginOrRegisterModal
         modalOpen={loginOrRegisterModal}
         setModal={closeModal}
-        settings={{}}
-        setSettings={{}}
       />
       <TopbarComponent showSettings={false} />
       <div className={classes.root}>
