@@ -64,18 +64,17 @@ export const HowToSelectPromptBottomSection = (
 export const HowToSelectPromptSection = (
   <Fragment>
     <Typography variant="h5" color={"secondary"} display={"inline"}>
-      Step 2. Choose a prompt to add
+      Step 2. Choose a prompt to add{" "}
+      <span role="img" aria-label="party">
+        🎉
+      </span>
     </Typography>
   </Fragment>
 );
 
 export const WritingHeader = (
   <Typography color="secondary" gutterBottom variant={"h5"}>
-    Step 1. Type a word (or a few){" "}
-    <span role="img" aria-label="party">
-      🎉
-    </span>
-    {" Hit spacebar."}
+    Step 1. Type a word. {" Hit spacebar."}
   </Typography>
 );
 
