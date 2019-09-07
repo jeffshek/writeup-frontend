@@ -545,7 +545,9 @@ export class _MainComponent extends React.Component {
       this.sendTextToWebSocket();
     });
 
-    this.focusTextInput();
+    if (isBrowser) {
+      this.focusTextInput();
+    }
   };
 
   focusTextInput = () => {
