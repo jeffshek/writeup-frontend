@@ -13,11 +13,17 @@ export const MainStyles = theme => ({
   grid: {
     width: 1200,
     marginTop: 40,
+    marginLeft: "auto",
+    marginRight: "auto",
     [theme.breakpoints.down("sm")]: {
-      width: "calc(100% - 20px)",
+      //width: "calc(100% - 20px)",
+      width: "100%",
       margin: 0,
       padding: 0
     }
+  },
+  gridItem: {
+    //padding: 0,
   },
   paper: {
     padding: theme.spacing(3),

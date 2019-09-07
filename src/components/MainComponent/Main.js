@@ -796,13 +796,13 @@ export class _MainComponent extends React.Component {
     if (validPrompts) {
       return (
         <Fragment>
-          <Grid
-            container
-            direction="row"
-            justify="space-between"
-            alignItems="center"
-          >
-            <BrowserView>
+          <BrowserView>
+            <Grid
+              container
+              direction="row"
+              justify="space-between"
+              alignItems="center"
+            >
               <Grid item>
                 {showInstructions ? HowToSelectPromptSection : null}
               </Grid>
@@ -827,14 +827,15 @@ export class _MainComponent extends React.Component {
                   {this.state.arrowKeysSelect ? "On" : "Off"}
                 </Button>
               </Grid>
-            </BrowserView>
-          </Grid>
+            </Grid>
+          </BrowserView>
           <PromptSelectComponent
             selectedIndex={this.state.currentDetailIndex}
             onTextClick={this.onTextClick}
             textPrompts={this.state.textPrompts}
           />
-          {HowToSelectPromptBottomSection}
+
+          {isBrowser ? HowToSelectPromptBottomSection : null}
         </Fragment>
       );
     } else {
