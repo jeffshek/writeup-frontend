@@ -139,7 +139,7 @@ export const SenriganAnalyticsFooter = (
       Senrigan Analytics
     </a>
     {". "}
-    Tweet @{" "}
+    Tweet requests and follow updates @{" "}
     <a
       href="https://www.twitter.com/shekkery"
       target={"_blank"}
