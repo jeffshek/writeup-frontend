@@ -18,6 +18,8 @@ export const TutorialModal = ({
   const classes = useWideModalStyles();
   const [modalStyle] = React.useState(getModalStyle);
 
+  console.log(classes.paper);
+
   return (
     <Modal
       aria-labelledby="simple-modal-title"

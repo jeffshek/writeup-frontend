@@ -764,7 +764,6 @@ export class _MainComponent extends React.Component {
               </Select>
               <FormHelperText>Writing Style</FormHelperText>
             </FormControl>
-
             <Button
               variant="outlined"
               color="secondary"
@@ -773,15 +772,17 @@ export class _MainComponent extends React.Component {
             >
               New Text
             </Button>
-            <CopyToClipboard text={text}>
-              <Button
-                variant="outlined"
-                color="primary"
-                style={{ marginRight: "0.25rem" }}
-              >
-                <FileCopyIcon />
-              </Button>
-            </CopyToClipboard>
+            {isMobile ? null : (
+              <CopyToClipboard text={text}>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  style={{ marginRight: "0.25rem" }}
+                >
+                  <FileCopyIcon />
+                </Button>
+              </CopyToClipboard>
+            )}
           </span>
           {isBrowser ? (
             <Fragment>
