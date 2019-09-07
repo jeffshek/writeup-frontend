@@ -48,7 +48,7 @@ import {
   Toolbar
 } from "components/SlateJS";
 
-import { BrowserView, isMobile } from "react-device-detect";
+import { BrowserView, isMobile, isBrowser } from "react-device-detect";
 
 const DEFAULT_NODE = "paragraph";
 
@@ -667,7 +667,7 @@ export class _MainComponent extends React.Component {
     const wordCount = this.getWordCount();
     const isMobileUser = isMobile;
     const additionalDisclaimer = isMobileUser
-      ? "As you type, new prompts will appear. For all features, please use w/laptop."
+      ? "As you type, prompts generate. For all features, please use a laptop at writeup.ai"
       : "";
 
     return (
@@ -678,7 +678,7 @@ export class _MainComponent extends React.Component {
         alignItems="flex-start"
       >
         <Grid item>
-          Word Count: {wordCount}. {additionalDisclaimer}
+          <b>Word Count: {wordCount}.</b> {additionalDisclaimer}
         </Grid>
         <BrowserView>
           <Grid item>
@@ -744,23 +744,26 @@ export class _MainComponent extends React.Component {
               </Button>
             </CopyToClipboard>
           </span>
-          <Button
-            variant={aiButtonStyle}
-            color="primary"
-            className={classes.button}
-            onClick={this.toggleaiAssistEnabled}
-          >
-            Assist: {aiLabel}
-          </Button>
-          <Button
-            //variant="contained"
-            variant="outlined"
-            color="secondary"
-            className={classes.button}
-            onClick={this.setModal("tutorialModalOpen")}
-          >
-            Tutorial
-          </Button>
+          {isBrowser ? (
+            <Fragment>
+              <Button
+                variant={aiButtonStyle}
+                color="primary"
+                className={classes.button}
+                onClick={this.toggleaiAssistEnabled}
+              >
+                Assist: {aiLabel}
+              </Button>
+              <Button
+                variant="outlined"
+                color="secondary"
+                className={classes.button}
+                onClick={this.setModal("tutorialModalOpen")}
+              >
+                Tutorial
+              </Button>
+            </Fragment>
+          ) : null}
         </Grid>
       </Grid>
     );
@@ -793,13 +796,13 @@ export class _MainComponent extends React.Component {
     if (validPrompts) {
       return (
         <Fragment>
-          <Grid
-            container
-            direction="row"
-            justify="space-between"
-            alignItems="center"
-          >
-            <BrowserView>
+          <BrowserView>
+            <Grid
+              container
+              direction="row"
+              justify="space-between"
+              alignItems="center"
+            >
               <Grid item>
                 {showInstructions ? HowToSelectPromptSection : null}
               </Grid>
@@ -824,14 +827,15 @@ export class _MainComponent extends React.Component {
                   {this.state.arrowKeysSelect ? "On" : "Off"}
                 </Button>
               </Grid>
-            </BrowserView>
-          </Grid>
+            </Grid>
+          </BrowserView>
           <PromptSelectComponent
             selectedIndex={this.state.currentDetailIndex}
             onTextClick={this.onTextClick}
             textPrompts={this.state.textPrompts}
           />
-          {HowToSelectPromptBottomSection}
+
+          {isBrowser ? HowToSelectPromptBottomSection : null}
         </Fragment>
       );
     } else {
