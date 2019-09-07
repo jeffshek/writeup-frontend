@@ -121,6 +121,8 @@ export class _MainComponent extends React.Component {
       twitter: "",
       share_state: "published_link_access_only"
     };
+
+    this.editor = React.createRef();
   }
 
   componentDidMount() {
@@ -135,7 +137,7 @@ export class _MainComponent extends React.Component {
     this.websocket.setupWebSocket();
 
     // puts cursor at end for easier resuming
-    this.editor.moveToEndOfDocument();
+    this.editor.current.moveToEndOfDocument();
 
     // Set interval helpers to run in the background to make UX feel smoother
     // if a user forgets to hit spacebar, this will send a signal
@@ -232,14 +234,9 @@ export class _MainComponent extends React.Component {
     editor.toggleMark(mark);
   };
 
-  ref = editor => {
-    // not smart enough to know why this works and react's createref didn't
-    this.editor = editor;
-  };
-
   onClickMark = (event, type) => {
     event.preventDefault();
-    this.editor.toggleMark(type);
+    this.editor.current.toggleMark(type);
   };
 
   onClickBlock = (event, type) => {
@@ -406,8 +403,8 @@ export class _MainComponent extends React.Component {
     // pretty sure it shouldn't this hard to check positions, but i haven't
     // groked all of slatejs documentation because i'm focusing on optimizing
     // on the backend
-    const currentOffset = this.editor.value.selection.focus.offset;
-    const endTextLength = this.editor.value.endText.text.length;
+    const currentOffset = this.editor.current.value.selection.focus.offset;
+    const endTextLength = this.editor.current.value.endText.text.length;
 
     /*
     justification of this function ...
@@ -497,7 +494,7 @@ export class _MainComponent extends React.Component {
       // Do a bit of logic here to contain if text character ending
       // has a space or doesn't ... and if the chosen text contains
       // an end of text prompt
-      const editor = self.editor;
+      const editor = self.editor.current;
 
       const typedText = self.state.editorValue.document.text;
       const lastCharacterText = typedText.slice(-1);
@@ -538,15 +535,15 @@ export class _MainComponent extends React.Component {
   focusTextInput = () => {
     // Explicitly focus the text input using the raw DOM API
     // Note: we're accessing "current" to get the DOM node
-    this.editor.focus();
+    this.editor.current.focus();
   };
 
   startNewText = () => {
     const textLength = this.state.editorValue.document.text.length;
-    this.editor.deleteBackward(textLength);
+    this.editor.current.deleteBackward(textLength);
 
     const randomPrompt = getRandomItemFromArray(PROMPTS_TO_USE);
-    this.editor.insertText(randomPrompt);
+    this.editor.current.insertText(randomPrompt);
 
     this.focusTextInput();
 
@@ -915,7 +912,7 @@ export class _MainComponent extends React.Component {
                       value={this.state.editorValue}
                       onChange={this.onTextChange}
                       autoFocus={true}
-                      ref={this.ref}
+                      ref={this.editor}
                       onKeyDown={this.onKeyDown}
                       renderBlock={renderBlock}
                       renderMark={renderMark}
