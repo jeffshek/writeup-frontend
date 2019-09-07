@@ -75,7 +75,13 @@ export const useWideModalStyles = makeStyles(theme => ({
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 4),
-    outline: "none"
+    outline: "none",
+    [theme.breakpoints.down("sm")]: {
+      minWidth: 300,
+      width: "95%",
+      margin: 0,
+      padding: 0
+    }
   },
   button: buttonStyling,
   formControl: {
