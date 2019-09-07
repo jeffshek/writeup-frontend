@@ -14,7 +14,9 @@ export const MainStyles = theme => ({
     width: 1200,
     marginTop: 40,
     [theme.breakpoints.down("sm")]: {
-      width: "calc(100% - 20px)"
+      width: "calc(100% - 20px)",
+      margin: 0,
+      padding: 0
     }
   },
   paper: {
