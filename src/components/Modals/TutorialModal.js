@@ -18,8 +18,6 @@ export const TutorialModal = ({
   const classes = useWideModalStyles();
   const [modalStyle] = React.useState(getModalStyle);
 
-  console.log(classes.paper);
-
   return (
     <Modal
       aria-labelledby="simple-modal-title"
@@ -42,7 +40,6 @@ export const TutorialModal = ({
               alt={"tutorial of features"}
               className={classes.tutorialImage}
             />
-            {/*<p className="legend">Basic Explanation</p>*/}
           </div>
         </Carousel>
         <Button
