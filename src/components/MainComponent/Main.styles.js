@@ -103,5 +103,8 @@ export const MainStyles = theme => ({
   },
   footer: {
     textAlign: "center"
+  },
+  algorithmSelectFormMain: {
+    marginRight: ".5rem"
   }
 });

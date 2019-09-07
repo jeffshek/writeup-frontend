@@ -22,10 +22,14 @@ import moment from "moment";
 import { LinearIndeterminate } from "components/Loading";
 import { SettingsModal } from "components/Modals/SettingsModal";
 import {
+  GPT2_LARGE_MODEL_NAME,
   GPT2_MEDIUM_MODEL_NAME,
+  GPT2_SMALL_LEGAL_MODEL_NAME,
+  GPT2_SMALL_MODEL_NAME,
   PROMPTS_TO_USE,
   SPECIAL_CHARACTERS,
-  WebSocketURL
+  WebSocketURL,
+  XLNET_BASE_CASED_MODEL_NAME
 } from "components/MainComponent/constants";
 import Button from "@material-ui/core/Button/Button";
 import Grid from "@material-ui/core/Grid/Grid";
@@ -49,6 +53,10 @@ import {
 } from "components/SlateJS";
 
 import { BrowserView, isMobile, isBrowser } from "react-device-detect";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormHelperText from "@material-ui/core/FormHelperText";
 
 const DEFAULT_NODE = "paragraph";
 
@@ -326,8 +334,6 @@ export class _MainComponent extends React.Component {
 
     const textPrompts = serializeAPIMessageToPrompts({ message });
     const text = this.state.editorValue.document.text;
-
-    //console.log(message.text_0);
 
     // This will only show texts that were meant for the prompt ...
     // this happens if the user types very quickly and it fires off a lot
@@ -696,6 +702,11 @@ export class _MainComponent extends React.Component {
     );
   };
 
+  onSelectChange = event => {
+    const value = event.target.value;
+    this.setState({ model_name: value }, this.sendTextToWebSocket);
+  };
+
   getWordCount = () => {
     const text = this.state.editorValue.document.text;
     return text.trim().split(" ").length;
@@ -723,9 +734,37 @@ export class _MainComponent extends React.Component {
         justify="space-between"
         alignItems="center"
       >
-        <Grid item>{showInstructions ? WritingHeader : null}</Grid>
+        <Grid item>
+          {showInstructions ? <Fragment>{WritingHeader}</Fragment> : null}
+        </Grid>
         <Grid item>
           <span className={classes.copiedContainer}>
+            <FormControl className={classes.algorithmSelectFormMain}>
+              <Select
+                value={this.state.model_name}
+                inputProps={{
+                  name: "publishOptions",
+                  id: "publish-options"
+                }}
+                onChange={this.onSelectChange}
+              >
+                <MenuItem value={GPT2_SMALL_MODEL_NAME}>
+                  General (Basic)
+                </MenuItem>
+                <MenuItem value={GPT2_MEDIUM_MODEL_NAME}>
+                  General (Intermediate)
+                </MenuItem>
+                <MenuItem value={GPT2_LARGE_MODEL_NAME}>
+                  General (Advanced)
+                </MenuItem>
+                <MenuItem value={GPT2_SMALL_LEGAL_MODEL_NAME}>Legal</MenuItem>
+                <MenuItem value={XLNET_BASE_CASED_MODEL_NAME}>
+                  XLNet (Base)
+                </MenuItem>
+              </Select>
+              <FormHelperText>Writing Style</FormHelperText>
+            </FormControl>
+
             <Button
               variant="outlined"
               color="secondary"
@@ -747,20 +786,20 @@ export class _MainComponent extends React.Component {
           {isBrowser ? (
             <Fragment>
               <Button
-                variant={aiButtonStyle}
-                color="primary"
-                className={classes.button}
-                onClick={this.toggleaiAssistEnabled}
-              >
-                Assist: {aiLabel}
-              </Button>
-              <Button
                 variant="outlined"
                 color="secondary"
                 className={classes.button}
                 onClick={this.setModal("tutorialModalOpen")}
               >
                 Tutorial
+              </Button>
+              <Button
+                variant={aiButtonStyle}
+                color="primary"
+                className={classes.button}
+                onClick={this.toggleaiAssistEnabled}
+              >
+                Assist: {aiLabel}
               </Button>
             </Fragment>
           ) : null}
