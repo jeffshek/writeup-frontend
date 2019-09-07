@@ -73,6 +73,7 @@ export class _MainComponent extends React.Component {
     this.undoAdd = this.undoAdd.bind(this);
 
     const showTutorial = process.env.REACT_APP_ENV !== "development";
+    const arrowKeysSelect = isMobile ? false : true;
 
     this.state = {
       editorValue: initialValue,
@@ -83,7 +84,7 @@ export class _MainComponent extends React.Component {
       unsent: false,
 
       // ux settings
-      arrowKeysSelect: true,
+      arrowKeysSelect: arrowKeysSelect,
       aiAssistEnabled: true,
 
       userLoggedIn: checkTokenKeyInLocalStorage(),
