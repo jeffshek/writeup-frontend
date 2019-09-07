@@ -48,6 +48,8 @@ import {
   Toolbar
 } from "components/SlateJS";
 
+import { BrowserView, isMobile } from "react-device-detect";
+
 const DEFAULT_NODE = "paragraph";
 
 // this file is a beast and should be refactored into 2-3 separate files, sorry
@@ -663,6 +665,10 @@ export class _MainComponent extends React.Component {
     const { classes } = this.props;
 
     const wordCount = this.getWordCount();
+    const isMobileUser = isMobile;
+    const additionalDisclaimer = isMobileUser
+      ? "As you type, new prompts will appear. For all features, please use w/laptop."
+      : "";
 
     return (
       <Grid
@@ -671,17 +677,21 @@ export class _MainComponent extends React.Component {
         justify="space-between"
         alignItems="flex-start"
       >
-        <Grid item>Word Count: {wordCount}</Grid>
         <Grid item>
-          <Button
-            variant="contained"
-            color="secondary"
-            className={classes.publishButton}
-            onClick={this.setModal("publishModalOpen")}
-          >
-            Publish
-          </Button>
+          Word Count: {wordCount}. {additionalDisclaimer}
         </Grid>
+        <BrowserView>
+          <Grid item>
+            <Button
+              variant="contained"
+              color="secondary"
+              className={classes.publishButton}
+              onClick={this.setModal("publishModalOpen")}
+            >
+              Publish
+            </Button>
+          </Grid>
+        </BrowserView>
       </Grid>
     );
   };
@@ -704,7 +714,7 @@ export class _MainComponent extends React.Component {
     const text = this.state.editorValue.document.text;
 
     const wordCount = this.getWordCount();
-    const showInstructions = wordCount < 50;
+    const showInstructions = wordCount < 50 && !isMobile;
 
     return (
       <Grid
@@ -722,7 +732,7 @@ export class _MainComponent extends React.Component {
               className={classes.createRandomPromptButton}
               onClick={this.startNewText}
             >
-              Start New Text
+              New Text
             </Button>
             <CopyToClipboard text={text}>
               <Button
@@ -740,7 +750,7 @@ export class _MainComponent extends React.Component {
             className={classes.button}
             onClick={this.toggleaiAssistEnabled}
           >
-            AI Assist: {aiLabel}
+            Assist: {aiLabel}
           </Button>
           <Button
             //variant="contained"
@@ -789,28 +799,32 @@ export class _MainComponent extends React.Component {
             justify="space-between"
             alignItems="center"
           >
-            <Grid item>
-              {showInstructions ? HowToSelectPromptSection : null}
-            </Grid>
-            <Grid item xs={1} />
-            <Grid item>
-              <Button
-                variant="outlined"
-                color="secondary"
-                className={classes.undoButton}
-                onClick={this.undoAdd}
-              >
-                Undo
-              </Button>
-              <Button
-                variant={this.state.arrowKeysSelect ? "contained" : "outlined"}
-                color="primary"
-                onClick={this.setModal("arrowKeysSelect")}
-              >
-                Arrow Keys Selection:{" "}
-                {this.state.arrowKeysSelect ? "On" : "Off"}
-              </Button>
-            </Grid>
+            <BrowserView>
+              <Grid item>
+                {showInstructions ? HowToSelectPromptSection : null}
+              </Grid>
+              <Grid item xs={1} />
+              <Grid item>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  className={classes.undoButton}
+                  onClick={this.undoAdd}
+                >
+                  Undo
+                </Button>
+                <Button
+                  variant={
+                    this.state.arrowKeysSelect ? "contained" : "outlined"
+                  }
+                  color="primary"
+                  onClick={this.setModal("arrowKeysSelect")}
+                >
+                  Arrow Keys Selection:{" "}
+                  {this.state.arrowKeysSelect ? "On" : "Off"}
+                </Button>
+              </Grid>
+            </BrowserView>
           </Grid>
           <PromptSelectComponent
             selectedIndex={this.state.currentDetailIndex}
@@ -834,7 +848,11 @@ export class _MainComponent extends React.Component {
           <meta charSet="utf-8" />
           <title>writeup.ai | write fast.</title>
         </Helmet>
-        <TopbarComponent setModal={this.setModal("settingsModalOpen")} />
+
+        <BrowserView>
+          <TopbarComponent setModal={this.setModal("settingsModalOpen")} />
+        </BrowserView>
+
         {this.renderModals()}
         <div className={classes.root} onKeyDown={this.onKeyPressed}>
           <GridLayout classes={classes}>
@@ -847,7 +865,7 @@ export class _MainComponent extends React.Component {
                     gutterBottom
                     color={"textPrimary"}
                   >
-                    {this.renderEditorToolbar()}
+                    <BrowserView>{this.renderEditorToolbar()}</BrowserView>
                     <Editor
                       spellCheck
                       value={this.state.editorValue}
