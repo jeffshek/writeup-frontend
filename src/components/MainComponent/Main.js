@@ -60,6 +60,16 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 
 const DEFAULT_NODE = "paragraph";
 
+const MobileDisclaimer = ({ wordCount }) => {
+  return (
+    <Fragment>
+      {wordCount > 20 ? "" : "As you type, prompts generate. "}
+      Not designed for mobile. For complete features, please use a laptop at
+      writeup.ai
+    </Fragment>
+  );
+};
+
 // this file is a beast and should be refactored into 2-3 separate files, sorry
 // state management is difficult to manage with writing apps
 
@@ -397,7 +407,12 @@ export class _MainComponent extends React.Component {
       localStorage.setItem("content", content);
     }
 
-    this.setState({ editorValue: value });
+    if (isMobile) {
+      // huge hack for mobile, since IME spacebar isn't correctly detected
+      this.setState({ editorValue: value, unsent: true });
+    } else {
+      this.setState({ editorValue: value });
+    }
   };
 
   checkEditorPositionAtEnd = () => {
@@ -670,9 +685,11 @@ export class _MainComponent extends React.Component {
 
     const wordCount = this.getWordCount();
     const isMobileUser = isMobile;
-    const additionalDisclaimer = isMobileUser
-      ? "As you type, prompts generate. For all features, please use a laptop at writeup.ai"
-      : "";
+    const additionalDisclaimer = isMobileUser ? (
+      <MobileDisclaimer wordCount={wordCount} />
+    ) : (
+      ""
+    );
 
     return (
       <Grid
