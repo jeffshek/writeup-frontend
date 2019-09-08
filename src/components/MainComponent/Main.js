@@ -412,13 +412,11 @@ export class _MainComponent extends React.Component {
   // text editor utilities
   ////////////////////
   onTextChange = ({ value }) => {
+    // this is the worst function, i hate myself for supporting mobile
     const textChanged =
       value.document.text !== this.state.editorValue.document.text;
     // my brain hurts from debugging mobile, don't judge me for having to read easier
     const textDidntChange = !textChanged;
-
-    // this is the worst function, i hate myself for supporting mobile
-    console.log(this.editor.current.value.selection);
 
     if (textChanged) {
       const content = JSON.stringify(value.toJSON());
@@ -462,7 +460,8 @@ export class _MainComponent extends React.Component {
           this.editor.current.moveToEndOfDocument
         );
       } else {
-        // if they are not near the end, it should be normal
+        // if they are not near the end when hitting spacebar, it normally works ...
+        // therefore give default
         this.setState({
           editorValue: value,
           unsent: true,
