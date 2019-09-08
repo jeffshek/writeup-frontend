@@ -5,9 +5,7 @@ import { Editor } from "slate-react";
 // Mobile is having a lot of issues, so try switching to a PureComponent to see if it alleviates anything
 
 export class MainEditor extends React.PureComponent {
-  onFocus = () => {
-    console.log("yep");
-  };
+  onFocus = () => {};
 
   render() {
     const props = this.props;

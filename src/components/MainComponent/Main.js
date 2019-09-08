@@ -473,6 +473,7 @@ export class _MainComponent extends React.Component {
   };
 
   checkEditorPositionNearEnd = () => {
+    // an attempt to figure out in mobile phones if the user is tying space
     try {
       const currentOffset = this.editor.current.value.selection.focus.offset;
       const endTextLength = this.editor.current.value.endText.text.length;
@@ -1015,7 +1016,6 @@ export class _MainComponent extends React.Component {
                       onTextChange={this.onTextChange}
                       reference={this.editor}
                       onKeyDown={this.onKeyDown}
-                      onFocus={this.onFocus}
                     />
                   </Typography>
                 </div>
