@@ -1,0 +1,6 @@
+- Select all won't work
+- Hitting Backspace Doesn't Always Work
+- Space will jump around
+- Hitting backspace for too long will lag
+- Doesn't always fire to API, not sure why
+- Can't Copy / Select All

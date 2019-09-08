@@ -48,6 +48,7 @@ import {
   isItalicHotkey,
   isUnderlinedHotkey,
   Toolbar
+  //renderBlock, renderMark,
 } from "components/SlateJS";
 
 import { BrowserView, isBrowser, isMobile } from "react-device-detect";
@@ -56,6 +57,7 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import { MainEditor } from "components/MainComponent/MainEditor";
+//import { Editor } from "slate-react";
 
 const DEFAULT_NODE = "paragraph";
 
@@ -63,8 +65,8 @@ const MobileDisclaimer = ({ wordCount }) => {
   return (
     <Fragment>
       {wordCount > 20 ? "" : "As you type, prompts generate. "}
-      Not designed for mobile. For complete features, please use a laptop at
-      writeup.ai
+      Not designed for mobile. For an improved and faster experience, please try
+      with a laptop.
     </Fragment>
   );
 };
@@ -410,39 +412,102 @@ export class _MainComponent extends React.Component {
   // text editor utilities
   ////////////////////
   onTextChange = ({ value }) => {
-    if (value.document !== this.state.editorValue.document) {
+    const textChanged =
+      value.document.text !== this.state.editorValue.document.text;
+    // my brain hurts from debugging mobile, don't judge me for having to read easier
+    const textDidntChange = !textChanged;
+
+    // this is the worst function, i hate myself for supporting mobile
+    console.log(this.editor.current.value.selection);
+
+    if (textChanged) {
       const content = JSON.stringify(value.toJSON());
       localStorage.setItem("content", content);
     }
 
-    this.setState({
-      editorValue: value,
-      unsent: true,
-      lastTextChange: moment()
-    });
+    // if statements are a super hack for mobile, it's hard for slate to detect mobile
+    if (isBrowser) {
+      if (textChanged) {
+        this.setState({
+          editorValue: value,
+          unsent: true,
+          lastTextChange: moment()
+        });
+      } else {
+        this.setState({
+          editorValue: value,
+          unsent: false
+        });
+      }
+    } else if (isMobile) {
+      // making this work on mobile is very hard, slatejs and chrome mobile
+      // conflict because of the virtual keyboards
+      const positionNearEnd = this.checkEditorPositionNearEnd();
+
+      if (textDidntChange) {
+        // text doesn't change don't fire api
+        this.setState({
+          editorValue: value
+        });
+      } else if (positionNearEnd) {
+        // because state detection doesn't work on chrome, when a user is typing
+        // space there are two separate states that get updated, resulting in the user's spacebar
+        // jumping back and forth
+        this.setState(
+          {
+            editorValue: value,
+            unsent: true,
+            lastTextChange: moment()
+          },
+          this.editor.current.moveToEndOfDocument
+        );
+      } else {
+        // if they are not near the end, it should be normal
+        this.setState({
+          editorValue: value,
+          unsent: true,
+          lastTextChange: moment()
+        });
+      }
+    }
   };
+
+  checkEditorPositionNearEnd = () => {
+    try {
+      const currentOffset = this.editor.current.value.selection.focus.offset;
+      const endTextLength = this.editor.current.value.endText.text.length;
+      return currentOffset + 5 >= endTextLength;
+    } catch {
+      return false;
+    }
+  };
+
+  checkEditorHasSelectedWords = () => {};
 
   checkEditorPositionAtEnd = () => {
     // pretty sure it shouldn't this hard to check positions, but i haven't
     // groked all of slatejs documentation because i'm focusing on optimizing
     // on the backend
-    const currentOffset = this.editor.current.value.selection.focus.offset;
-    const endTextLength = this.editor.current.value.endText.text.length;
-
     /*
-    justification of this function ...
+  justification of this function ...
 
-    if slatejs's offset is at the same position as the ending text length
-    means the user typed a word and forgot spacebar. since using spacebar
-    is an odd way to "fire" an api, sometimes users (aka myself) forget to hit
-    spacebar. it's a crappy UX feeling when you forget to hit spacebar, so throw
-    a hack to check if the user (yourself) made this error
+  if slatejs's offset is at the same position as the ending text length
+  means the user typed a word and forgot spacebar. since using spacebar
+  is an odd way to "fire" an api, sometimes users (aka myself) forget to hit
+  spacebar. it's a crappy UX feeling when you forget to hit spacebar, so throw
+  a hack to check if the user (yourself) made this error
 
-    i didn't just fire the API regardless at any cursor position, because
-    there's one killer feature that i wanted to add (ssssh. it's a secret for
-    now). thanks for reading this far tho!
-    */
-    return currentOffset === endTextLength;
+  i didn't just fire the API regardless at any cursor position, because
+  there's one killer feature that i wanted to add (ssssh. it's a secret for
+  now). thanks for reading this far tho!
+  */
+    try {
+      const currentOffset = this.editor.current.value.selection.focus.offset;
+      const endTextLength = this.editor.current.value.endText.text.length;
+      return currentOffset === endTextLength;
+    } catch {
+      return false;
+    }
   };
 
   moveUp = () => {
@@ -950,6 +1015,7 @@ export class _MainComponent extends React.Component {
                       onTextChange={this.onTextChange}
                       reference={this.editor}
                       onKeyDown={this.onKeyDown}
+                      onFocus={this.onFocus}
                     />
                   </Typography>
                 </div>
