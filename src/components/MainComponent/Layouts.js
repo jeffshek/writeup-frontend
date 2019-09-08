@@ -78,6 +78,10 @@ export const WritingHeader = (
   </Typography>
 );
 
+export const WritingHeaderSimple = (
+  <Typography color="secondary" gutterBottom variant={"h5"}></Typography>
+);
+
 export const DividerSection = (
   <Fragment>
     <br />

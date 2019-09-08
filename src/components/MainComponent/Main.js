@@ -15,7 +15,8 @@ import {
   HowToSelectPromptSection,
   initialValue,
   MainFooter,
-  WritingHeader
+  WritingHeader,
+  WritingHeaderSimple
 } from "components/MainComponent/Layouts";
 
 import moment from "moment";
@@ -57,6 +58,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormHelperText from "@material-ui/core/FormHelperText";
+import { MainEditor } from "components/MainComponent/MainEditor";
 
 const DEFAULT_NODE = "paragraph";
 
@@ -101,6 +103,7 @@ export class _MainComponent extends React.Component {
 
       // create a false lastSent to ensure first send is easy
       lastSent: moment().subtract(5, "seconds"),
+      lastTextChange: moment(),
 
       // algo settings
       model_name: GPT2_MEDIUM_MODEL_NAME,
@@ -310,8 +313,16 @@ export class _MainComponent extends React.Component {
     //fast typists shouldn't send multiple API calls to the server,
     //especially if they know what they're about to write
     // okay - i can't optimize it any further, sorry.
-    const delayLimit = moment().subtract(5, "seconds");
+    const userHasStoppedTypingCutoff = moment().subtract(500, "milliseconds");
+    const userHasStoppedTypingCheck =
+      this.state.lastTextChange < userHasStoppedTypingCutoff;
 
+    // if the user is still typing don't send a request yet
+    if (!userHasStoppedTypingCheck) {
+      return false;
+    }
+
+    const delayLimit = moment().subtract(3, "seconds");
     // return true only if we've waited enough time to not hammer
     // the servers
     return this.state.lastSent < delayLimit;
@@ -407,12 +418,11 @@ export class _MainComponent extends React.Component {
       localStorage.setItem("content", content);
     }
 
-    if (isMobile) {
-      // huge hack for mobile, since IME spacebar isn't correctly detected
-      this.setState({ editorValue: value, unsent: true });
-    } else {
-      this.setState({ editorValue: value });
-    }
+    this.setState({
+      editorValue: value,
+      unsent: true,
+      lastTextChange: moment()
+    });
   };
 
   checkEditorPositionAtEnd = () => {
@@ -701,7 +711,8 @@ export class _MainComponent extends React.Component {
         alignItems="flex-start"
       >
         <Grid item>
-          <b>Word Count: {wordCount}.</b> {additionalDisclaimer}
+          <b>Word Count: {wordCount}.</b> If issues, try the spacebar key.{" "}
+          {additionalDisclaimer}
         </Grid>
         <BrowserView>
           <Grid item>
@@ -752,7 +763,7 @@ export class _MainComponent extends React.Component {
         alignItems="center"
       >
         <Grid item>
-          {showInstructions ? <Fragment>{WritingHeader}</Fragment> : null}
+          {showInstructions ? WritingHeader : WritingHeaderSimple}
         </Grid>
         <Grid item>
           <span className={classes.copiedContainer}>
@@ -927,15 +938,21 @@ export class _MainComponent extends React.Component {
                     color={"textPrimary"}
                   >
                     <BrowserView>{this.renderEditorToolbar()}</BrowserView>
-                    <Editor
-                      spellCheck
-                      value={this.state.editorValue}
-                      onChange={this.onTextChange}
-                      autoFocus={true}
-                      ref={this.editor}
+                    {/*<Editor*/}
+                    {/*spellCheck*/}
+                    {/*value={this.state.editorValue}*/}
+                    {/*onChange={this.onTextChange}*/}
+                    {/*autoFocus={true}*/}
+                    {/*ref={this.editor}*/}
+                    {/*onKeyDown={this.onKeyDown}*/}
+                    {/*renderBlock={renderBlock}*/}
+                    {/*renderMark={renderMark}*/}
+                    {/*/>*/}
+                    <MainEditor
+                      editorValue={this.state.editorValue}
+                      onTextChange={this.onTextChange}
+                      reference={this.editor}
                       onKeyDown={this.onKeyDown}
-                      renderBlock={renderBlock}
-                      renderMark={renderMark}
                     />
                   </Typography>
                 </div>
