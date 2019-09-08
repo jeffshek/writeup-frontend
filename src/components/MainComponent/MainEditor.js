@@ -1,14 +1,10 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { renderBlock, renderMark } from "components/SlateJS";
 import { Editor } from "slate-react";
 
 // Mobile is having a lot of issues, so try switching to a PureComponent to see if it alleviates anything
 
 export class MainEditor extends React.PureComponent {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const props = this.props;
 

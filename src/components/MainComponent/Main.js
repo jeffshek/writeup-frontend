@@ -5,7 +5,6 @@ import { withRouter } from "react-router-dom";
 import Paper from "@material-ui/core/Paper/Paper";
 import Typography from "@material-ui/core/Typography/Typography";
 import { TopbarComponent } from "components/TopbarComponent/Topbar";
-import { Editor } from "slate-react";
 import { PromptSelectComponent } from "components/PromptSelectComponent";
 import { ReactWebSocket } from "components/ReactWebSocket";
 import { serializeAPIMessageToPrompts } from "utilities/apiSerializers";
@@ -48,12 +47,10 @@ import {
   isCodeHotkey,
   isItalicHotkey,
   isUnderlinedHotkey,
-  renderBlock,
-  renderMark,
   Toolbar
 } from "components/SlateJS";
 
-import { BrowserView, isMobile, isBrowser } from "react-device-detect";
+import { BrowserView, isBrowser, isMobile } from "react-device-detect";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
