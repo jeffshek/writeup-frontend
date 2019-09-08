@@ -1,0 +1,7 @@
+# stuff to check when you're making changes to test on mobile
+- Select all frequently doesn't work
+- Can't copy since state conflicts quickly
+- Hitting Backspace Doesn't Always Work
+- Spacebar will jump around
+- Hitting backspace for too long will lag
+- Doesn't always fire to API, not sure why
