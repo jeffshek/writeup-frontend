@@ -1087,10 +1087,10 @@
   dependencies:
     "@babel/runtime" "^7.2.0"
 
-"@material-ui/styles@^4.3.3":
-  version "4.3.3"
-  resolved "https://registry.yarnpkg.com/@material-ui/styles/-/styles-4.3.3.tgz#39867dd6f3779a8326075e097d72208d3c5b4977"
-  integrity sha512-quupQ6RYXbtKBJxhLkF3RQx6LSfrfuh2lYpILvk7p9XNkfqOQq36fuNVgrJ/A+NNn03uqDFfQYIWh4CByKr4hA==
+"@material-ui/styles@^4.3.3", "@material-ui/styles@^4.4.1":
+  version "4.4.1"
+  resolved "https://registry.yarnpkg.com/@material-ui/styles/-/styles-4.4.1.tgz#a53fb39e373636bd2c296a78c54afecb80f68446"
+  integrity sha512-wXASlta7G+N8NeihbAKQjL6E1XMkS3SWpksNKn1cxhmKYQ+5pkMAUW/rChC5ovG7C/C2ZIdajYgOz977m3xlBA==
   dependencies:
     "@babel/runtime" "^7.4.4"
     "@emotion/hash" "^0.7.1"
