@@ -135,6 +135,8 @@ export const GridLayout = ({ classes, children }) => {
 export const RightGridLayout = ({ classes, children }) => {
   // there are a lot of areas where i prefer to right align
   // a group of items, and ideally using float is a bad idea
+  // TODO - it may faster? to just refactor this to flex and flex-end
+  // rather than using material's UI grid, although i am partial to grid ...
   return (
     <Grid
       spacing={0}
@@ -143,11 +145,9 @@ export const RightGridLayout = ({ classes, children }) => {
       container
       className={classes.grid}
     >
-      {/*<Grid item xs={12}>*/}
       <Grid item xs={12} className={classes.gridItem}>
         {children}
       </Grid>
-      {/*</Grid>*/}
     </Grid>
   );
 };

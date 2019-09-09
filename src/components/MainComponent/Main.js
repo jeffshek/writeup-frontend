@@ -414,8 +414,6 @@ export class _MainComponent extends React.Component {
   // text editor utilities
   ////////////////////
   onTextChange = ({ value }) => {
-    console.log(value.document.text);
-
     // this is the worst function, i hate myself for supporting mobile
     const textChanged =
       value.document.text !== this.state.editorValue.document.text;
