@@ -65,6 +65,11 @@ export const MainStyles = theme => ({
   },
   createRandomPromptButton: {
     marginRight: "0.25rem"
+    //padding: 0
+  },
+  copiedContainer: {
+    whitespace: "nowrap",
+    overflow: "hidden"
   },
   box: {
     marginBottom: 20,
