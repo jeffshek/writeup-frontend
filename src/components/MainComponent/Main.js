@@ -14,6 +14,7 @@ import {
   HowToSelectPromptSection,
   initialValue,
   MainFooter,
+  RightGridLayout,
   WritingHeader,
   WritingHeaderSimple
 } from "components/MainComponent/Layouts";
@@ -812,6 +813,102 @@ export class _MainComponent extends React.Component {
     this.editor.current.insertText("");
   };
 
+  renderMobileHeaderAndTutorial = () => {
+    const { classes } = this.props;
+
+    if (!this.state.editorValue.document) {
+      return;
+    }
+
+    const text = this.state.editorValue.document.text;
+
+    const wordCount = this.getWordCount();
+    const showInstructions = wordCount < 50 && !isMobile;
+
+    return (
+      <Grid
+        container
+        direction="row"
+        justify="space-between"
+        alignItems="flex-end"
+      >
+        <Grid item>
+          {showInstructions ? WritingHeader : WritingHeaderSimple}
+        </Grid>
+        <Grid item xs={6}>
+          <span className={classes.copiedContainer}>
+            <FormControl className={classes.algorithmSelectFormMain}>
+              <Select
+                value={this.state.model_name}
+                inputProps={{
+                  name: "publishOptions",
+                  id: "publish-options"
+                }}
+                onChange={this.onSelectChange}
+              >
+                <MenuItem value={GPT2_SMALL_MODEL_NAME}>
+                  General (Basic)
+                </MenuItem>
+                <MenuItem value={GPT2_MEDIUM_MODEL_NAME}>
+                  General (Medium)
+                </MenuItem>
+                <MenuItem value={GPT2_LARGE_MODEL_NAME}>
+                  General (Advanced)
+                </MenuItem>
+                <MenuItem value={GPT2_SMALL_LEGAL_MODEL_NAME}>Legal</MenuItem>
+                <MenuItem value={XLNET_BASE_CASED_MODEL_NAME}>
+                  XLNet (Base)
+                </MenuItem>
+              </Select>
+              <FormHelperText>Writing Style</FormHelperText>
+            </FormControl>
+          </span>
+        </Grid>
+        <Grid item xs={6}>
+          <span className={classes.copiedContainer}>
+            <Grid
+              spacing={0}
+              alignItems="center"
+              justify="flex-end"
+              container
+              className={classes.grid}
+            >
+              <Button
+                variant="outlined"
+                color="secondary"
+                className={classes.createRandomPromptButton}
+                onClick={this.startNewText}
+                size={"small"}
+              >
+                New
+              </Button>
+              <Button
+                variant="outlined"
+                color="secondary"
+                className={classes.createRandomPromptButton}
+                onClick={this.clearText}
+                size={"small"}
+              >
+                <TrashIcon />
+              </Button>
+              <CopyToClipboard text={text}>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  style={{ marginRight: "0.25rem" }}
+                  size={"small"}
+                  className={classes.createRandomPromptButton}
+                >
+                  <FileCopyIcon />
+                </Button>
+              </CopyToClipboard>
+            </Grid>
+          </span>
+        </Grid>
+      </Grid>
+    );
+  };
+
   renderHeaderAndTutorial = () => {
     const { classes } = this.props;
 
@@ -837,7 +934,7 @@ export class _MainComponent extends React.Component {
         <Grid item>
           {showInstructions ? WritingHeader : WritingHeaderSimple}
         </Grid>
-        <Grid item xs={5}>
+        <Grid item>
           <span className={classes.copiedContainer}>
             <FormControl className={classes.algorithmSelectFormMain}>
               <Select
@@ -852,9 +949,11 @@ export class _MainComponent extends React.Component {
                   General (Basic)
                 </MenuItem>
                 <MenuItem value={GPT2_MEDIUM_MODEL_NAME}>
-                  General (Med)
+                  General (Medium)
                 </MenuItem>
-                <MenuItem value={GPT2_LARGE_MODEL_NAME}>General (Adv)</MenuItem>
+                <MenuItem value={GPT2_LARGE_MODEL_NAME}>
+                  General (Advanced)
+                </MenuItem>
                 <MenuItem value={GPT2_SMALL_LEGAL_MODEL_NAME}>Legal</MenuItem>
                 <MenuItem value={XLNET_BASE_CASED_MODEL_NAME}>
                   XLNet (Base)
@@ -863,8 +962,6 @@ export class _MainComponent extends React.Component {
               <FormHelperText>Writing Style</FormHelperText>
             </FormControl>
           </span>
-        </Grid>
-        <Grid item xs={7}>
           <span className={classes.copiedContainer}>
             <Button
               variant="outlined"
@@ -875,17 +972,6 @@ export class _MainComponent extends React.Component {
             >
               New
             </Button>
-            {isMobile ? (
-              <Button
-                variant="outlined"
-                color="secondary"
-                className={classes.createRandomPromptButton}
-                onClick={this.clearText}
-                size={"small"}
-              >
-                <TrashIcon />
-              </Button>
-            ) : null}
             <CopyToClipboard text={text}>
               <Button
                 variant="outlined"
@@ -897,38 +983,25 @@ export class _MainComponent extends React.Component {
                 <FileCopyIcon />
               </Button>
             </CopyToClipboard>
-            {/*{isMobile ? null : (*/}
-            {/*  <CopyToClipboard text={text}>*/}
-            {/*    <Button*/}
-            {/*      variant="outlined"*/}
-            {/*      color="primary"*/}
-            {/*      style={{ marginRight: "0.25rem" }}*/}
-            {/*    >*/}
-            {/*      <FileCopyIcon />*/}
-            {/*    </Button>*/}
-            {/*  </CopyToClipboard>*/}
-            {/*)}*/}
           </span>
-          {isBrowser ? (
-            <Fragment>
-              <Button
-                variant="outlined"
-                color="secondary"
-                className={classes.button}
-                onClick={this.setModal("tutorialModalOpen")}
-              >
-                Tutorial
-              </Button>
-              <Button
-                variant={aiButtonStyle}
-                color="primary"
-                className={classes.button}
-                onClick={this.toggleaiAssistEnabled}
-              >
-                Assist: {aiLabel}
-              </Button>
-            </Fragment>
-          ) : null}
+          <Fragment>
+            <Button
+              variant="outlined"
+              color="secondary"
+              className={classes.button}
+              onClick={this.setModal("tutorialModalOpen")}
+            >
+              Tutorial
+            </Button>
+            <Button
+              variant={aiButtonStyle}
+              color="primary"
+              className={classes.button}
+              onClick={this.toggleaiAssistEnabled}
+            >
+              Assist: {aiLabel}
+            </Button>
+          </Fragment>
         </Grid>
       </Grid>
     );
@@ -1027,7 +1100,10 @@ export class _MainComponent extends React.Component {
           <GridLayout classes={classes}>
             <Paper className={classes.paper}>
               <div className={classes.box}>
-                {this.renderHeaderAndTutorial()}
+                {isBrowser
+                  ? this.renderHeaderAndTutorial()
+                  : this.renderMobileHeaderAndTutorial()}
+
                 <div className={classes.textBox}>
                   <Typography
                     variant="subtitle1"
