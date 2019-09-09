@@ -37,6 +37,7 @@ import { PublishModal } from "components/Modals/PublishModal";
 import { TutorialModal } from "components/Modals/TutorialModal";
 import { Helmet } from "react-helmet";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
+import TrashIcon from "@material-ui/icons/Delete";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { getRandomItemFromArray } from "utilities/utilities";
 import { LoginOrRegisterModal } from "components/Modals/LoginOrRegisterModal";
@@ -412,6 +413,8 @@ export class _MainComponent extends React.Component {
   // text editor utilities
   ////////////////////
   onTextChange = ({ value }) => {
+    console.log(value.document.text);
+
     // this is the worst function, i hate myself for supporting mobile
     const textChanged =
       value.document.text !== this.state.editorValue.document.text;
@@ -802,6 +805,13 @@ export class _MainComponent extends React.Component {
     return text.trim().split(" ").length;
   };
 
+  clearText = () => {
+    // do this because on mobile, selects dont always work
+    const textLength = this.state.editorValue.document.text.length;
+    this.editor.current.deleteBackward(textLength);
+    this.editor.current.insertText("");
+  };
+
   renderHeaderAndTutorial = () => {
     const { classes } = this.props;
 
@@ -822,12 +832,12 @@ export class _MainComponent extends React.Component {
         container
         direction="row"
         justify="space-between"
-        alignItems="center"
+        alignItems="flex-end"
       >
         <Grid item>
           {showInstructions ? WritingHeader : WritingHeaderSimple}
         </Grid>
-        <Grid item>
+        <Grid item xs={5}>
           <span className={classes.copiedContainer}>
             <FormControl className={classes.algorithmSelectFormMain}>
               <Select
@@ -842,11 +852,9 @@ export class _MainComponent extends React.Component {
                   General (Basic)
                 </MenuItem>
                 <MenuItem value={GPT2_MEDIUM_MODEL_NAME}>
-                  General (Intermediate)
+                  General (Med)
                 </MenuItem>
-                <MenuItem value={GPT2_LARGE_MODEL_NAME}>
-                  General (Advanced)
-                </MenuItem>
+                <MenuItem value={GPT2_LARGE_MODEL_NAME}>General (Adv)</MenuItem>
                 <MenuItem value={GPT2_SMALL_LEGAL_MODEL_NAME}>Legal</MenuItem>
                 <MenuItem value={XLNET_BASE_CASED_MODEL_NAME}>
                   XLNet (Base)
@@ -854,25 +862,52 @@ export class _MainComponent extends React.Component {
               </Select>
               <FormHelperText>Writing Style</FormHelperText>
             </FormControl>
+          </span>
+        </Grid>
+        <Grid item xs={7}>
+          <span className={classes.copiedContainer}>
             <Button
               variant="outlined"
               color="secondary"
               className={classes.createRandomPromptButton}
               onClick={this.startNewText}
+              size={"small"}
             >
-              New Text
+              New
             </Button>
-            {isMobile ? null : (
-              <CopyToClipboard text={text}>
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  style={{ marginRight: "0.25rem" }}
-                >
-                  <FileCopyIcon />
-                </Button>
-              </CopyToClipboard>
-            )}
+            {isMobile ? (
+              <Button
+                variant="outlined"
+                color="secondary"
+                className={classes.createRandomPromptButton}
+                onClick={this.clearText}
+                size={"small"}
+              >
+                <TrashIcon />
+              </Button>
+            ) : null}
+            <CopyToClipboard text={text}>
+              <Button
+                variant="outlined"
+                color="primary"
+                style={{ marginRight: "0.25rem" }}
+                size={"small"}
+                className={classes.createRandomPromptButton}
+              >
+                <FileCopyIcon />
+              </Button>
+            </CopyToClipboard>
+            {/*{isMobile ? null : (*/}
+            {/*  <CopyToClipboard text={text}>*/}
+            {/*    <Button*/}
+            {/*      variant="outlined"*/}
+            {/*      color="primary"*/}
+            {/*      style={{ marginRight: "0.25rem" }}*/}
+            {/*    >*/}
+            {/*      <FileCopyIcon />*/}
+            {/*    </Button>*/}
+            {/*  </CopyToClipboard>*/}
+            {/*)}*/}
           </span>
           {isBrowser ? (
             <Fragment>

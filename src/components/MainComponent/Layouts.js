@@ -132,6 +132,26 @@ export const GridLayout = ({ classes, children }) => {
   );
 };
 
+export const RightGridLayout = ({ classes, children }) => {
+  // there are a lot of areas where i prefer to right align
+  // a group of items, and ideally using float is a bad idea
+  return (
+    <Grid
+      spacing={0}
+      alignItems="center"
+      justify="flex-end"
+      container
+      className={classes.grid}
+    >
+      {/*<Grid item xs={12}>*/}
+      <Grid item xs={12} className={classes.gridItem}>
+        {children}
+      </Grid>
+      {/*</Grid>*/}
+    </Grid>
+  );
+};
+
 export const SenriganAnalyticsFooter = (
   <Typography variant="body1" color={"textPrimary"}>
     Made with ♥ by{" "}
