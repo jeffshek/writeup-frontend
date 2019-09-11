@@ -80,6 +80,15 @@ export class _MainComponent extends React.Component {
   constructor(props) {
     super(props);
 
+    // add some quick links to make URLs a little bit more accessible
+    // for external linking
+    // ie. writeup.ai/legal will automatically use the legal text gen. models
+    const pathname = props.location.pathname;
+    let model_name = GPT2_MEDIUM_MODEL_NAME;
+    if (pathname === "/legal") {
+      model_name = GPT2_SMALL_LEGAL_MODEL_NAME;
+    }
+
     const textPrompts = [];
 
     // this is getting into spaghetti, but needed this for async
@@ -107,7 +116,7 @@ export class _MainComponent extends React.Component {
       lastTextChange: moment(),
 
       // algo settings
-      model_name: GPT2_MEDIUM_MODEL_NAME,
+      model_name: model_name,
       temperature: 0.5,
       // low top_k results in all the same prompts
       top_k: 30,

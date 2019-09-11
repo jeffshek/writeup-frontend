@@ -116,18 +116,22 @@ export const LearnMoreButton = ({ classes }) => {
 export const GridLayout = ({ classes, children }) => {
   // extracted because i really hate seeing the 20 layers of indent in renders
   return (
-    <Grid
-      spacing={0}
-      alignItems="center"
-      justify="center"
-      container
-      className={classes.grid}
-    >
-      {/*<Grid item xs={12}>*/}
-      <Grid item xs={12} className={classes.gridItem}>
-        {children}
+    // this nests everything in a huge center, which ends up being useful for
+    // most pages, although putting grids in grids is sort of weird.
+    <Grid container justify="center">
+      <Grid
+        spacing={0}
+        alignItems="center"
+        justify="center"
+        container
+        className={classes.grid}
+      >
+        <Grid container item xs={12}>
+          <Grid item xs={12} className={classes.gridItem}>
+            {children}
+          </Grid>
+        </Grid>
       </Grid>
-      {/*</Grid>*/}
     </Grid>
   );
 };
