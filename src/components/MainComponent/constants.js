@@ -55,5 +55,11 @@ export const PROMPTS_TO_USE = [
   // "Boy Name + Girl Name " - hilariously bad, makes a lot of non PC remarks
 ];
 
+export const LEGAL_PROMPTS_TO_USE = [
+  "The defendant has claimed ",
+  "This court is here to ",
+  "The jury has decided "
+];
+
 // use this as a way to back slatejs back to focus on where to add the comment
 export const SPECIAL_CHARACTERS = [",", "!", ".", '"', "-", "'"];

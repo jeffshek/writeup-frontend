@@ -14,7 +14,6 @@ import {
   HowToSelectPromptSection,
   initialValue,
   MainFooter,
-  RightGridLayout,
   WritingHeader,
   WritingHeaderSimple
 } from "components/MainComponent/Layouts";
@@ -27,6 +26,7 @@ import {
   GPT2_MEDIUM_MODEL_NAME,
   GPT2_SMALL_LEGAL_MODEL_NAME,
   GPT2_SMALL_MODEL_NAME,
+  LEGAL_PROMPTS_TO_USE,
   PROMPTS_TO_USE,
   SPECIAL_CHARACTERS,
   WebSocketURL,
@@ -634,7 +634,12 @@ export class _MainComponent extends React.Component {
     const textLength = this.state.editorValue.document.text.length;
     this.editor.current.deleteBackward(textLength);
 
-    const randomPrompt = getRandomItemFromArray(PROMPTS_TO_USE);
+    let prompts = PROMPTS_TO_USE;
+    if (this.state.model_name === GPT2_SMALL_LEGAL_MODEL_NAME) {
+      prompts = LEGAL_PROMPTS_TO_USE;
+    }
+
+    const randomPrompt = getRandomItemFromArray(prompts);
     this.editor.current.insertText(randomPrompt);
 
     this.focusTextInput();
