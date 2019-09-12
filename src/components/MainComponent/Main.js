@@ -369,9 +369,12 @@ export class _MainComponent extends React.Component {
     // of API requests, then we keep on receiving additional messages
     // from previous phrases that no longer apply
     if (message.prompt.trim().slice(-10) === text.trim().slice(-10)) {
-      this.setState({
-        textPrompts: textPrompts
-      });
+      this.setState(
+        {
+          textPrompts: textPrompts
+        },
+        this.focusTextInput
+      );
     }
   };
 
