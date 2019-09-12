@@ -266,7 +266,7 @@ export class _MainComponent extends React.Component {
   onClickBlock = (event, type) => {
     event.preventDefault();
 
-    const { editor } = this;
+    const { editor } = this.editor.current;
     const { value } = editor;
     const { document } = value;
 
