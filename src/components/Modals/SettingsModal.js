@@ -12,6 +12,7 @@ import {
   GPT2_LARGE_MODEL_NAME,
   GPT2_MEDIUM_GOT_MODEL_NAME,
   GPT2_MEDIUM_HP_MODEL_NAME,
+  GPT2_MEDIUM_LEGAL_MODEL_NAME,
   GPT2_MEDIUM_LYRICS_MODEL_NAME,
   GPT2_MEDIUM_MODEL_NAME,
   GPT2_SMALL_LEGAL_MODEL_NAME,
@@ -177,7 +178,7 @@ export const SettingsModal = ({
                 <MenuItem value={GPT2_SMALL_MODEL_NAME}>
                   GPT2 (Small, Fastest)
                 </MenuItem>
-                <MenuItem value={GPT2_SMALL_LEGAL_MODEL_NAME}>
+                <MenuItem value={GPT2_MEDIUM_LEGAL_MODEL_NAME}>
                   GPT2 (Law/Legal Writing Style)
                 </MenuItem>
                 <MenuItem value={GPT2_MEDIUM_MODEL_NAME}>

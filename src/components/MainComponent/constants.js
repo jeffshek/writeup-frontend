@@ -68,5 +68,26 @@ export const LEGAL_PROMPTS_TO_USE = [
   "The jury has decided "
 ];
 
+export const HP_PROMPTS_TO_USE = [
+  "The wand begin shaking ",
+  "His scar began to sense ",
+  "Ron, stop! ",
+  //"Avada Kedavra! ", # this one no good
+  "Voldemort was near. ",
+  "The Golden Snitch flew ",
+  "They began to duel. "
+];
+
+export const GOT_PROMPTS_TO_USE = [
+  "The dragon stared ",
+  "The army converged ",
+  "Missandei was angry. ",
+  "They began the attack at dawn. ",
+  "The poison seeped ",
+  "Tyrion joked ",
+  "Forged from ",
+  "The white walkers began "
+];
+
 // use this as a way to back slatejs back to focus on where to add the comment
-export const SPECIAL_CHARACTERS = [",", "!", ".", '"', "-", "'"];
+export const SPECIAL_CHARACTERS = [",", "!", ".", '"', "-", "'", "”"];
