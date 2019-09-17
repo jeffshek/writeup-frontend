@@ -182,9 +182,9 @@ export const SettingsModal = ({
                   GPT2 (Medium)
                 </MenuItem>
                 <MenuItem value={GPT2_LARGE_MODEL_NAME}>GPT2 (Large)</MenuItem>
-                <MenuItem value={XLNET_BASE_CASED_MODEL_NAME}>
-                  XLNet (Base)
-                </MenuItem>
+                {/*<MenuItem value={XLNET_BASE_CASED_MODEL_NAME}>*/}
+                {/*  XLNet (Base)*/}
+                {/*</MenuItem>*/}
               </Select>
             </FormControl>
           </Grid>

@@ -868,9 +868,9 @@ export class _MainComponent extends React.Component {
                   General (Advanced)
                 </MenuItem>
                 <MenuItem value={GPT2_SMALL_LEGAL_MODEL_NAME}>Legal</MenuItem>
-                <MenuItem value={XLNET_BASE_CASED_MODEL_NAME}>
-                  XLNet (Base)
-                </MenuItem>
+                {/*<MenuItem value={XLNET_BASE_CASED_MODEL_NAME}>*/}
+                {/*  XLNet (Base)*/}
+                {/*</MenuItem>*/}
               </Select>
               <FormHelperText>Writing Style</FormHelperText>
             </FormControl>
@@ -967,9 +967,9 @@ export class _MainComponent extends React.Component {
                   General (Advanced)
                 </MenuItem>
                 <MenuItem value={GPT2_SMALL_LEGAL_MODEL_NAME}>Legal</MenuItem>
-                <MenuItem value={XLNET_BASE_CASED_MODEL_NAME}>
-                  XLNet (Base)
-                </MenuItem>
+                {/*<MenuItem value={XLNET_BASE_CASED_MODEL_NAME}>*/}
+                {/*  XLNet (Base)*/}
+                {/*</MenuItem>*/}
               </Select>
               <FormHelperText>Writing Style</FormHelperText>
             </FormControl>
