@@ -23,14 +23,17 @@ import { LinearIndeterminate } from "components/Loading";
 import { SettingsModal } from "components/Modals/SettingsModal";
 import {
   GPT2_LARGE_MODEL_NAME,
+  GPT2_MEDIUM_GOT_MODEL_NAME,
+  GPT2_MEDIUM_HP_MODEL_NAME,
+  GPT2_MEDIUM_LYRICS_MODEL_NAME,
   GPT2_MEDIUM_MODEL_NAME,
+  GPT2_MEDIUM_RESEARCH_MODEL_NAME,
   GPT2_SMALL_LEGAL_MODEL_NAME,
   GPT2_SMALL_MODEL_NAME,
   LEGAL_PROMPTS_TO_USE,
   PROMPTS_TO_USE,
   SPECIAL_CHARACTERS,
-  WebSocketURL,
-  XLNET_BASE_CASED_MODEL_NAME
+  WebSocketURL
 } from "components/MainComponent/constants";
 import Button from "@material-ui/core/Button/Button";
 import Grid from "@material-ui/core/Grid/Grid";
@@ -85,8 +88,17 @@ export class _MainComponent extends React.Component {
     // ie. writeup.ai/legal will automatically use the legal text gen. models
     const pathname = props.location.pathname;
     let model_name = GPT2_MEDIUM_MODEL_NAME;
+
     if (pathname === "/legal") {
       model_name = GPT2_SMALL_LEGAL_MODEL_NAME;
+    } else if (pathname === "/got") {
+      model_name = GPT2_MEDIUM_GOT_MODEL_NAME;
+    } else if (pathname === "/hp") {
+      model_name = GPT2_MEDIUM_HP_MODEL_NAME;
+    } else if (pathname === "/research") {
+      model_name = GPT2_MEDIUM_RESEARCH_MODEL_NAME;
+    } else if (pathname === "/lyrics") {
+      model_name = GPT2_MEDIUM_LYRICS_MODEL_NAME;
     }
 
     const textPrompts = [];
@@ -828,6 +840,41 @@ export class _MainComponent extends React.Component {
     this.editor.current.insertText("");
   };
 
+  renderSelectModelContainer = () => {
+    const { classes } = this.props;
+
+    return (
+      <span className={classes.copiedContainer}>
+        <FormControl className={classes.algorithmSelectFormMain}>
+          <Select
+            value={this.state.model_name}
+            inputProps={{
+              name: "publishOptions",
+              id: "publish-options"
+            }}
+            onChange={this.onSelectChange}
+          >
+            <MenuItem value={GPT2_SMALL_MODEL_NAME}>General (Basic)</MenuItem>
+            <MenuItem value={GPT2_MEDIUM_MODEL_NAME}>General (Medium)</MenuItem>
+            <MenuItem value={GPT2_LARGE_MODEL_NAME}>
+              General (Advanced)
+            </MenuItem>
+            <MenuItem value={GPT2_SMALL_LEGAL_MODEL_NAME}>Legal</MenuItem>
+            {/*<MenuItem value={GPT2_MEDIUM_RESEARCH_MODEL_NAME}>Research</MenuItem>*/}
+            <MenuItem value={GPT2_MEDIUM_HP_MODEL_NAME}>Harry Potter</MenuItem>
+            <MenuItem value={GPT2_MEDIUM_GOT_MODEL_NAME}>
+              Game of Thrones
+            </MenuItem>
+            <MenuItem value={GPT2_MEDIUM_LYRICS_MODEL_NAME}>
+              Song Lyrics
+            </MenuItem>
+          </Select>
+          <FormHelperText>Writing Style</FormHelperText>
+        </FormControl>
+      </span>
+    );
+  };
+
   renderMobileHeaderAndTutorial = () => {
     const { classes } = this.props;
 
@@ -851,33 +898,7 @@ export class _MainComponent extends React.Component {
           {showInstructions ? WritingHeader : WritingHeaderSimple}
         </Grid>
         <Grid item xs={6}>
-          <span className={classes.copiedContainer}>
-            <FormControl className={classes.algorithmSelectFormMain}>
-              <Select
-                value={this.state.model_name}
-                inputProps={{
-                  name: "publishOptions",
-                  id: "publish-options"
-                }}
-                onChange={this.onSelectChange}
-              >
-                <MenuItem value={GPT2_SMALL_MODEL_NAME}>
-                  General (Basic)
-                </MenuItem>
-                <MenuItem value={GPT2_MEDIUM_MODEL_NAME}>
-                  General (Medium)
-                </MenuItem>
-                <MenuItem value={GPT2_LARGE_MODEL_NAME}>
-                  General (Advanced)
-                </MenuItem>
-                <MenuItem value={GPT2_SMALL_LEGAL_MODEL_NAME}>Legal</MenuItem>
-                {/*<MenuItem value={XLNET_BASE_CASED_MODEL_NAME}>*/}
-                {/*  XLNet (Base)*/}
-                {/*</MenuItem>*/}
-              </Select>
-              <FormHelperText>Writing Style</FormHelperText>
-            </FormControl>
-          </span>
+          {this.renderSelectModelContainer()}
         </Grid>
         <Grid item xs={6}>
           <span className={classes.copiedContainer}>
@@ -950,33 +971,7 @@ export class _MainComponent extends React.Component {
           {showInstructions ? WritingHeader : WritingHeaderSimple}
         </Grid>
         <Grid item>
-          <span className={classes.copiedContainer}>
-            <FormControl className={classes.algorithmSelectFormMain}>
-              <Select
-                value={this.state.model_name}
-                inputProps={{
-                  name: "publishOptions",
-                  id: "publish-options"
-                }}
-                onChange={this.onSelectChange}
-              >
-                <MenuItem value={GPT2_SMALL_MODEL_NAME}>
-                  General (Basic)
-                </MenuItem>
-                <MenuItem value={GPT2_MEDIUM_MODEL_NAME}>
-                  General (Medium)
-                </MenuItem>
-                <MenuItem value={GPT2_LARGE_MODEL_NAME}>
-                  General (Advanced)
-                </MenuItem>
-                <MenuItem value={GPT2_SMALL_LEGAL_MODEL_NAME}>Legal</MenuItem>
-                {/*<MenuItem value={XLNET_BASE_CASED_MODEL_NAME}>*/}
-                {/*  XLNet (Base)*/}
-                {/*</MenuItem>*/}
-              </Select>
-              <FormHelperText>Writing Style</FormHelperText>
-            </FormControl>
-          </span>
+          {this.renderSelectModelContainer()}
           <span className={classes.copiedContainer}>
             <Button
               variant="outlined"

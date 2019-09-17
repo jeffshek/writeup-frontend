@@ -3,7 +3,14 @@ import uuid from "uuid/v4";
 
 export const GPT2_SMALL_MODEL_NAME = "gpt2";
 export const GPT2_SMALL_LEGAL_MODEL_NAME = "gpt2-small-legal";
+
 export const GPT2_MEDIUM_MODEL_NAME = "gpt2-medium";
+export const GPT2_MEDIUM_LEGAL_MODEL_NAME = "gpt2-medium-legal";
+export const GPT2_MEDIUM_GOT_MODEL_NAME = "gpt2-medium-got";
+export const GPT2_MEDIUM_HP_MODEL_NAME = "gpt2-medium-hp";
+export const GPT2_MEDIUM_RESEARCH_MODEL_NAME = "gpt2-medium-research";
+export const GPT2_MEDIUM_LYRICS_MODEL_NAME = "gpt2-medium-lyrics";
+
 export const GPT2_LARGE_MODEL_NAME = "gpt2-large";
 
 export const XLNET_BASE_CASED_MODEL_NAME = "xlnet-base-cased";
