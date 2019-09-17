@@ -266,7 +266,7 @@ export class _MainComponent extends React.Component {
   onClickBlock = (event, type) => {
     event.preventDefault();
 
-    const { editor } = this;
+    const { editor } = this.editor.current;
     const { value } = editor;
     const { document } = value;
 
@@ -369,9 +369,12 @@ export class _MainComponent extends React.Component {
     // of API requests, then we keep on receiving additional messages
     // from previous phrases that no longer apply
     if (message.prompt.trim().slice(-10) === text.trim().slice(-10)) {
-      this.setState({
-        textPrompts: textPrompts
-      });
+      this.setState(
+        {
+          textPrompts: textPrompts
+        },
+        this.focusTextInput
+      );
     }
   };
 
