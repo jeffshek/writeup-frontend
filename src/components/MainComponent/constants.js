@@ -3,7 +3,14 @@ import uuid from "uuid/v4";
 
 export const GPT2_SMALL_MODEL_NAME = "gpt2";
 export const GPT2_SMALL_LEGAL_MODEL_NAME = "gpt2-small-legal";
+
 export const GPT2_MEDIUM_MODEL_NAME = "gpt2-medium";
+export const GPT2_MEDIUM_LEGAL_MODEL_NAME = "gpt2-medium-legal";
+export const GPT2_MEDIUM_GOT_MODEL_NAME = "gpt2-medium-got";
+export const GPT2_MEDIUM_HP_MODEL_NAME = "gpt2-medium-hp";
+export const GPT2_MEDIUM_RESEARCH_MODEL_NAME = "gpt2-medium-research";
+export const GPT2_MEDIUM_LYRICS_MODEL_NAME = "gpt2-medium-lyrics";
+
 export const GPT2_LARGE_MODEL_NAME = "gpt2-large";
 
 export const XLNET_BASE_CASED_MODEL_NAME = "xlnet-base-cased";
@@ -61,5 +68,26 @@ export const LEGAL_PROMPTS_TO_USE = [
   "The jury has decided "
 ];
 
+export const HP_PROMPTS_TO_USE = [
+  "The wand begin shaking ",
+  "His scar began to sense ",
+  "Ron, stop! ",
+  //"Avada Kedavra! ", # this one no good
+  "Voldemort was near. ",
+  "The Golden Snitch flew ",
+  "They began to duel. "
+];
+
+export const GOT_PROMPTS_TO_USE = [
+  "The dragon stared ",
+  "The army converged ",
+  "Missandei was angry. ",
+  "They began the attack at dawn. ",
+  "The poison seeped ",
+  "Tyrion joked ",
+  "Forged from ",
+  "The white walkers began "
+];
+
 // use this as a way to back slatejs back to focus on where to add the comment
-export const SPECIAL_CHARACTERS = [",", "!", ".", '"', "-", "'"];
+export const SPECIAL_CHARACTERS = [",", "!", ".", '"', "-", "'", "”"];

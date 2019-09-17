@@ -30,6 +30,27 @@ export const initialValue = Value.fromJSON(
   }
 );
 
+export function getInitialValue(randomPrompts) {
+  return Value.fromJSON(
+    existingValue || {
+      document: {
+        nodes: [
+          {
+            object: "block",
+            type: "paragraph",
+            nodes: [
+              {
+                object: "text",
+                text: getRandomItemFromArray(randomPrompts)
+              }
+            ]
+          }
+        ]
+      }
+    }
+  );
+}
+
 export const loadTextIntoEditorValue = ({ text }) =>
   Value.fromJSON({
     document: {

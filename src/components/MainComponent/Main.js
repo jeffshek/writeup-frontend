@@ -9,6 +9,7 @@ import { PromptSelectComponent } from "components/PromptSelectComponent";
 import { ReactWebSocket } from "components/ReactWebSocket";
 import { serializeAPIMessageToPrompts } from "utilities/apiSerializers";
 import {
+  getInitialValue,
   GridLayout,
   HowToSelectPromptBottomSection,
   HowToSelectPromptSection,
@@ -22,15 +23,21 @@ import moment from "moment";
 import { LinearIndeterminate } from "components/Loading";
 import { SettingsModal } from "components/Modals/SettingsModal";
 import {
+  GOT_PROMPTS_TO_USE,
   GPT2_LARGE_MODEL_NAME,
+  GPT2_MEDIUM_GOT_MODEL_NAME,
+  GPT2_MEDIUM_HP_MODEL_NAME,
+  GPT2_MEDIUM_LEGAL_MODEL_NAME,
+  GPT2_MEDIUM_LYRICS_MODEL_NAME,
   GPT2_MEDIUM_MODEL_NAME,
+  GPT2_MEDIUM_RESEARCH_MODEL_NAME,
   GPT2_SMALL_LEGAL_MODEL_NAME,
   GPT2_SMALL_MODEL_NAME,
+  HP_PROMPTS_TO_USE,
   LEGAL_PROMPTS_TO_USE,
   PROMPTS_TO_USE,
   SPECIAL_CHARACTERS,
-  WebSocketURL,
-  XLNET_BASE_CASED_MODEL_NAME
+  WebSocketURL
 } from "components/MainComponent/constants";
 import Button from "@material-ui/core/Button/Button";
 import Grid from "@material-ui/core/Grid/Grid";
@@ -84,9 +91,27 @@ export class _MainComponent extends React.Component {
     // for external linking
     // ie. writeup.ai/legal will automatically use the legal text gen. models
     const pathname = props.location.pathname;
+
     let model_name = GPT2_MEDIUM_MODEL_NAME;
+    let initValue = getInitialValue(PROMPTS_TO_USE);
+    // 45 words felt like a good number, 17 just loads way faster
+    let length = 19;
+
     if (pathname === "/legal") {
-      model_name = GPT2_SMALL_LEGAL_MODEL_NAME;
+      model_name = GPT2_MEDIUM_LEGAL_MODEL_NAME;
+      initValue = getInitialValue(LEGAL_PROMPTS_TO_USE);
+    } else if (pathname === "/got") {
+      model_name = GPT2_MEDIUM_GOT_MODEL_NAME;
+      initValue = getInitialValue(GOT_PROMPTS_TO_USE);
+      length = 50;
+    } else if (pathname === "/hp") {
+      model_name = GPT2_MEDIUM_HP_MODEL_NAME;
+      initValue = getInitialValue(HP_PROMPTS_TO_USE);
+      length = 50;
+    } else if (pathname === "/research") {
+      model_name = GPT2_MEDIUM_RESEARCH_MODEL_NAME;
+    } else if (pathname === "/lyrics") {
+      model_name = GPT2_MEDIUM_LYRICS_MODEL_NAME;
     }
 
     const textPrompts = [];
@@ -95,10 +120,13 @@ export class _MainComponent extends React.Component {
     this.undoAdd = this.undoAdd.bind(this);
 
     const showTutorial = process.env.REACT_APP_ENV !== "development";
-    const arrowKeysSelect = isMobile ? false : true;
+    //const arrowKeysSelect = isMobile ? false : true;
+    // this is good when everything works, but for a lot of text
+    // like hp, it doesn't work great
+    const arrowKeysSelect = false;
 
     this.state = {
-      editorValue: initialValue,
+      editorValue: initValue,
       currentDetailIndex: null,
       textPrompts: textPrompts,
 
@@ -125,8 +153,7 @@ export class _MainComponent extends React.Component {
       // turn off until you can fix cuda issues
       top_p: 0,
 
-      // 45 words felt like a good number, 17 just loads way faster
-      length: 19,
+      length: length,
       batch_size: 7, // having higher batch sizes doesn't slow it down much
 
       // modals
@@ -610,12 +637,16 @@ export class _MainComponent extends React.Component {
       );
       const firstCharacterOfTextIsSpace = firstCharacterOfText === " ";
 
+      // keep this here in case you occur some one-off serializations
+      // you need to do ...
+      const formattedText = text;
+
       if (lastCharacterIsSpace && firstCharacterOfTextIsSpecial) {
-        editor.moveAnchorBackward(1).insertText(text);
+        editor.moveAnchorBackward(1).insertText(formattedText);
       } else if (firstCharacterOfTextIsSpace && lastCharacterIsSpace) {
-        editor.moveAnchorBackward(1).insertText(text);
+        editor.moveAnchorBackward(1).insertText(formattedText);
       } else {
-        editor.moveToEndOfDocument().insertText(text);
+        editor.moveToEndOfDocument().insertText(formattedText);
       }
 
       resolve("Success!");
@@ -647,8 +678,12 @@ export class _MainComponent extends React.Component {
     this.editor.current.deleteBackward(textLength);
 
     let prompts = PROMPTS_TO_USE;
-    if (this.state.model_name === GPT2_SMALL_LEGAL_MODEL_NAME) {
+    if (this.state.model_name === GPT2_MEDIUM_LEGAL_MODEL_NAME) {
       prompts = LEGAL_PROMPTS_TO_USE;
+    } else if (this.state.model_name === GPT2_MEDIUM_GOT_MODEL_NAME) {
+      prompts = GOT_PROMPTS_TO_USE;
+    } else if (this.state.model_name === GPT2_MEDIUM_HP_MODEL_NAME) {
+      prompts = HP_PROMPTS_TO_USE;
     }
 
     const randomPrompt = getRandomItemFromArray(prompts);
@@ -828,6 +863,41 @@ export class _MainComponent extends React.Component {
     this.editor.current.insertText("");
   };
 
+  renderSelectModelContainer = () => {
+    const { classes } = this.props;
+
+    return (
+      <span className={classes.copiedContainer}>
+        <FormControl className={classes.algorithmSelectFormMain}>
+          <Select
+            value={this.state.model_name}
+            inputProps={{
+              name: "publishOptions",
+              id: "publish-options"
+            }}
+            onChange={this.onSelectChange}
+          >
+            <MenuItem value={GPT2_SMALL_MODEL_NAME}>General (Basic)</MenuItem>
+            <MenuItem value={GPT2_MEDIUM_MODEL_NAME}>General (Medium)</MenuItem>
+            <MenuItem value={GPT2_LARGE_MODEL_NAME}>
+              General (Advanced)
+            </MenuItem>
+            <MenuItem value={GPT2_MEDIUM_LEGAL_MODEL_NAME}>Legal</MenuItem>
+            {/*<MenuItem value={GPT2_MEDIUM_RESEARCH_MODEL_NAME}>Research</MenuItem>*/}
+            <MenuItem value={GPT2_MEDIUM_HP_MODEL_NAME}>Harry Potter</MenuItem>
+            <MenuItem value={GPT2_MEDIUM_GOT_MODEL_NAME}>
+              Game of Thrones
+            </MenuItem>
+            <MenuItem value={GPT2_MEDIUM_LYRICS_MODEL_NAME}>
+              Song Lyrics
+            </MenuItem>
+          </Select>
+          <FormHelperText>Writing Style</FormHelperText>
+        </FormControl>
+      </span>
+    );
+  };
+
   renderMobileHeaderAndTutorial = () => {
     const { classes } = this.props;
 
@@ -851,33 +921,7 @@ export class _MainComponent extends React.Component {
           {showInstructions ? WritingHeader : WritingHeaderSimple}
         </Grid>
         <Grid item xs={6}>
-          <span className={classes.copiedContainer}>
-            <FormControl className={classes.algorithmSelectFormMain}>
-              <Select
-                value={this.state.model_name}
-                inputProps={{
-                  name: "publishOptions",
-                  id: "publish-options"
-                }}
-                onChange={this.onSelectChange}
-              >
-                <MenuItem value={GPT2_SMALL_MODEL_NAME}>
-                  General (Basic)
-                </MenuItem>
-                <MenuItem value={GPT2_MEDIUM_MODEL_NAME}>
-                  General (Medium)
-                </MenuItem>
-                <MenuItem value={GPT2_LARGE_MODEL_NAME}>
-                  General (Advanced)
-                </MenuItem>
-                <MenuItem value={GPT2_SMALL_LEGAL_MODEL_NAME}>Legal</MenuItem>
-                {/*<MenuItem value={XLNET_BASE_CASED_MODEL_NAME}>*/}
-                {/*  XLNet (Base)*/}
-                {/*</MenuItem>*/}
-              </Select>
-              <FormHelperText>Writing Style</FormHelperText>
-            </FormControl>
-          </span>
+          {this.renderSelectModelContainer()}
         </Grid>
         <Grid item xs={6}>
           <span className={classes.copiedContainer}>
@@ -950,33 +994,7 @@ export class _MainComponent extends React.Component {
           {showInstructions ? WritingHeader : WritingHeaderSimple}
         </Grid>
         <Grid item>
-          <span className={classes.copiedContainer}>
-            <FormControl className={classes.algorithmSelectFormMain}>
-              <Select
-                value={this.state.model_name}
-                inputProps={{
-                  name: "publishOptions",
-                  id: "publish-options"
-                }}
-                onChange={this.onSelectChange}
-              >
-                <MenuItem value={GPT2_SMALL_MODEL_NAME}>
-                  General (Basic)
-                </MenuItem>
-                <MenuItem value={GPT2_MEDIUM_MODEL_NAME}>
-                  General (Medium)
-                </MenuItem>
-                <MenuItem value={GPT2_LARGE_MODEL_NAME}>
-                  General (Advanced)
-                </MenuItem>
-                <MenuItem value={GPT2_SMALL_LEGAL_MODEL_NAME}>Legal</MenuItem>
-                {/*<MenuItem value={XLNET_BASE_CASED_MODEL_NAME}>*/}
-                {/*  XLNet (Base)*/}
-                {/*</MenuItem>*/}
-              </Select>
-              <FormHelperText>Writing Style</FormHelperText>
-            </FormControl>
-          </span>
+          {this.renderSelectModelContainer()}
           <span className={classes.copiedContainer}>
             <Button
               variant="outlined"
