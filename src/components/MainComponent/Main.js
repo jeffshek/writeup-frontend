@@ -58,7 +58,12 @@ import {
   //renderBlock, renderMark,
 } from "components/SlateJS";
 
-import { BrowserView, isBrowser, isMobile } from "react-device-detect";
+import {
+  BrowserView,
+  isBrowser,
+  isMobile,
+  isSafari
+} from "react-device-detect";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -393,14 +398,33 @@ export class _MainComponent extends React.Component {
     // this happens if the user types very quickly and it fires off a lot
     // of API requests, then we keep on receiving additional messages
     // from previous phrases that no longer apply
-    if (message.prompt.trim().slice(-10) === text.trim().slice(-10)) {
-      this.setState(
-        {
-          textPrompts: textPrompts
-        },
-        this.focusTextInput
-      );
+    const properMessage =
+      message.prompt.trim().slice(-10) === text.trim().slice(-10);
+    if (!properMessage) {
+      return;
     }
+
+    this.setState({
+      textPrompts: textPrompts
+    });
+
+    // safari has an issue with slatejs race condition where focus is called
+    // before the message has been fully loaded as slatejs text state
+    //if (isSafari) {
+    //  this.setState(
+    //    {
+    //      textPrompts: textPrompts
+    //    },
+    //  );
+    //}
+    //else {
+    //  this.setState(
+    //    {
+    //      textPrompts: textPrompts
+    //    },
+    //    this.focusTextInput
+    //  );
+    //}
   };
 
   webSocketConnected = () => {
