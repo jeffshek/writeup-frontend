@@ -13,7 +13,6 @@ import {
   GridLayout,
   HowToSelectPromptBottomSection,
   HowToSelectPromptSection,
-  initialValue,
   MainFooter,
   WritingHeader,
   WritingHeaderSimple
@@ -31,7 +30,6 @@ import {
   GPT2_MEDIUM_LYRICS_MODEL_NAME,
   GPT2_MEDIUM_MODEL_NAME,
   GPT2_MEDIUM_RESEARCH_MODEL_NAME,
-  GPT2_SMALL_LEGAL_MODEL_NAME,
   GPT2_SMALL_MODEL_NAME,
   HP_PROMPTS_TO_USE,
   LEGAL_PROMPTS_TO_USE,

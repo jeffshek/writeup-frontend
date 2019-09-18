@@ -217,10 +217,7 @@ export const MainFooter = ({ classes }) => {
           >
             HuggingFace
           </a>{" "}
-          for PyTorch implementations, CMU and Google Brain for{" "}
-          <a href="https://github.com/zihangdai/xlnet" target={"_blank"}>
-            XLNet.
-          </a>
+          for PyTorch implementations.
         </Typography>
         <Typography variant="subtitle1" color={"textPrimary"}>
           The{" "}

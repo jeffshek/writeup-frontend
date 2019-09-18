@@ -15,7 +15,6 @@ import {
   GPT2_MEDIUM_LEGAL_MODEL_NAME,
   GPT2_MEDIUM_LYRICS_MODEL_NAME,
   GPT2_MEDIUM_MODEL_NAME,
-  GPT2_SMALL_LEGAL_MODEL_NAME,
   GPT2_SMALL_MODEL_NAME
 } from "components/MainComponent/constants";
 import Grid from "@material-ui/core/Grid";
