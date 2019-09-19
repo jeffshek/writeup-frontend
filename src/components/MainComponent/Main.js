@@ -58,12 +58,7 @@ import {
   //renderBlock, renderMark,
 } from "components/SlateJS";
 
-import {
-  BrowserView,
-  isBrowser,
-  isMobile,
-  isSafari
-} from "react-device-detect";
+import { BrowserView, isBrowser, isMobile } from "react-device-detect";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";

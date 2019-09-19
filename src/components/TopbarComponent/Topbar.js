@@ -51,8 +51,11 @@ class _TopbarComponent extends Component {
     super(props);
 
     const isHomePage = this.props.match.path === "/";
+    const hpPage = this.props.match.path === "/hp";
+    const gotPage = this.props.match.path === "/got";
+
     let tabValue = 0;
-    if (isHomePage) {
+    if (isHomePage || hpPage || gotPage) {
       this.renderRightContainer = this.renderRightContainerMain;
       tabValue = 1;
     } else {
