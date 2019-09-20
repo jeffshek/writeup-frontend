@@ -34,6 +34,7 @@ import {
   HP_PROMPTS_TO_USE,
   LEGAL_PROMPTS_TO_USE,
   PROMPTS_TO_USE,
+  RESEARCH_PROMPTS_TO_USE,
   SPECIAL_CHARACTERS,
   WebSocketURL
 } from "components/MainComponent/constants";
@@ -702,6 +703,8 @@ export class _MainComponent extends React.Component {
       prompts = GOT_PROMPTS_TO_USE;
     } else if (this.state.model_name === GPT2_MEDIUM_HP_MODEL_NAME) {
       prompts = HP_PROMPTS_TO_USE;
+    } else if (this.state.model_name === GPT2_MEDIUM_RESEARCH_MODEL_NAME) {
+      prompts = RESEARCH_PROMPTS_TO_USE;
     }
 
     const randomPrompt = getRandomItemFromArray(prompts);

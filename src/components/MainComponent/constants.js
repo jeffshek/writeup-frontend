@@ -89,5 +89,11 @@ export const GOT_PROMPTS_TO_USE = [
   "The white walkers began "
 ];
 
+export const RESEARCH_PROMPTS_TO_USE = [
+  "Observations that the chemical ",
+  "The research in ",
+  "Neural networks have ",
+  "Recent breakthroughs in "
+];
 // use this as a way to back slatejs back to focus on where to add the comment
 export const SPECIAL_CHARACTERS = [",", "!", ".", '"', "-", "'", "”"];
