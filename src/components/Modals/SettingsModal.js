@@ -15,6 +15,7 @@ import {
   GPT2_MEDIUM_LEGAL_MODEL_NAME,
   GPT2_MEDIUM_LYRICS_MODEL_NAME,
   GPT2_MEDIUM_MODEL_NAME,
+  GPT2_MEDIUM_RESEARCH_MODEL_NAME,
   GPT2_SMALL_MODEL_NAME
 } from "components/MainComponent/constants";
 import Grid from "@material-ui/core/Grid";
@@ -184,7 +185,9 @@ export const SettingsModal = ({
                   GPT2 (Medium)
                 </MenuItem>
                 <MenuItem value={GPT2_LARGE_MODEL_NAME}>GPT2 (Large)</MenuItem>
-                {/*<MenuItem value={GPT2_MEDIUM_RESEARCH_MODEL_NAME}>Research</MenuItem>*/}
+                <MenuItem value={GPT2_MEDIUM_RESEARCH_MODEL_NAME}>
+                  Research
+                </MenuItem>
                 <MenuItem value={GPT2_MEDIUM_HP_MODEL_NAME}>
                   Harry Potter
                 </MenuItem>

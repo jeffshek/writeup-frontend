@@ -93,7 +93,8 @@ export class _MainComponent extends React.Component {
     let model_name = GPT2_MEDIUM_MODEL_NAME;
     let initValue = getInitialValue(PROMPTS_TO_USE);
     // 45 words felt like a good number, 17 just loads way faster
-    let length = 19;
+    // 25 to see how this works for the time being ..
+    let length = 25;
 
     if (pathname === "/legal") {
       model_name = GPT2_MEDIUM_LEGAL_MODEL_NAME;
@@ -900,7 +901,9 @@ export class _MainComponent extends React.Component {
               General (Advanced)
             </MenuItem>
             <MenuItem value={GPT2_MEDIUM_LEGAL_MODEL_NAME}>Legal</MenuItem>
-            {/*<MenuItem value={GPT2_MEDIUM_RESEARCH_MODEL_NAME}>Research</MenuItem>*/}
+            <MenuItem value={GPT2_MEDIUM_RESEARCH_MODEL_NAME}>
+              Research
+            </MenuItem>
             <MenuItem value={GPT2_MEDIUM_HP_MODEL_NAME}>Harry Potter</MenuItem>
             <MenuItem value={GPT2_MEDIUM_GOT_MODEL_NAME}>
               Game of Thrones
