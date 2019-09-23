@@ -15,7 +15,7 @@ export const MainStyles = theme => ({
     marginTop: 40,
     marginLeft: "auto",
     marginRight: "auto",
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("md")]: {
       //width: "calc(100% - 20px)",
       width: "100%",
       margin: 0,
