@@ -96,7 +96,12 @@ export const RESEARCH_PROMPTS_TO_USE = [
   "We have discovered ",
   "In this paper ",
   "We propose ",
-  "Our thesis "
+  "Our thesis ",
+  "In recent years ",
+  "This paper presents ",
+  "We describe a method ",
+  "Significant enhancement in ",
+  "In order to improve the  "
 ];
 // use this as a way to back slatejs back to focus on where to add the comment
 export const SPECIAL_CHARACTERS = [",", "!", ".", '"', "-", "'", "”"];
