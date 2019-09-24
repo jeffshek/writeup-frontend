@@ -202,6 +202,15 @@ export const MainFooter = ({ classes }) => {
   return (
     <Paper className={classes.paper}>
       <div className={classes.footer}>
+        <a
+          href="https://www.producthunt.com/posts/writeup-ai?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-writeup-ai"
+          target="_blank"
+        >
+          <img
+            src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=168858&theme=light"
+            alt="writeup.ai - A bot that writes your mission statement with you | Product Hunt Embed"
+          />
+        </a>
         <Typography variant="subtitle1" color={"textPrimary"}>
           <b>HUGE </b>thanks to{" "}
           <a
