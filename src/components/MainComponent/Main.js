@@ -116,6 +116,7 @@ export class _MainComponent extends React.Component {
       model_name = GPT2_MEDIUM_LYRICS_MODEL_NAME;
     } else if (pathname === "/companies") {
       model_name = GPT2_MEDIUM_COMPANIES_MODEL_NAME;
+      initValue = getInitialValue(COMPANY_PROMPTS_TO_USE);
       // these are much smaller, so show more options
       batch_size = 10;
     }
