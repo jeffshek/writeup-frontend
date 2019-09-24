@@ -22,15 +22,16 @@ import moment from "moment";
 import { LinearIndeterminate } from "components/Loading";
 import { SettingsModal } from "components/Modals/SettingsModal";
 import {
+  COMPANY_PROMPTS_TO_USE,
   GOT_PROMPTS_TO_USE,
   GPT2_LARGE_MODEL_NAME,
+  GPT2_MEDIUM_COMPANIES_MODEL_NAME,
   GPT2_MEDIUM_GOT_MODEL_NAME,
   GPT2_MEDIUM_HP_MODEL_NAME,
   GPT2_MEDIUM_LEGAL_MODEL_NAME,
   GPT2_MEDIUM_LYRICS_MODEL_NAME,
   GPT2_MEDIUM_MODEL_NAME,
   GPT2_MEDIUM_RESEARCH_MODEL_NAME,
-  GPT2_SMALL_MODEL_NAME,
   HP_PROMPTS_TO_USE,
   LEGAL_PROMPTS_TO_USE,
   PROMPTS_TO_USE,
@@ -96,6 +97,7 @@ export class _MainComponent extends React.Component {
     // 45 words felt like a good number, 17 just loads way faster
     // 25 to see how this works for the time being ..
     let length = 25;
+    let batch_size = 7;
 
     if (pathname === "/legal") {
       model_name = GPT2_MEDIUM_LEGAL_MODEL_NAME;
@@ -112,6 +114,10 @@ export class _MainComponent extends React.Component {
       model_name = GPT2_MEDIUM_RESEARCH_MODEL_NAME;
     } else if (pathname === "/lyrics") {
       model_name = GPT2_MEDIUM_LYRICS_MODEL_NAME;
+    } else if (pathname === "/companies") {
+      model_name = GPT2_MEDIUM_COMPANIES_MODEL_NAME;
+      // these are much smaller, so show more options
+      batch_size = 10;
     }
 
     const textPrompts = [];
@@ -154,7 +160,7 @@ export class _MainComponent extends React.Component {
       top_p: 0,
 
       length: length,
-      batch_size: 7, // having higher batch sizes doesn't slow it down much
+      batch_size: batch_size, // having higher batch sizes doesn't slow it down much
 
       // modals
       loginOrRegisterModal: false,
@@ -705,6 +711,8 @@ export class _MainComponent extends React.Component {
       prompts = HP_PROMPTS_TO_USE;
     } else if (this.state.model_name === GPT2_MEDIUM_RESEARCH_MODEL_NAME) {
       prompts = RESEARCH_PROMPTS_TO_USE;
+    } else if (this.state.model_name === GPT2_MEDIUM_COMPANIES_MODEL_NAME) {
+      prompts = COMPANY_PROMPTS_TO_USE;
     }
 
     const randomPrompt = getRandomItemFromArray(prompts);
@@ -898,7 +906,7 @@ export class _MainComponent extends React.Component {
             }}
             onChange={this.onSelectChange}
           >
-            <MenuItem value={GPT2_SMALL_MODEL_NAME}>General (Basic)</MenuItem>
+            {/*<MenuItem value={GPT2_SMALL_MODEL_NAME}>General (Basic)</MenuItem>*/}
             <MenuItem value={GPT2_MEDIUM_MODEL_NAME}>General (Medium)</MenuItem>
             <MenuItem value={GPT2_LARGE_MODEL_NAME}>
               General (Advanced)
@@ -913,6 +921,9 @@ export class _MainComponent extends React.Component {
             </MenuItem>
             <MenuItem value={GPT2_MEDIUM_LYRICS_MODEL_NAME}>
               Song Lyrics
+            </MenuItem>
+            <MenuItem value={GPT2_MEDIUM_COMPANIES_MODEL_NAME}>
+              Mission Statements
             </MenuItem>
           </Select>
           <FormHelperText>Writing Style</FormHelperText>
