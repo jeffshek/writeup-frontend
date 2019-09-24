@@ -10,13 +10,13 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import {
   GPT2_LARGE_MODEL_NAME,
+  GPT2_MEDIUM_COMPANIES_MODEL_NAME,
   GPT2_MEDIUM_GOT_MODEL_NAME,
   GPT2_MEDIUM_HP_MODEL_NAME,
   GPT2_MEDIUM_LEGAL_MODEL_NAME,
   GPT2_MEDIUM_LYRICS_MODEL_NAME,
   GPT2_MEDIUM_MODEL_NAME,
-  GPT2_MEDIUM_RESEARCH_MODEL_NAME,
-  GPT2_SMALL_MODEL_NAME
+  GPT2_MEDIUM_RESEARCH_MODEL_NAME
 } from "components/MainComponent/constants";
 import Grid from "@material-ui/core/Grid";
 
@@ -175,9 +175,6 @@ export const SettingsModal = ({
                 }}
                 onChange={onSelectChange}
               >
-                <MenuItem value={GPT2_SMALL_MODEL_NAME}>
-                  GPT2 (Small, Fastest)
-                </MenuItem>
                 <MenuItem value={GPT2_MEDIUM_LEGAL_MODEL_NAME}>
                   GPT2 (Law/Legal Writing Style)
                 </MenuItem>
@@ -194,8 +191,12 @@ export const SettingsModal = ({
                 <MenuItem value={GPT2_MEDIUM_GOT_MODEL_NAME}>
                   Game of Thrones
                 </MenuItem>
+
                 <MenuItem value={GPT2_MEDIUM_LYRICS_MODEL_NAME}>
                   Song Lyrics
+                </MenuItem>
+                <MenuItem value={GPT2_MEDIUM_COMPANIES_MODEL_NAME}>
+                  Company/Product Vision
                 </MenuItem>
               </Select>
             </FormControl>

@@ -10,6 +10,7 @@ export const GPT2_MEDIUM_GOT_MODEL_NAME = "gpt2-medium-got";
 export const GPT2_MEDIUM_HP_MODEL_NAME = "gpt2-medium-hp";
 export const GPT2_MEDIUM_RESEARCH_MODEL_NAME = "gpt2-medium-research";
 export const GPT2_MEDIUM_LYRICS_MODEL_NAME = "gpt2-medium-lyrics";
+export const GPT2_MEDIUM_COMPANIES_MODEL_NAME = "gpt2-medium-companies";
 
 export const GPT2_LARGE_MODEL_NAME = "gpt2-large";
 
@@ -102,6 +103,19 @@ export const RESEARCH_PROMPTS_TO_USE = [
   "We describe a method ",
   "Significant enhancement in ",
   "In order to improve the  "
+];
+
+export const COMPANY_PROMPTS_TO_USE = [
+  "Ferocious Caterpillar's founder vision was ",
+  "WaterFaucet.AI's mission is to ",
+  "Decaffeinated Water aims to ",
+  "RoundSquare innovates ",
+  "Invisible Mirror demonstrates ",
+  "Sturdy Knockoff has patented the ",
+  "Zapdos is the award-winning electric ",
+  "Articuno's team has ",
+  "Bulbausaur AI is a plant-based ",
+  "BoringPotatos is disrupting the "
 ];
 // use this as a way to back slatejs back to focus on where to add the comment
 export const SPECIAL_CHARACTERS = [",", "!", ".", '"', "-", "'", "”"];
