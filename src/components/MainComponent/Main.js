@@ -92,7 +92,7 @@ export class _MainComponent extends React.Component {
     // ie. writeup.ai/legal will automatically use the legal text gen. models
     const pathname = props.location.pathname;
 
-    let model_name = GPT2_MEDIUM_MODEL_NAME;
+    let model_name = GPT2_LARGE_MODEL_NAME;
     let initValue = getInitialValue(PROMPTS_TO_USE);
     // 45 words felt like a good number, 17 just loads way faster
     // 25 to see how this works for the time being ..
