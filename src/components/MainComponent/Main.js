@@ -452,7 +452,8 @@ export class _MainComponent extends React.Component {
 
     // feels a little unfair, make sure to include this asterik so people
     // don't get confused
-    const text = this.state.editorValue.document.text.slice(-500);
+    // 500 was fine for higher traffic, now that traffic is less, try it at 700
+    const text = this.state.editorValue.document.text.slice(-700);
 
     const textIsBlank = text.trim().length === 0;
     if (textIsBlank) {
