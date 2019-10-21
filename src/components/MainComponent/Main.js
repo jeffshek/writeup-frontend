@@ -905,12 +905,6 @@ export class _MainComponent extends React.Component {
               Research
             </MenuItem>
             <MenuItem value={GPT2_MEDIUM_HP_MODEL_NAME}>Harry Potter</MenuItem>
-            {/*<MenuItem value={GPT2_MEDIUM_GOT_MODEL_NAME}>*/}
-            {/*  Game of Thrones*/}
-            {/*</MenuItem>*/}
-            {/*<MenuItem value={GPT2_MEDIUM_LYRICS_MODEL_NAME}>*/}
-            {/*  Song Lyrics*/}
-            {/*</MenuItem>*/}
             <MenuItem value={GPT2_MEDIUM_COMPANIES_MODEL_NAME}>
               Mission Statements
             </MenuItem>
