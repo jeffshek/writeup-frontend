@@ -11,10 +11,8 @@ import FormControl from "@material-ui/core/FormControl";
 import {
   GPT2_LARGE_MODEL_NAME,
   GPT2_MEDIUM_COMPANIES_MODEL_NAME,
-  GPT2_MEDIUM_GOT_MODEL_NAME,
   GPT2_MEDIUM_HP_MODEL_NAME,
   GPT2_MEDIUM_LEGAL_MODEL_NAME,
-  GPT2_MEDIUM_LYRICS_MODEL_NAME,
   GPT2_MEDIUM_MODEL_NAME,
   GPT2_MEDIUM_RESEARCH_MODEL_NAME
 } from "components/MainComponent/constants";
@@ -187,13 +185,6 @@ export const SettingsModal = ({
                 </MenuItem>
                 <MenuItem value={GPT2_MEDIUM_HP_MODEL_NAME}>
                   Harry Potter
-                </MenuItem>
-                <MenuItem value={GPT2_MEDIUM_GOT_MODEL_NAME}>
-                  Game of Thrones
-                </MenuItem>
-
-                <MenuItem value={GPT2_MEDIUM_LYRICS_MODEL_NAME}>
-                  Song Lyrics
                 </MenuItem>
                 <MenuItem value={GPT2_MEDIUM_COMPANIES_MODEL_NAME}>
                   Company/Product Vision

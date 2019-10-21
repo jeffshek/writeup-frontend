@@ -23,13 +23,10 @@ import { LinearIndeterminate } from "components/Loading";
 import { SettingsModal } from "components/Modals/SettingsModal";
 import {
   COMPANY_PROMPTS_TO_USE,
-  GOT_PROMPTS_TO_USE,
   GPT2_LARGE_MODEL_NAME,
   GPT2_MEDIUM_COMPANIES_MODEL_NAME,
-  GPT2_MEDIUM_GOT_MODEL_NAME,
   GPT2_MEDIUM_HP_MODEL_NAME,
   GPT2_MEDIUM_LEGAL_MODEL_NAME,
-  GPT2_MEDIUM_LYRICS_MODEL_NAME,
   GPT2_MEDIUM_MODEL_NAME,
   GPT2_MEDIUM_RESEARCH_MODEL_NAME,
   HP_PROMPTS_TO_USE,
@@ -57,7 +54,6 @@ import {
   isItalicHotkey,
   isUnderlinedHotkey,
   Toolbar
-  //renderBlock, renderMark,
 } from "components/SlateJS";
 
 import { BrowserView, isBrowser, isMobile } from "react-device-detect";
@@ -66,7 +62,6 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import { MainEditor } from "components/MainComponent/MainEditor";
-//import { Editor } from "slate-react";
 
 const DEFAULT_NODE = "paragraph";
 
@@ -102,18 +97,12 @@ export class _MainComponent extends React.Component {
     if (pathname === "/legal") {
       model_name = GPT2_MEDIUM_LEGAL_MODEL_NAME;
       initValue = getInitialValue(LEGAL_PROMPTS_TO_USE);
-    } else if (pathname === "/got") {
-      model_name = GPT2_MEDIUM_GOT_MODEL_NAME;
-      initValue = getInitialValue(GOT_PROMPTS_TO_USE);
-      length = 50;
     } else if (pathname === "/hp") {
       model_name = GPT2_MEDIUM_HP_MODEL_NAME;
       initValue = getInitialValue(HP_PROMPTS_TO_USE);
       length = 50;
     } else if (pathname === "/research") {
       model_name = GPT2_MEDIUM_RESEARCH_MODEL_NAME;
-    } else if (pathname === "/lyrics") {
-      model_name = GPT2_MEDIUM_LYRICS_MODEL_NAME;
     } else if (pathname === "/companies") {
       model_name = GPT2_MEDIUM_COMPANIES_MODEL_NAME;
       initValue = getInitialValue(COMPANY_PROMPTS_TO_USE);
@@ -707,8 +696,6 @@ export class _MainComponent extends React.Component {
     let prompts = PROMPTS_TO_USE;
     if (this.state.model_name === GPT2_MEDIUM_LEGAL_MODEL_NAME) {
       prompts = LEGAL_PROMPTS_TO_USE;
-    } else if (this.state.model_name === GPT2_MEDIUM_GOT_MODEL_NAME) {
-      prompts = GOT_PROMPTS_TO_USE;
     } else if (this.state.model_name === GPT2_MEDIUM_HP_MODEL_NAME) {
       prompts = HP_PROMPTS_TO_USE;
     } else if (this.state.model_name === GPT2_MEDIUM_RESEARCH_MODEL_NAME) {
@@ -918,12 +905,6 @@ export class _MainComponent extends React.Component {
               Research
             </MenuItem>
             <MenuItem value={GPT2_MEDIUM_HP_MODEL_NAME}>Harry Potter</MenuItem>
-            <MenuItem value={GPT2_MEDIUM_GOT_MODEL_NAME}>
-              Game of Thrones
-            </MenuItem>
-            <MenuItem value={GPT2_MEDIUM_LYRICS_MODEL_NAME}>
-              Song Lyrics
-            </MenuItem>
             <MenuItem value={GPT2_MEDIUM_COMPANIES_MODEL_NAME}>
               Mission Statements
             </MenuItem>
