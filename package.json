@@ -13,7 +13,7 @@
     "immutable": "^4.0.0-rc.12",
     "is-hotkey": "^0.1.4",
     "moment": "^2.24.0",
-    "react": "^16.9.0",
+    "react": "^16.11.0",
     "react-copy-to-clipboard": "^5.0.1",
     "react-device-detect": "^1.7.5",
     "react-dom": "^16.9.0",
