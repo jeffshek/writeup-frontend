@@ -4,6 +4,8 @@
 [![CircleCI](https://circleci.com/gh/jeffshek/writeup-frontend.svg?style=svg)](https://circleci.com/gh/jeffshek/writeup-frontend)
 [![HitCount](http://hits.dwyl.io/jeffshek/writeup-frontend.svg)](http://hits.dwyl.io/jeffshek/writeup-frontend)
 
+![App](https://cdn.buttercms.com/ErL3GkElR4ysvNeAm0Hi)
+
 ### Tech Stack
 
 - Mostly powered by Netlify, Material UI and React.
