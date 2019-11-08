@@ -203,60 +203,43 @@ export const MainFooter = ({ classes }) => {
     <Paper className={classes.paper}>
       <div className={classes.footer}>
         <Typography variant="subtitle1" color={"textPrimary"}>
-          <b>HUGE </b>thanks to{" "}
+          Powered by{" "}
           <a
             href="https://openai.com/blog/better-language-models/"
             target={"_blank"}
           >
-            OpenAI
-          </a>{" "}
-          for GPT,{" "}
+            GPT2
+          </a>
+          {". "}
           <a
-            href="https://github.com/huggingface/pytorch-transformers"
-            target={"_blank"}
-          >
-            HuggingFace
-          </a>{" "}
-          for PyTorch implementations.
-        </Typography>
-        <Typography variant="subtitle1" color={"textPrimary"}>
-          The{" "}
-          <a
-            href="https://senrigan.io/blog/"
+            href="https://senrigan.io/blog/how-writeupai-runs-behind-the-scenes/"
             target={"_blank"}
             rel="noopener noreferrer"
           >
-            blog
-          </a>{" "}
-          will have a featured article detailing technical challenges, solutions
-          and tradeoffs.
-        </Typography>
-        <Typography variant="body1" color={"textPrimary"}>
+            How This App Was Built
+          </a>
+          {". "}
           <a
             href="https://github.com/jeffshek/writeup-frontend"
             target={"_blank"}
           >
             Open Sourced
           </a>
-          {". "}Powered by{" "}
+          {"! "}
+        </Typography>
+
+        {SenriganAnalyticsFooter}
+        <Typography variant="body1" color={"textPrimary"}>
+          Hosted on{" "}
           <a
             href="https://cloud.google.com/"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Google Cloud Platform
-          </a>{" "}
-          and{" "}
-          <a
-            href="http://netlify.com"
-            target={"_blank"}
-            rel="noopener noreferrer"
-          >
-            Netlify
+            Google Cloud
           </a>
           {". "}
         </Typography>
-        {SenriganAnalyticsFooter}
       </div>
     </Paper>
   );
