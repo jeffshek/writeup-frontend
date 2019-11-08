@@ -27,7 +27,6 @@ import {
   GPT2_MEDIUM_COMPANIES_MODEL_NAME,
   GPT2_MEDIUM_HP_MODEL_NAME,
   GPT2_MEDIUM_LEGAL_MODEL_NAME,
-  GPT2_MEDIUM_MODEL_NAME,
   GPT2_MEDIUM_RESEARCH_MODEL_NAME,
   HP_PROMPTS_TO_USE,
   LEGAL_PROMPTS_TO_USE,
@@ -895,8 +894,6 @@ export class _MainComponent extends React.Component {
             }}
             onChange={this.onSelectChange}
           >
-            {/*<MenuItem value={GPT2_SMALL_MODEL_NAME}>General (Basic)</MenuItem>*/}
-            <MenuItem value={GPT2_MEDIUM_MODEL_NAME}>General (Medium)</MenuItem>
             <MenuItem value={GPT2_LARGE_MODEL_NAME}>
               General (Advanced)
             </MenuItem>
