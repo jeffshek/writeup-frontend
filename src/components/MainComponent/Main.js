@@ -897,7 +897,7 @@ export class _MainComponent extends React.Component {
             <MenuItem value={GPT2_LARGE_MODEL_NAME}>
               General (Advanced)
             </MenuItem>
-            <MenuItem value={GPT2_MEDIUM_LEGAL_MODEL_NAME}>Legal</MenuItem>
+            {/*<MenuItem value={GPT2_MEDIUM_LEGAL_MODEL_NAME}>Legal</MenuItem>*/}
             <MenuItem value={GPT2_MEDIUM_RESEARCH_MODEL_NAME}>
               Research
             </MenuItem>

@@ -172,9 +172,9 @@ export const SettingsModal = ({
                 }}
                 onChange={onSelectChange}
               >
-                <MenuItem value={GPT2_MEDIUM_LEGAL_MODEL_NAME}>
-                  GPT2 (Law/Legal Writing Style)
-                </MenuItem>
+                {/*<MenuItem value={GPT2_MEDIUM_LEGAL_MODEL_NAME}>*/}
+                {/*  GPT2 (Law/Legal Writing Style)*/}
+                {/*</MenuItem>*/}
                 <MenuItem value={GPT2_LARGE_MODEL_NAME}>GPT2 (Large)</MenuItem>
                 <MenuItem value={GPT2_MEDIUM_RESEARCH_MODEL_NAME}>
                   Research
