@@ -27,6 +27,7 @@ import {
   GPT2_MEDIUM_COMPANIES_MODEL_NAME,
   GPT2_MEDIUM_HP_MODEL_NAME,
   GPT2_MEDIUM_LEGAL_MODEL_NAME,
+  GPT2_MEDIUM_MODEL_NAME,
   GPT2_MEDIUM_RESEARCH_MODEL_NAME,
   HP_PROMPTS_TO_USE,
   LEGAL_PROMPTS_TO_USE,
@@ -86,7 +87,7 @@ export class _MainComponent extends React.Component {
     // ie. writeup.ai/legal will automatically use the legal text gen. models
     const pathname = props.location.pathname;
 
-    let model_name = GPT2_LARGE_MODEL_NAME;
+    let model_name = GPT2_MEDIUM_MODEL_NAME;
     let initValue = getInitialValue(PROMPTS_TO_USE);
     // 45 words felt like a good number, 17 just loads way faster
     // 25 to see how this works for the time being ..
@@ -441,7 +442,8 @@ export class _MainComponent extends React.Component {
     // feels a little unfair, make sure to include this asterik so people
     // don't get confused
     // 500 was fine for higher traffic, now that traffic is less, try it at 700
-    const text = this.state.editorValue.document.text.slice(-700);
+    // issues still happen at 700 (i think GPT2 large uses a lot of resources)
+    const text = this.state.editorValue.document.text.slice(-500);
 
     const textIsBlank = text.trim().length === 0;
     if (textIsBlank) {
@@ -894,6 +896,7 @@ export class _MainComponent extends React.Component {
             }}
             onChange={this.onSelectChange}
           >
+            <MenuItem value={GPT2_MEDIUM_MODEL_NAME}>General</MenuItem>
             <MenuItem value={GPT2_LARGE_MODEL_NAME}>
               General (Advanced)
             </MenuItem>
