@@ -23,7 +23,7 @@ import { LinearIndeterminate } from "components/Loading";
 import { SettingsModal } from "components/Modals/SettingsModal";
 import {
   COMPANY_PROMPTS_TO_USE,
-  GPT2_LARGE_MODEL_NAME,
+  // GPT2_LARGE_MODEL_NAME,
   GPT2_MEDIUM_COMPANIES_MODEL_NAME,
   GPT2_MEDIUM_HP_MODEL_NAME,
   GPT2_MEDIUM_LEGAL_MODEL_NAME,
@@ -897,9 +897,9 @@ export class _MainComponent extends React.Component {
             onChange={this.onSelectChange}
           >
             <MenuItem value={GPT2_MEDIUM_MODEL_NAME}>General</MenuItem>
-            <MenuItem value={GPT2_LARGE_MODEL_NAME}>
-              General (Advanced)
-            </MenuItem>
+            {/*<MenuItem value={GPT2_LARGE_MODEL_NAME}>*/}
+            {/*  General (Advanced)*/}
+            {/*</MenuItem>*/}
             {/*<MenuItem value={GPT2_MEDIUM_LEGAL_MODEL_NAME}>Legal</MenuItem>*/}
             <MenuItem value={GPT2_MEDIUM_RESEARCH_MODEL_NAME}>
               Research

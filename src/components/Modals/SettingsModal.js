@@ -9,7 +9,7 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import {
-  GPT2_LARGE_MODEL_NAME,
+  //GPT2_LARGE_MODEL_NAME,
   GPT2_MEDIUM_COMPANIES_MODEL_NAME,
   GPT2_MEDIUM_HP_MODEL_NAME,
   GPT2_MEDIUM_MODEL_NAME,
@@ -179,7 +179,7 @@ export const SettingsModal = ({
                 <MenuItem value={GPT2_MEDIUM_MODEL_NAME}>
                   GPT2 (Medium)
                 </MenuItem>
-                <MenuItem value={GPT2_LARGE_MODEL_NAME}>GPT2 (Large)</MenuItem>
+                {/*<MenuItem value={GPT2_LARGE_MODEL_NAME}>GPT2 (Large)</MenuItem>*/}
                 <MenuItem value={GPT2_MEDIUM_RESEARCH_MODEL_NAME}>
                   Research
                 </MenuItem>
