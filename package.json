@@ -11,7 +11,7 @@
     "emotion": "^10.0.14",
     "husky": "^3.0.4",
     "immutable": "^4.0.0-rc.12",
-    "is-hotkey": "^0.1.4",
+    "is-hotkey": "^0.1.7",
     "moment": "^2.24.0",
     "react": "^16.9.0",
     "react-copy-to-clipboard": "^5.0.1",
