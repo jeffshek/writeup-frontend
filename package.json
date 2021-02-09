@@ -9,7 +9,7 @@
     "@material-ui/styles": "^4.3.3",
     "axios": "^0.19.0",
     "emotion": "^10.0.14",
-    "husky": "^3.0.4",
+    "husky": "^5.0.9",
     "immutable": "^4.0.0-rc.12",
     "is-hotkey": "^0.1.4",
     "moment": "^2.24.0",
